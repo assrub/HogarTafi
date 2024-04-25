@@ -1,0 +1,141 @@
+object MenuPrincipal: TMenuPrincipal
+  Left = 589
+  Height = 781
+  Top = 154
+  Width = 958
+  Caption = 'Menu principal'
+  ClientHeight = 761
+  ClientWidth = 958
+  Menu = MainMenu1
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnShow = FormShow
+  LCLVersion = '2.2.6.0'
+  object SG_pacientes: TStringGrid
+    Left = 240
+    Height = 632
+    Top = 72
+    Width = 648
+    Columns = <    
+      item
+        Title.Caption = 'DNI'
+        Width = 161
+      end    
+      item
+        Title.Caption = 'Apellido'
+        Width = 161
+      end    
+      item
+        Title.Caption = 'Nombre'
+        Width = 161
+      end    
+      item
+        Title.Caption = 'Obra social'
+        Width = 161
+      end>
+    DefaultRowHeight = 31
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSelect, goSmoothScroll]
+    RowCount = 1
+    TabOrder = 0
+    ColWidths = (
+      0
+      161
+      161
+      161
+      161
+    )
+  end
+  object btn_registrar_paciente: TButton
+    Left = 48
+    Height = 40
+    Top = 72
+    Width = 155
+    Caption = 'Registrar un paciente'
+    OnClick = btn_registrar_pacienteClick
+    TabOrder = 1
+  end
+  object btn_eliminar_paciente: TButton
+    Left = 48
+    Height = 40
+    Hint = 'Selecciona el paciente que quieras eliminar en la tabla y toca el boton.'
+    Top = 136
+    Width = 155
+    Caption = 'Eliminar un paciente'
+    OnClick = btn_eliminar_pacienteClick
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 2
+  end
+  object Label1: TLabel
+    Left = 456
+    Height = 37
+    Top = 16
+    Width = 135
+    Caption = 'Hogar Tafi'
+    Font.Height = -27
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object btn_editar: TButton
+    Left = 48
+    Height = 40
+    Top = 200
+    Width = 155
+    Caption = 'Editar paciente'
+    OnClick = btn_editarClick
+    TabOrder = 3
+  end
+  object btn_salir: TButton
+    Left = 48
+    Height = 41
+    Top = 663
+    Width = 155
+    Caption = 'Salir'
+    OnClick = btn_salirClick
+    TabOrder = 4
+  end
+  object btn_pedido: TButton
+    Left = 48
+    Height = 40
+    Top = 264
+    Width = 155
+    Caption = 'Pedido'
+    OnClick = btn_pedidoClick
+    TabOrder = 5
+  end
+  object btn_confirmaciones: TButton
+    Left = 48
+    Height = 40
+    Top = 328
+    Width = 155
+    Caption = 'Confirmaciones'
+    OnClick = btn_confirmacionesClick
+    TabOrder = 6
+  end
+  object btn_cerrar_sesion: TButton
+    Left = 48
+    Height = 41
+    Top = 592
+    Width = 155
+    Caption = 'Cerrar sesion'
+    OnClick = btn_cerrar_sesionClick
+    TabOrder = 7
+  end
+  object MainMenu1: TMainMenu
+    Left = 728
+    Top = 733
+    object MenuItem1: TMenuItem
+      Caption = 'Opciones'
+      OnClick = MenuItem1Click
+      object menu_cerrar_sesion: TMenuItem
+        Caption = 'Cerrar sesion'
+        OnClick = menu_cerrar_sesionClick
+      end
+      object MenuItem3: TMenuItem
+        Caption = 'Salir'
+        OnClick = MenuItem3Click
+      end
+    end
+  end
+end

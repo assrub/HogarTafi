@@ -1,0 +1,42 @@
+object form_pedidos: Tform_pedidos
+  Left = 654
+  Height = 746
+  Top = 141
+  Width = 716
+  Caption = 'Pedido semanal'
+  ClientHeight = 746
+  ClientWidth = 716
+  OnShow = FormShow
+  LCLVersion = '2.2.6.0'
+  object Label1: TLabel
+    Left = 256
+    Height = 32
+    Top = 32
+    Width = 180
+    Caption = 'Pedido semanal'
+    Font.CharSet = ANSI_CHARSET
+    Font.Height = -24
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object LB_pedido: TListBox
+    Left = 160
+    Height = 570
+    Top = 88
+    Width = 440
+    ItemHeight = 0
+    TabOrder = 0
+  end
+  object btn_volver: TButton
+    Left = 536
+    Height = 41
+    Top = 688
+    Width = 155
+    Caption = 'Volver'
+    OnClick = btn_volverClick
+    TabOrder = 1
+  end
+end

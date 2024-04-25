@@ -1,0 +1,464 @@
+object Form_editar_paciente: TForm_editar_paciente
+  Left = 499
+  Height = 861
+  Top = 115
+  Width = 939
+  Caption = 'Editar un paciente'
+  ClientHeight = 861
+  ClientWidth = 939
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnShow = FormShow
+  LCLVersion = '2.2.6.0'
+  object txt_nombre: TEdit
+    Left = 32
+    Height = 23
+    Top = 64
+    Width = 160
+    Enabled = False
+    ReadOnly = True
+    TabOrder = 0
+  end
+  object txt_apellido: TEdit
+    Left = 32
+    Height = 23
+    Top = 128
+    Width = 160
+    Enabled = False
+    ReadOnly = True
+    TabOrder = 1
+  end
+  object Label2: TLabel
+    Left = 32
+    Height = 32
+    Top = 32
+    Width = 101
+    Caption = 'Nombre:'
+    Font.Height = -24
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 32
+    Height = 32
+    Top = 96
+    Width = 103
+    Caption = 'Apellido:'
+    Font.Height = -24
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object btn_buscar: TButton
+    Left = 752
+    Height = 41
+    Hint = 'Ingresa el DNI de un paciente para buscarlo'
+    Top = 56
+    Width = 155
+    Caption = 'Buscar'
+    OnClick = btn_buscarClick
+    TabOrder = 2
+  end
+  object txt_buscar: TEdit
+    Left = 552
+    Height = 23
+    Top = 64
+    Width = 182
+    NumbersOnly = True
+    OnChange = txt_buscarChange
+    OnEditingDone = txt_buscarEditingDone
+    TabOrder = 3
+  end
+  object Label4: TLabel
+    Left = 552
+    Height = 32
+    Top = 32
+    Width = 182
+    Caption = 'Buscar por DNI:'
+    Font.Height = -24
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object txt_dni: TEdit
+    Left = 32
+    Height = 23
+    Top = 192
+    Width = 160
+    Enabled = False
+    NumbersOnly = True
+    ReadOnly = True
+    TabOrder = 4
+  end
+  object lbl_dni: TLabel
+    Left = 32
+    Height = 32
+    Top = 160
+    Width = 52
+    Caption = 'DNI:'
+    Font.Height = -24
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object txt_obra_social: TEdit
+    Left = 32
+    Height = 23
+    Top = 256
+    Width = 160
+    Enabled = False
+    TabOrder = 5
+  end
+  object lbl_dni1: TLabel
+    Left = 32
+    Height = 32
+    Top = 224
+    Width = 135
+    Caption = 'Obra social:'
+    Font.Height = -24
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object btn_volver: TButton
+    Left = 763
+    Height = 42
+    Top = 736
+    Width = 144
+    Caption = 'Volver al menu principal'
+    OnClick = btn_volverClick
+    TabOrder = 6
+  end
+  object btn_guardar: TButton
+    Left = 8
+    Height = 25
+    Top = 832
+    Width = 40
+    Caption = 'Guardar'
+    Enabled = False
+    OnClick = btn_guardarClick
+    TabOrder = 7
+    Visible = False
+  end
+  object lbl_dni2: TLabel
+    Left = 32
+    Height = 28
+    Top = 400
+    Width = 130
+    Caption = 'Medicamento'
+    Font.Height = -20
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object txt_6: TEdit
+    Left = 168
+    Height = 23
+    Top = 432
+    Width = 48
+    Enabled = False
+    NumbersOnly = True
+    TabOrder = 8
+  end
+  object lbl_dni3: TLabel
+    Left = 168
+    Height = 28
+    Top = 400
+    Width = 41
+    Caption = '6:00'
+    Font.Height = -20
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object btn_agregar_medicacion1: TButton
+    Left = 672
+    Height = 41
+    Top = 416
+    Width = 115
+    Caption = 'Agregar medicacion'
+    Enabled = False
+    OnClick = btn_agregar_medicacionClick
+    ParentShowHint = False
+    TabOrder = 9
+  end
+  object btn_eliminar_medicacion1: TButton
+    Left = 792
+    Height = 41
+    Top = 416
+    Width = 115
+    Caption = 'Eliminar medicacion'
+    Enabled = False
+    OnClick = btn_eliminar_medicacion1Click
+    TabOrder = 10
+  end
+  object txt_des: TEdit
+    Left = 224
+    Height = 23
+    Top = 432
+    Width = 48
+    Enabled = False
+    NumbersOnly = True
+    TabOrder = 11
+  end
+  object lbl_dni4: TLabel
+    Left = 224
+    Height = 28
+    Top = 400
+    Width = 35
+    Caption = 'Des'
+    Font.Height = -20
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object txt_alm: TEdit
+    Left = 280
+    Height = 23
+    Top = 432
+    Width = 48
+    Enabled = False
+    NumbersOnly = True
+    TabOrder = 12
+  end
+  object lbl_dni5: TLabel
+    Left = 280
+    Height = 28
+    Top = 400
+    Width = 38
+    Caption = 'Alm'
+    Font.Height = -20
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object txt_cena: TEdit
+    Left = 396
+    Height = 23
+    Top = 432
+    Width = 48
+    Enabled = False
+    NumbersOnly = True
+    TabOrder = 13
+  end
+  object lbl_dni6: TLabel
+    Left = 396
+    Height = 28
+    Top = 400
+    Width = 46
+    Caption = 'Cena'
+    Font.Height = -20
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object txt_2230: TEdit
+    Left = 452
+    Height = 23
+    Top = 432
+    Width = 48
+    Enabled = False
+    NumbersOnly = True
+    TabOrder = 14
+  end
+  object lbl_dni7: TLabel
+    Left = 452
+    Height = 28
+    Top = 400
+    Width = 53
+    Caption = '22:30'
+    Font.Height = -20
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object txt_observaciones: TEdit
+    Left = 508
+    Height = 23
+    Top = 432
+    Width = 128
+    Enabled = False
+    TabOrder = 15
+  end
+  object lbl_dni8: TLabel
+    Left = 508
+    Height = 28
+    Top = 400
+    Width = 138
+    Caption = 'Observaciones'
+    Font.Height = -20
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object txt_mer: TEdit
+    Left = 336
+    Height = 23
+    Top = 432
+    Width = 48
+    Enabled = False
+    NumbersOnly = True
+    TabOrder = 16
+  end
+  object lbl_dni9: TLabel
+    Left = 336
+    Height = 28
+    Top = 400
+    Width = 38
+    Caption = 'Mer'
+    Font.Height = -20
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object SG_lista_medicamentos: TStringGrid
+    Left = 32
+    Height = 256
+    Top = 472
+    Width = 875
+    Color = 15000804
+    ColCount = 9
+    Columns = <    
+      item
+        ReadOnly = True
+        Title.Caption = 'Merdicacion'
+        Width = 114
+      end    
+      item
+        ReadOnly = True
+        Title.Caption = '6:00'
+        Width = 86
+      end    
+      item
+        ReadOnly = True
+        Title.Caption = 'Des'
+        Width = 86
+      end    
+      item
+        Title.Caption = 'Alm'
+        Width = 86
+      end    
+      item
+        Title.Caption = 'Mer'
+        Width = 86
+      end    
+      item
+        Title.Caption = 'Cena'
+        Width = 86
+      end    
+      item
+        Title.Caption = '22:30'
+        Width = 86
+      end    
+      item
+        Title.Caption = 'Observaciones'
+        Width = 240
+      end>
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSizing, goColSizing, goEditing, goAutoAddRows, goRowSelect, goDblClickAutoSize, goSmoothScroll, goFixedColSizing]
+    RowCount = 2
+    TabOrder = 17
+    ColWidths = (
+      0
+      114
+      86
+      86
+      86
+      86
+      86
+      86
+      240
+    )
+    Cells = (
+      8
+      1
+      0
+      'Medicacion'
+      2
+      0
+      '6:00'
+      3
+      0
+      'Des'
+      4
+      0
+      'Alm'
+      5
+      0
+      'Mer'
+      6
+      0
+      'Cena'
+      7
+      0
+      '22:30'
+      8
+      0
+      'Observaciones'
+    )
+  end
+  object btn_recetas: TButton
+    Left = 752
+    Height = 41
+    Top = 184
+    Width = 155
+    Caption = 'Recetas'
+    Enabled = False
+    OnClick = btn_recetasClick
+    TabOrder = 18
+  end
+  object btn_stock: TButton
+    Left = 752
+    Height = 41
+    Top = 120
+    Width = 155
+    Caption = 'Stock'
+    Enabled = False
+    OnClick = btn_stockClick
+    TabOrder = 19
+  end
+  object CB_medicamentos: TComboBox
+    Left = 32
+    Height = 23
+    Top = 432
+    Width = 121
+    Enabled = False
+    ItemHeight = 15
+    TabOrder = 20
+  end
+  object btn_restar_medicacion: TButton
+    Left = 32
+    Height = 41
+    Top = 736
+    Width = 155
+    Caption = 'Restar medicacion del dia'
+    Enabled = False
+    OnClick = btn_restar_medicacionClick
+    TabOrder = 21
+  end
+  object CB_buscar: TComboBox
+    Left = 336
+    Height = 23
+    Top = 64
+    Width = 182
+    ItemHeight = 15
+    OnChange = CB_buscarChange
+    OnSelect = CB_buscarSelect
+    ReadOnly = True
+    TabOrder = 22
+  end
+  object img_carnet: TImage
+    Left = 484
+    Height = 216
+    Top = 104
+    Width = 228
+    Stretch = True
+  end
+  object img_dni: TImage
+    Left = 224
+    Height = 216
+    Top = 104
+    Width = 228
+    Stretch = True
+  end
+end
