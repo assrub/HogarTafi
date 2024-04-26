@@ -1,0 +1,126 @@
+object form_recetas: Tform_recetas
+  Left = 220
+  Height = 738
+  Top = 144
+  Width = 860
+  Caption = 'Recetas'
+  ClientHeight = 738
+  ClientWidth = 860
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnShow = FormShow
+  LCLVersion = '2.2.6.0'
+  object img_receta_1: TImage
+    Left = 62
+    Height = 164
+    Top = 36
+    Width = 194
+    OnClick = img_receta_1Click
+    ParentShowHint = False
+    ShowHint = True
+    Stretch = True
+  end
+  object img_receta_2: TImage
+    Left = 328
+    Height = 164
+    Top = 36
+    Width = 194
+    ParentShowHint = False
+    ShowHint = True
+    Stretch = True
+  end
+  object img_receta_3: TImage
+    Left = 600
+    Height = 164
+    Top = 36
+    Width = 194
+    ParentShowHint = False
+    ShowHint = True
+    Stretch = True
+  end
+  object img_receta_4: TImage
+    Left = 62
+    Height = 164
+    Top = 264
+    Width = 194
+    ParentShowHint = False
+    ShowHint = True
+    Stretch = True
+  end
+  object img_receta_5: TImage
+    Left = 328
+    Height = 164
+    Top = 264
+    Width = 194
+    ParentShowHint = False
+    ShowHint = True
+    Stretch = True
+  end
+  object img_receta_6: TImage
+    Left = 600
+    Height = 164
+    Top = 264
+    Width = 194
+    ParentShowHint = False
+    ShowHint = True
+    Stretch = True
+  end
+  object img_receta_7: TImage
+    Left = 64
+    Height = 164
+    Top = 480
+    Width = 194
+    ParentShowHint = False
+    ShowHint = True
+    Stretch = True
+  end
+  object img_receta_8: TImage
+    Left = 330
+    Height = 164
+    Top = 480
+    Width = 194
+    ParentShowHint = False
+    ShowHint = True
+    Stretch = True
+  end
+  object img_receta_9: TImage
+    Left = 602
+    Height = 164
+    Top = 480
+    Width = 194
+    ParentShowHint = False
+    ShowHint = True
+    Stretch = True
+  end
+  object btn_guardar: TButton
+    Left = 80
+    Height = 40
+    Top = 688
+    Width = 155
+    Caption = 'Guardar'
+    OnClick = btn_guardarClick
+    TabOrder = 0
+  end
+  object btn_volver: TButton
+    Left = 632
+    Height = 40
+    Top = 688
+    Width = 155
+    Caption = 'Volver'
+    OnClick = btn_volverClick
+    TabOrder = 1
+  end
+  object btn_cargar_imagen: TButton
+    Left = 352
+    Height = 40
+    Top = 688
+    Width = 155
+    Caption = 'Cargar imagen'
+    OnClick = btn_cargar_imagenClick
+    TabOrder = 2
+  end
+  object OD_imagen: TOpenDialog
+    Left = 8
+    Top = 8
+  end
+end
