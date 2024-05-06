@@ -21,16 +21,14 @@ public class ControladorPacientes {
 
     @PostMapping
     public ResponseEntity<?> guardarPaciente(@RequestParam String nombre,@RequestParam String apellido,
-                                             @RequestParam int dni,@RequestParam String obraSocial,
+                                             @RequestParam String dni,@RequestParam String obraSocial,
                                              @RequestParam String[] fotoCarnet, @RequestParam String[] fotoDni) {
-        servicioPacientes.guardarPaciente(
-                nombre,
-                apellido,
-                dni,
-                obraSocial,
-                fotoCarnet,
-                fotoDni
-        );
-        return ResponseEntity.ok("Paciente creado correctamente");
+
+        if(servicioPacientes.guardarPaciente(nombre, apellido, dni, obraSocial, fotoCarnet, fotoDni)) {
+            return ResponseEntity.ok("Paciente registrado.");
+        }else{
+            return ResponseEntity.badRequest().body("El paciente ya esta registrado");
+        }
+
     }
 }

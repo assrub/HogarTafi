@@ -8,12 +8,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class EntidadPaciente {
     private String nombre;
     private String apellido;
-    private int dni;
+    private String dni;
     private String obraSocial;
     private String[] fotoCarnet; // Buscar algun tipo para poder usar imagenes
     private String[] fotoDni; // Buscar algun tipo para poder usar imagenes
 
-    public EntidadPaciente(String nombre, String apellido, int dni, String obraSocial, String[] fotoCarnet, String[] fotoDni) {
+    public EntidadPaciente(String nombre, String apellido, String dni, String obraSocial, String[] fotoCarnet, String[] fotoDni) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -38,11 +38,11 @@ public class EntidadPaciente {
         this.apellido = apellido;
     }
 
-    public int getDni() {
+    public String getDni() {
         return dni;
     }
 
-    public void setDni(int dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 

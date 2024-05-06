@@ -10,4 +10,6 @@ import java.util.List;
 public interface RepositorioPacientes extends MongoRepository<EntidadPaciente, String> {
     @Override
     List<EntidadPaciente> findAll();
+
+    EntidadPaciente findByDni(String dni);
 }
