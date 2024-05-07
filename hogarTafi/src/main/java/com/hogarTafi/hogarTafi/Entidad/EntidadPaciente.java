@@ -2,24 +2,31 @@ package com.hogarTafi.hogarTafi.Entidad;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
 @Document(collection = "Pacientes")
 public class EntidadPaciente {
     private String nombre;
     private String apellido;
     private String dni;
     private String obraSocial;
-    private String[] fotoCarnet; // Buscar algun tipo para poder usar imagenes
-    private String[] fotoDni; // Buscar algun tipo para poder usar imagenes
 
-    public EntidadPaciente(String nombre, String apellido, String dni, String obraSocial, String[] fotoCarnet, String[] fotoDni) {
+    private byte[] fotoFrenteCarnet; // Buscar algun tipo para poder usar imagenes
+
+    private byte[] fotoAtrasCarnet;
+
+    private byte[] fotoFrenteDni;// Buscar algun tipo para poder usar imagenes
+
+    private byte[] fotoAtrasDni;
+
+    public EntidadPaciente(String nombre, String apellido, String dni, String obraSocial, byte[] fotoFrenteCarnet,
+                           byte[] fotoAtrasCarnet, byte[] fotoFrenteDni, byte[] fotoAtrasDni) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.obraSocial = obraSocial;
-        this.fotoCarnet = fotoCarnet;
-        this.fotoDni = fotoDni;
+        this.fotoFrenteCarnet = fotoFrenteCarnet;
+        this.fotoAtrasCarnet = fotoAtrasCarnet;
+        this.fotoFrenteDni = fotoFrenteDni;
+        this.fotoAtrasDni = fotoAtrasDni;
     }
 
     public String getNombre() {
@@ -54,19 +61,35 @@ public class EntidadPaciente {
         this.obraSocial = obraSocial;
     }
 
-    public String[] getFotoCarnet() {
-        return fotoCarnet;
+    public byte[] getFotoFrenteCarnet() {
+        return fotoFrenteCarnet;
     }
 
-    public void setFotoCarnet(String[] fotoCarnet) {
-        this.fotoCarnet = fotoCarnet;
+    public void setFotoFrenteCarnet(byte[] fotoFrenteCarnet) {
+        this.fotoFrenteCarnet = fotoFrenteCarnet;
     }
 
-    public String[] getFotoDni() {
-        return fotoDni;
+    public byte[] getFotoFrenteDni() {
+        return fotoFrenteDni;
     }
 
-    public void setFotoDni(String[] fotoDni) {
-        this.fotoDni = fotoDni;
+    public void setFotoFrenteDni(byte[] fotoFrenteDni) {
+        this.fotoFrenteDni = fotoFrenteDni;
+    }
+
+    public byte[] getFotoAtrasCarnet() {
+        return fotoAtrasCarnet;
+    }
+
+    public void setFotoAtrasCarnet(byte[] fotoAtrasCarnet) {
+        this.fotoAtrasCarnet = fotoAtrasCarnet;
+    }
+
+    public byte[] getFotoAtrasDni() {
+        return fotoAtrasDni;
+    }
+
+    public void setFotoAtrasDni(byte[] fotoAtrasDni) {
+        this.fotoAtrasDni = fotoAtrasDni;
     }
 }

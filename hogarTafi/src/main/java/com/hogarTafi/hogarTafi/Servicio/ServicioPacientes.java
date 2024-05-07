@@ -18,10 +18,12 @@ public class ServicioPacientes {
         return repositorioPacientes.findAll();
     }
 
-    public boolean guardarPaciente(String nombre, String apellido, String dni, String obraSocial, String[] fotoCarnet, String[] fotoDni) {
+    //Pide los datos de un paciente y los almacena
+    public boolean guardarPaciente(String nombre, String apellido, String dni, String obraSocial, byte[] fotoFrenteCarnet,
+                                   byte[] fotoAtrasCarnet, byte[] fotoFrenteDni, byte[] fotoAtrasDni) {
 
 
-        EntidadPaciente paciente = new EntidadPaciente(nombre, apellido, dni, obraSocial, fotoCarnet, fotoDni);
+        EntidadPaciente paciente = new EntidadPaciente(nombre, apellido, dni, obraSocial, fotoFrenteCarnet,fotoAtrasCarnet, fotoFrenteDni,fotoAtrasDni);
 
         if (repositorioPacientes.findByDni(paciente.getDni()) != null){
             return false;
@@ -30,5 +32,10 @@ public class ServicioPacientes {
             repositorioPacientes.save(paciente);
             return true;
         }
+    }
+
+    public EntidadPaciente buscarPaciente(String dni){
+        EntidadPaciente paciente = repositorioPacientes.findByDni(dni);
+        return paciente;
     }
 }
