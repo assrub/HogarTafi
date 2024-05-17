@@ -38,4 +38,18 @@ public class ServicioPacientes {
         EntidadPaciente paciente = repositorioPacientes.findByDni(dni);
         return paciente;
     }
+
+    public boolean eliminarPaciente(String dni){
+        try{
+            repositorioPacientes.deleteByDni(dni);
+            if (repositorioPacientes.findByDni(dni) == null){
+                return true;
+            }else{
+                return false;
+            }
+        }catch (Error e){
+            return false;
+        }
+    }
+
 }

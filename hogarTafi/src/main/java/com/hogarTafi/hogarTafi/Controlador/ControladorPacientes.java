@@ -1,5 +1,6 @@
 package com.hogarTafi.hogarTafi.Controlador;
 
+import com.hogarTafi.hogarTafi.Servicio.ServicioPacientesEliminados;
 import com.hogarTafi.hogarTafi.Servicio.ServicioPacientes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,9 @@ import java.util.List;
 public class ControladorPacientes {
     @Autowired
     ServicioPacientes servicioPacientes;
+
+    @Autowired
+    ServicioPacientesEliminados servicioPacientesEliminados;
 
     @GetMapping
     public ResponseEntity<List<EntidadPaciente>> todosLosPacientes() {
@@ -43,6 +47,23 @@ public class ControladorPacientes {
         else
         {
             return ResponseEntity.ok(paciente);
+        }
+    }
+
+    @PostMapping("/eliminar/{dni}")
+    public ResponseEntity<?> eliminarPaciente(@PathVariable String dni){
+        try {
+            EntidadPaciente paciente = servicioPacientes.buscarPaciente(dni);
+
+
+            servicioPacientesEliminados.guardarPaciente(paciente.getNombre(), paciente.getApellido(), paciente.getDni(),
+                    paciente.getObraSocial(), paciente.getFotoFrenteCarnet(), paciente.getFotoAtrasCarnet(),
+                    paciente.getFotoFrenteDni(), paciente.getFotoAtrasDni());
+            servicioPacientes.eliminarPaciente(paciente.getDni());
+                return ResponseEntity.ok("Paciente eliminado.");
+
+        }catch (Error e){
+            return ResponseEntity.badRequest().body("No se puedo borrar al paciente.");
         }
     }
 }

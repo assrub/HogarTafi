@@ -12,4 +12,6 @@ public interface RepositorioPacientes extends MongoRepository<EntidadPaciente, S
     List<EntidadPaciente> findAll();
 
     EntidadPaciente findByDni(String dni);
+
+    void deleteByDni(String dni);
 }
