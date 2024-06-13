@@ -1,9 +1,8 @@
-package com.hogarTafi.hogarTafi.Controlador;
+package com.hogarTafi.hogarTafi.Controlador.Paciente;
 
 
-import com.hogarTafi.hogarTafi.Entidad.EntidadPaciente;
-import com.hogarTafi.hogarTafi.Entidad.EntidadPacienteEliminado;
-import com.hogarTafi.hogarTafi.Servicio.ServicioPacientesEliminados;
+import com.hogarTafi.hogarTafi.Entidad.Paciente.EntidadPacienteEliminado;
+import com.hogarTafi.hogarTafi.Servicio.Paciente.ServicioPacientesEliminados;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
-package com.hogarTafi.hogarTafi.Repositorio;
+package com.hogarTafi.hogarTafi.Repositorio.Paciente;
 
 
-import com.hogarTafi.hogarTafi.Entidad.EntidadPacienteEliminado;
+import com.hogarTafi.hogarTafi.Entidad.Paciente.EntidadPacienteEliminado;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

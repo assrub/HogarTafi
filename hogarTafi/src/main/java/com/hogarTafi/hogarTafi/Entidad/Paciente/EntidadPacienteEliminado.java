@@ -1,9 +1,9 @@
-package com.hogarTafi.hogarTafi.Entidad;
+package com.hogarTafi.hogarTafi.Entidad.Paciente;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Pacientes")
-public class EntidadPaciente {
+@Document(collection = "PacientesEliminados")
+public class EntidadPacienteEliminado {
     private String nombre;
     private String apellido;
     private String dni;
@@ -17,7 +17,7 @@ public class EntidadPaciente {
 
     private byte[] fotoAtrasDni;
 
-    public EntidadPaciente(String nombre, String apellido, String dni, String obraSocial, byte[] fotoFrenteCarnet,
+    public EntidadPacienteEliminado (String nombre, String apellido, String dni, String obraSocial, byte[] fotoFrenteCarnet,
                            byte[] fotoAtrasCarnet, byte[] fotoFrenteDni, byte[] fotoAtrasDni) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -87,9 +87,5 @@ public class EntidadPaciente {
 
     public byte[] getFotoAtrasDni() {
         return fotoAtrasDni;
-    }
-
-    public void setFotoAtrasDni(byte[] fotoAtrasDni) {
-        this.fotoAtrasDni = fotoAtrasDni;
     }
 }

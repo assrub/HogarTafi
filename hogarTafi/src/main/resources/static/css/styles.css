@@ -1,0 +1,61 @@
+
+/*.color1 { #be6737 }
+.color2 { #ce7f4e }
+.color3 { #df9764 }
+.color4 { #efaf7b }
+.color5 { #ffc791 }*/
+
+*{
+    font-family: "ABeeZee";
+}
+
+
+.nav-bg{
+    background-color: #be6737;
+}
+
+.actividades-bg{
+    background-color: #efeae4;
+}
+
+.servicios-bg{
+    background-color: #f4f4f4;
+}
+
+.instalaciones-bg{
+    background-color: #efeae4;
+}
+.contacto-bg{
+    background-color: #efaf7b;
+}
+
+
+.footer-bg{
+    background-color: #ffc791;
+}
+
+.nav-font{
+    
+    font-size: large;
+}
+
+.nav-li:hover{
+    opacity: 70%;
+}
+
+.bg-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; 
+}
+
+.custom-carousel {
+    max-width: 600px; 
+    margin: auto; 
+  }
+
+  .custom-carousel .carousel-item img {
+    width: 100%; 
+    height: auto; 
+  }

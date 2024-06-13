@@ -1,4 +1,4 @@
-package com.hogarTafi.hogarTafi.Entidad;
+package com.hogarTafi.hogarTafi.Entidad.Medicacion;
 
 
 import org.springframework.data.mongodb.core.mapping.Document;

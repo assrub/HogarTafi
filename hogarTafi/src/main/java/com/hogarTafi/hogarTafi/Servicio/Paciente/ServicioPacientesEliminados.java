@@ -1,11 +1,9 @@
-package com.hogarTafi.hogarTafi.Servicio;
+package com.hogarTafi.hogarTafi.Servicio.Paciente;
 
-import com.hogarTafi.hogarTafi.Entidad.EntidadPaciente;
-import com.hogarTafi.hogarTafi.Entidad.EntidadPacienteEliminado;
-import com.hogarTafi.hogarTafi.Repositorio.RepositorioPacientesEliminados;
+import com.hogarTafi.hogarTafi.Entidad.Paciente.EntidadPacienteEliminado;
+import com.hogarTafi.hogarTafi.Repositorio.Paciente.RepositorioPacientesEliminados;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
