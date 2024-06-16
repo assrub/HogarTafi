@@ -8,8 +8,8 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/styles.css">
-  <!-- Boostrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+  <!-- Boostrap 55.3-->
+  <link href="css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <!--Iconos de boostrap-->
   <link rel="stylesheet"
@@ -18,18 +18,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&display=swap" rel="stylesheet">
-  <!--Lightbox-->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+
 </head>
 
-<body class="color-fondo">
+<body>
 
   <!--Header (Barra de navegacion, imagen de fondo y seccion "Nosotros")-->
   <header>
     <nav class="navbar navbar-expand-lg bg-dark nav-font">
       <div class="container-fluid">
         <a class="navbar-brand text-white" href="#">Hogar Tafi</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
           aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -124,13 +123,13 @@
       <div class="container mt-5">
         <div class="row">
           <!-- Servicio 1 -->
-          <div class="col-md-6 mb-4">
-            <div class="card h-100">
+          <div class="col-lg-6 mb-4">
+            <div class="card">
               <div class="row g-0">
                 <div class="col-md-4">
                   <img src="img/tarjeta-servicios.jpg" class="img-fluid rounded-start h-100" alt="Imagen 1">
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8  servicios-bg">
                   <div class="card-body">
                     <h5 class="card-title">Título 1</h5>
                     <p class="card-text">Descripción de la tarjeta 1. Lorem ipsum dolor sit amet, consectetur adipiscing
@@ -141,13 +140,13 @@
             </div>
           </div>
           <!-- Servicio 2 -->
-          <div class="col-md-6 mb-4">
-            <div class="card h-100">
+          <div class="col-lg-6 mb-4">
+            <div class="card">
               <div class="row g-0">
                 <div class="col-md-4">
                   <img src="img/tarjeta-servicios.jpg" class="img-fluid rounded-start h-100" alt="Imagen 2">
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8  servicios-bg">
                   <div class="card-body">
                     <h5 class="card-title">Título 2</h5>
                     <p class="card-text">Descripción de la tarjeta 2. Lorem ipsum dolor sit amet, consectetur adipiscing
@@ -158,13 +157,13 @@
             </div>
           </div>
           <!-- Servicio 3 -->
-          <div class="col-md-6 mb-4">
-            <div class="card h-100">
+          <div class="col-lg-6 mb-4">
+            <div class="card">
               <div class="row g-0">
                 <div class="col-md-4">
                   <img src="img/tarjeta-servicios.jpg" class="img-fluid rounded-start h-100" alt="Imagen 3">
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8 servicios-bg">
                   <div class="card-body">
                     <h5 class="card-title">Título 3</h5>
                     <p class="card-text">Descripción de la tarjeta 3. Lorem ipsum dolor sit amet, consectetur adipiscing
@@ -175,13 +174,13 @@
             </div>
           </div>
           <!-- Servicio 4 -->
-          <div class="col-md-6 mb-4">
-            <div class="card h-100">
+          <div class="col-lg-6 mb-4">
+            <div class="card">
               <div class="row g-0">
                 <div class="col-md-4">
                   <img src="img/tarjeta-servicios.jpg" class="img-fluid rounded-start h-100" alt="Imagen 4">
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8 servicios-bg">
                   <div class="card-body">
                     <h5 class="card-title">Título 4</h5>
                     <p class="card-text">Descripción de la tarjeta 4. Lorem ipsum dolor sit amet, consectetur adipiscing
@@ -196,58 +195,71 @@
     </div>
   </section>
 
-<!-- Seccion instalaciones-->
-<section id="instalaciones" class="p-2 instalaciones-bg">
-  <div class="container">
-    <h2 class="h2 text-center">Instalaciones</h2>
-    <div class="row">
-      <div class="col-lg-4 col-md-6 mb-4">
-        <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
-      </div>
-      <div class="col-lg-4 col-md-6 mb-4">
-        <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
-      </div>
-      <div class="col-lg-4 col-md-6 mb-4">
-        <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
-      </div>
-      <div class="col-lg-4 col-md-6 mb-4">
-        <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
-      </div>
-      <div class="col-lg-4 col-md-6 mb-4">
-        <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
-      </div>
-      <div class="col-lg-4 col-md-6 mb-4">
-        <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
+  <!-- Seccion instalaciones-->
+  <section id="instalaciones" class="p-2 instalaciones-bg">
+    <div class="container">
+      <h2 class="h2 text-center">Instalaciones</h2>
+      <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4">
+          <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
   <!-- Seccion contacto-->
-  <section id="contacto" class="p-2 contacto-bg">
-    <div class="container">
-      <div class="mb-2">
-        <label for="exampleFormControlInput1" class="form-label">Nombre</label>
-        <input class="form-control" type="text" placeholder="">
+  <section id="contacto" class="pt-2  contacto-bg ">
+    <h2 class="text-center">Contacto</h2>
+    <div class="d-flex justify-content-center p-2">
+    <div class="container row">
+      <div class="mapa col-md-6">
+        <div class="row h-100">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3112.9886579559634!2d-62.27961112464322!3d-38.718069386259444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95edbca5014e1a5d%3A0x9039aa43c9238a1b!2sBlandengues%20365%2C%20B8000GIG%20Bah%C3%ADa%20Blanca%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1718401035228!5m2!1ses-419!2sar"
+            style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
       </div>
-      <div class="mb-2">
-        <label for="exampleFormControlInput1" class="form-label">Apellido</label>
-        <input class="form-control" type="text" placeholder="">
-      </div>
-      <div class="mb-2">
-        <label for="exampleFormControlInput1" class="form-label">Email</label>
-        <input class="form-control" type="text" placeholder="">
-      </div>
-      <div class="mb-2">
-        <label for="exampleFormControlInput1" class="form-label">Telefono</label>
-        <input class="form-control" type="text" placeholder="">
-      </div>
-      <div class="mb-2">
-        <label for="exampleFormControlTextarea1" class="form-label">Mensaje</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+
+      <div class="formulario col-md-6">
+        <div class="mb-2">
+          <label for="exampleFormControlInput1" class="form-label">Nombre</label>
+          <input class="form-control" type="text" placeholder="">
+        </div>
+        <div class="mb-2">
+          <label for="exampleFormControlInput1" class="form-label">Apellido</label>
+          <input class="form-control" type="text" placeholder="">
+        </div>
+        <div class="mb-2">
+          <label for="exampleFormControlInput1" class="form-label">Email</label>
+          <input class="form-control" type="text" placeholder="">
+        </div>
+        <div class="mb-2">
+          <label for="exampleFormControlInput1" class="form-label">Telefono</label>
+          <input class="form-control" type="text" placeholder="">
+        </div>
+        <div class="mb-2">
+          <label for="exampleFormControlTextarea1" class="form-label">Mensaje</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
       </div>
     </div>
+  </div>
   </section>
 
   <footer class="bg-dark text-white pt-4">
@@ -256,7 +268,8 @@
         <!-- Sección de Información -->
         <div class="col-md-4">
           <h5>Hogar Tafi</h5>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sunt voluptatem, deleniti error enim amet mollitia atque dolor cumque assumenda.</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sunt voluptatem, deleniti error enim amet
+            mollitia atque dolor cumque assumenda.</p>
         </div>
 
         <!-- Sección de Enlaces -->
@@ -274,7 +287,7 @@
         <div class="col-md-4">
           <h5>Contacto</h5>
           <p>
-            <i class="bi bi-geo-alt-fill"></i> Dirección: Calle asdsads, Bahia Blanca<br>
+            <i class="bi bi-geo-alt-fill"></i> Dirección: Calle Blandengues 365, Bahia Blanca<br>
             <i class="bi bi-telephone-fill"></i> Teléfono: +15412312123<br>
             <i class="bi bi-envelope-fill"></i> Email: contacto@hogartafi.com
           </p>
@@ -292,10 +305,10 @@
 
 
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  <script src="js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 </body>
 <!--<script src="js/app.js"></script>-->
 
