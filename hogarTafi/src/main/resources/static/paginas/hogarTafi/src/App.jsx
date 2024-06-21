@@ -7,8 +7,6 @@ import FormularioDatosPacientes from './PaginaPrincipal/FormularioDatosPacientes
 
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
     <div className="App h-100 d-flex flex-column">
