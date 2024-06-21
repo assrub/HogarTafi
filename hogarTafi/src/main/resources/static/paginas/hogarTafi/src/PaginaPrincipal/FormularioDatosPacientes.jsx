@@ -1,14 +1,15 @@
 import React from 'react'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import TablaMedicamentos from './TablaMedicamentos'
+import Medicamentos from './Medicamentos'
 import './FormularioDatosPacientes.css'
 import Imagenes from './Imagenes'
+import Boton from '../Boton';
 
 function FormularioDatosPacientes() {
   return (
-    <Container className="mt-5 bg-dark">
+    <Container className="mt-5">
       <Row>
-        <Col md={4}>
+        <Col lg={4}>
           <Form className="text-light">
             <div className="Datos">
               <Form.Group className="mb-3" controlId="FormNombre">
@@ -32,33 +33,32 @@ function FormularioDatosPacientes() {
               </Form.Group>
             </div>
             
-            <div className="botones">
-              <Button className="w-100 fs-5 mb-3">Stock</Button>
-              <Button className="w-100 fs-5 mb-3">Recetas</Button>
-              <Button className="w-100 fs-5 mb-3">Stock</Button>
+            <div className="Botones d-grid gap-2">
+              <Boton className="w-100 fs-5 mb-3" TextoBoton={"Stock"}></Boton>
+              <Boton className="w-100 fs-5 mb-3" TextoBoton={"Recetas"}></Boton>
+              <Boton className="w-100 fs-5 mb-3" TextoBoton={"Historial medico"}></Boton>
             </div>
           </Form>
         </Col>
-        <Col md={8} className="mb-2 mt-4 d-flex flex-column align-items-end">
+        <Col lg={8} className="mb-2 mt-4 d-flex flex-column align-items-end">
           <Row className="w-100">
             <Col md={6} className="p-2">
-              <Imagenes TextoFoto={"Foto del frente del DNI"} />
+              <Imagenes TextoFoto={"Foto del frente del DNI"} TextoBoton={"Cargar imagen"}/>
             </Col>
             <Col md={6} className="p-2">
-              <Imagenes TextoFoto={"Foto del frente del DNI"} />
+              <Imagenes TextoFoto={"Foto del frente del DNI"} TextoBoton={"Cargar imagen"}/>
             </Col>
             <Col md={6} className="p-2">
-              <Imagenes TextoFoto={"Foto del frente del DNI"} />
+              <Imagenes TextoFoto={"Foto del frente del DNI"} TextoBoton={"Cargar imagen"}/>
             </Col>
             <Col md={6} className="p-2">
-              <Imagenes TextoFoto={"Foto del frente del DNI"} />
+              <Imagenes TextoFoto={"Foto del frente del DNI"} TextoBoton={"Cargar imagen"}/>
             </Col>
           </Row>
         </Col>
       </Row>
 
-      {/* Asegúrate de definir el componente TablaMedicamentos */}
-      <TablaMedicamentos />
+      <Medicamentos />
     </Container>
   )
 }

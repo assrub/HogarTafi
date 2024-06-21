@@ -9,7 +9,7 @@ import FormularioDatosPacientes from './PaginaPrincipal/FormularioDatosPacientes
 function App() {
   return (
     <>
-    <div className="App h-100 d-flex flex-column">
+    <div className="App h-100">
       <BarraNavegacion></BarraNavegacion>
       <FormularioDatosPacientes></FormularioDatosPacientes>
       </div>
