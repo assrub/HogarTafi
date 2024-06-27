@@ -1,8 +1,8 @@
 import Form from 'react-bootstrap/Form';
 
-function SeleccionMedicamentos() {
+function SeleccionMedicamentos( {habilitado} ) {
   return (
-    <Form.Select aria-label="Default select example">
+    <Form.Select disabled ={habilitado} aria-label="Default select example">
       <option>Medicamento</option>
       <option value="1">Ibuprofeno</option>
       <option value="2">Paracetamol</option>

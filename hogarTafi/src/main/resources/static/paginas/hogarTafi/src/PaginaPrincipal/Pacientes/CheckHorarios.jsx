@@ -1,8 +1,8 @@
 import Form from 'react-bootstrap/Form';
 
-function CheckHorarios() {
+function CheckHorarios( {habilitado} ) {
   return (
-    <Form className="text-light">
+    <Form className="text-light" >
       {['checkbox'].map((type) => (
         <div key={`inline-${type}`} className="mb-3">
           <Form.Check
@@ -11,6 +11,7 @@ function CheckHorarios() {
             name="group1"
             type={type}
             id={`inline-${type}-1`}
+            disabled={habilitado}
           />
           <Form.Check
             inline
@@ -18,6 +19,7 @@ function CheckHorarios() {
             name="group1"
             type={type}
             id={`inline-${type}-2`}
+            disabled={habilitado}
           />
           <Form.Check
             inline
@@ -25,6 +27,7 @@ function CheckHorarios() {
             name="group1"
             type={type}
             id={`inline-${type}-2`}
+            disabled={habilitado}
           />
           <Form.Check
             inline
@@ -32,6 +35,7 @@ function CheckHorarios() {
             name="group1"
             type={type}
             id={`inline-${type}-2`}
+            disabled={habilitado}
           />
           <Form.Check
             inline
@@ -39,6 +43,7 @@ function CheckHorarios() {
             name="group1"
             type={type}
             id={`inline-${type}-2`}
+            disabled={habilitado}
           />
          <Form.Check
             inline
@@ -46,6 +51,7 @@ function CheckHorarios() {
             name="group1"
             type={type}
             id={`inline-${type}-2`}
+            disabled={habilitado}
           />
         </div>
       ))}

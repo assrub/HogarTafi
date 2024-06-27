@@ -3,16 +3,16 @@ import SeleccionMedicamentos from './SeleccionMedicamentos';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import CheckHorarios from './CheckHorarios';
 
-function Medicamentos() {
+function Medicamentos( {habilitado} ) {
   return (
-    <Container>
+    <div className='mx-5'>
       <div className="BotonesSeleccionMedicamentos">
         <Row>
           <Col md={2} className="mb-2">
-          <SeleccionMedicamentos></SeleccionMedicamentos>
+          <SeleccionMedicamentos habilitado={habilitado}></SeleccionMedicamentos>
           </Col>
           <Col className="d-flex align-items-center">
-          <CheckHorarios></CheckHorarios>
+          <CheckHorarios habilitado={habilitado}></CheckHorarios>
           </Col>
         </Row>
 
@@ -60,7 +60,7 @@ function Medicamentos() {
        
       </tbody>
     </Table>
-    </Container>
+    </div>
   );
 }
 

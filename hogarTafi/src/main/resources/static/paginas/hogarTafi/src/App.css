@@ -1,6 +1,19 @@
-.App{
+/*    background: rgb(47,44,92);
+    background: linear-gradient(180deg, rgba(47,44,92,1) 0%, rgba(16,33,46,1) 55%, rgba(7,52,61,1) 100%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    background-position: center;
+    */
+
+body{
     margin:0;
     padding: 0;
     background: rgb(47,44,92);
     background: linear-gradient(180deg, rgba(47,44,92,1) 0%, rgba(16,33,46,1) 55%, rgba(7,52,61,1) 100%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    background-position: center;
+    
 }
