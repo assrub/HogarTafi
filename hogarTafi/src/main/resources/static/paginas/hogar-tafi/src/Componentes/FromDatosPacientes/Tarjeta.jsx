@@ -8,7 +8,7 @@ import {
   } from "@material-tailwind/react";
   import Boton from "./Boton";
    
-  export default function Tarjeta({textoTarjeta}) {
+  export default function Tarjeta({textoTarjeta, readOnly}) {
     return (
       <Card className="mt-6 bg-transparent text-neutral-300 border-white border-2 rounded-lg shadow-lg">
         <CardHeader color="blue-gray" className="md:w-full">
@@ -24,7 +24,9 @@ import {
           </Typography>
         </CardBody>
         <CardFooter className="pt-0 flex justify-center">
-          <Boton textoBoton={"Cargar imagen"}></Boton>
+          {!readOnly &&(
+            <Boton textoBoton={"Cargar imagen"} ></Boton>
+          )}
         </CardFooter>
       </Card>
     );

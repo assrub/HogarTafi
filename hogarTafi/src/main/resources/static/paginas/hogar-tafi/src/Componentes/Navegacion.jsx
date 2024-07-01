@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import {
-ChevronDownIcon,
-} from "@heroicons/react/16/solid";
-import { Link } from "./Barra de navegacion/Link";
+import { ChevronDownIcon } from "@heroicons/react/16/solid";
+import { Enlace } from "./Barra de navegacion/Enlace";
 import "tailwindcss/tailwind.css";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import FromDatosPacientes from "./FormDatosPaciente";
 
 export default function Navegacion() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -19,120 +19,157 @@ export default function Navegacion() {
   };
 
   return (
-    <div className="">
-      {/* navbar */}
-      <div className="w-screen py-6 px-5 lg:px-16 bg-[#252525] flex justify-between">
-        <span className="text-3xl text-neutral-300 font-semibold">
-          Hogar Tafi
-        </span>
+    <BrowserRouter>
+      <div className="">
+        {/* navbar */}
+        <div className="w-screen py-6 px-5 lg:px-16 bg-[#252525] flex justify-between">
+          <span className="text-3xl text-neutral-300 font-semibold">
+            Hogar Tafi
+          </span>
 
-        <ul className="hidden md:flex items-center space-x-5">
-          <li className="relative">
-            <div className="block px-2 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 hover:rounded-lg">
-              <a
-                href="#"
-                onClick={toggleDropdown}
-                className="cursor-pointer flex items-center space-x-2"
-              >
-                <span>Pacientes</span>
-                <ChevronDownIcon className="w-4 h-4 text-neutral-300" />
-              </a>
-            </div>
-            {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-[#252525] rounded-md shadow-lg z-20">
-                <Link texto={"Mostrar"} link={"#"} />
-                <Link texto={"Cargar"} link={"#"} />
-                <Link texto={"Modificar"} link={"#"} />
+          <ul className="hidden md:flex items-center space-x-5">
+            <li className="relative">
+              <div className="relative">
+                <div className="block px-2 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 hover:rounded-lg">
+                  <a
+                    href="#"
+                    onClick={toggleDropdown}
+                    className="cursor-pointer flex items-center space-x-2"
+                  >
+                    <span>Pacientes</span>
+                    <ChevronDownIcon className="w-4 h-4 text-neutral-300" />
+                  </a>
+                </div>
+                {isDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-[#252525] rounded-md shadow-lg z-20">
+                    <Link
+                      to="/Pacientes/Mostrar"
+                      className="block px-4 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 rounded-t-md"
+                    >
+                      Mostrar
+                    </Link>
+                    <Link
+                      to="/Pacientes/Cargar"
+                      className="block px-4 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800"
+                    >
+                      Cargar
+                    </Link>
+                    <Link
+                      to="/Pacientes/Modificar"
+                      className="block px-4 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 rounded-b-md"
+                    >
+                      Modificar
+                    </Link>
+                  </div>
+                )}
               </div>
-            )}
-          </li>
-          <li>
-            <Link texto={"Stock del hogar"} link={"#"} />
-          </li>
-          <li>
-            <Link texto={"Empleados"} link={"#"} />
-          </li>
-          <li>
-            <Link texto={"Pedidos"} link={"#"} />
-          </li>
-          <li>
-            <Link texto={"Lista de usuarios"} link={"#"} />
-          </li>
-        </ul>
-
-        <div className="hidden md:flex items-center  space-x-5">     
-          <a href="#">
-            <img
-              src="../../public/imagen-avatar.png"
-              className="size-10 rounded-3xl"
-              alt=""
-            />
-            <div className="flex justify-center">
-            <ChevronDownIcon className="w-4 h-4 text-neutral-300" />
-            </div>
-          </a>
-        </div>
-
-        {/* hamburger menu */}
-        <button onClick={toggleHamburger} className="space-y-1 group md:hidden">
-          <div className="w-6 h-1 bg-white"></div>
-          <div className="w-6 h-1 bg-white"></div>
-          <div className="w-6 h-1 bg-white"></div>
-        </button>
-      </div>
-
-      {/* menu */}
-      {isHamburgerOpen && (
-        <ul className="bg-[#252525] text-neutral-300 w-screen pb-10 absolute top-0 right-0 duration-150 flex flex-col space-y-3">
-          <button
-            onClick={toggleHamburger}
-            className="px-10 py-8 relative ml-auto"
+            </li>
+            <li>
+              <Link
+                to="/StockDelHogar"
+                className="block px-4 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 rounded-t-md"
+              >
+                Stock del hogar
+              </Link>
+            </li>
+            <li>
+            <Link
+            to="/Empleados"
+            className="block px-4 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 rounded-t-md"
           >
-            <div className="w-6 h-1 rotate-45 absolute bg-white"></div>
-            <div className="w-6 h-1 -rotate-45 absolute bg-white"></div>
-          </button>
-          <li className="relative">
-            <div className="block px-2 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 hover:rounded-lg">
-              <a
-                href="#"
-                onClick={toggleDropdown}
-                className="cursor-pointer flex items-center space-x-2"
-              >
-                <span>Pacientes</span>
-                <ChevronDownIcon className="w-4 h-4 text-neutral-300" />
-              </a>
-            </div>
-            {isDropdownOpen && (
-              <div className="mt-2 w-48 bg-[#252525] rounded-md shadow-lg z-20">
-                <Link texto={"Mostrar"} link={"#"} />
-                <Link texto={"Cargar"} link={"#"} />
-                <Link texto={"Modificar"} link={"#"} />
-              </div>
-            )}
-          </li>
-          <li>
-            <Link texto={"Stock del hogar"} link={"#"} />
-          </li>
-          <li>
-            <Link texto={"Empleados"} link={"#"} />
-          </li>
-          <li>
-            <Link texto={"Pedidos"} link={"#"} />
-          </li>
-          <li>
-            <Link texto={"Lista de usuarios"} link={"#"} />
-          </li>
-          <li className="hover:bg-gray-200 hover:rounded-lg">
+            Empleados
+          </Link>
+            </li>
+            <li>
+              <Enlace texto={"Pedidos"} Enlace={"#"} />
+            </li>
+            <li>
+              <Enlace texto={"Lista de usuarios"} Enlace={"#"} />
+            </li>
+          </ul>
+
+          <div className="hidden md:flex items-center  space-x-5">
             <a href="#">
               <img
                 src="../../public/imagen-avatar.png"
-                className="size-10 rounded-3xl ml-2 "
+                className="size-10 rounded-3xl"
                 alt=""
               />
+              <div className="flex justify-center">
+                <ChevronDownIcon className="w-4 h-4 text-neutral-300" />
+              </div>
             </a>
-          </li>
-        </ul>
-      )}
-    </div>
+          </div>
+
+          {/* hamburger menu */}
+          <button
+            onClick={toggleHamburger}
+            className="space-y-1 group md:hidden"
+          >
+            <div className="w-6 h-1 bg-white"></div>
+            <div className="w-6 h-1 bg-white"></div>
+            <div className="w-6 h-1 bg-white"></div>
+          </button>
+        </div>
+
+        {/* menu */}
+        {isHamburgerOpen && (
+          <ul className="bg-[#252525] text-neutral-300 w-screen pb-10 absolute top-0 right-0 duration-150 flex flex-col space-y-3">
+            <button
+              onClick={toggleHamburger}
+              className="px-10 py-8 relative ml-auto"
+            >
+              <div className="w-6 h-1 rotate-45 absolute bg-white"></div>
+              <div className="w-6 h-1 -rotate-45 absolute bg-white"></div>
+            </button>
+            <li className="relative">
+              <div className="block px-2 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 hover:rounded-lg">
+                <a
+                  href="#"
+                  onClick={toggleDropdown}
+                  className="cursor-pointer flex items-center space-x-2"
+                >
+                  <span>Pacientes</span>
+                  <ChevronDownIcon className="w-4 h-4 text-neutral-300" />
+                </a>
+              </div>
+              {isDropdownOpen && (
+                <div className="mt-2 w-48 bg-[#252525] rounded-md shadow-lg z-20">
+                  <Enlace texto={"Mostrar"} Enlace={"#"} />
+                  <Enlace texto={"Cargar"} Enlace={"#"} />
+                  <Enlace texto={"Modificar"} Enlace={"#"} />
+                </div>
+              )}
+            </li>
+            <li>
+              <Enlace texto={"Stock del hogar"} Enlace={"#"} />
+            </li>
+            <li>
+              <Enlace texto={"Empleados"} Enlace={"#"} />
+            </li>
+            <li>
+              <Enlace texto={"Pedidos"} Enlace={"#"} />
+            </li>
+            <li>
+              <Enlace texto={"Lista de usuarios"} Enlace={"#"} />
+            </li>
+            <li className="hover:bg-gray-200 hover:rounded-lg">
+              <a href="#">
+                <img
+                  src="../../public/imagen-avatar.png"
+                  className="size-10 rounded-3xl ml-2 "
+                  alt=""
+                />
+              </a>
+            </li>
+          </ul>
+        )}
+      </div>
+
+      <Routes>
+        <Route path="/Pacientes/Mostrar" element={<FromDatosPacientes mostrar={true} />} />
+        <Route path="/Pacientes/Cargar" element={<FromDatosPacientes />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
