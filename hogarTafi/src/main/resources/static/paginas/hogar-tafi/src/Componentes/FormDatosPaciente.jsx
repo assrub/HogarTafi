@@ -3,6 +3,7 @@ import CampoTexto from "./FromDatosPacientes/CampoTexto";
 import Boton from "./FromDatosPacientes/Boton";
 import Tarjeta from "./FromDatosPacientes/Tarjeta";
 import TablaMedicamentos  from "./FromDatosPacientes/TablaMedicamentos";
+import { Link } from "react-router-dom";
 
 export function FromDatosPacientes({mostrar = false}) {
 
@@ -43,9 +44,16 @@ export function FromDatosPacientes({mostrar = false}) {
               <textarea className="w-full rounded-lg h-56 bg-transparent border-white border-2 p-2 resize-none focus:outline-none"></textarea>
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
-              <Boton textoBoton="Stock" />
-              <Boton textoBoton="Recetas" />
+            <div className="flex gap-2">
+            <Link to="/Pacientes/Stock">
+                <Boton textoBoton={"Stock"}/>
+
+
+              </Link>
+              <Link to="/Pacientes/Recetas">
+                <Boton textoBoton={"Recetas"}/>
+             
+              </Link>
             </div>
           </form>
         </div>
@@ -67,7 +75,8 @@ export function FromDatosPacientes({mostrar = false}) {
       <h3 className="text-2xl text-neutral-50 m-2">Medicamentos</h3>
         <TablaMedicamentos></TablaMedicamentos>
       </div>
-      
+     
+
     </div>
     </>
   );
