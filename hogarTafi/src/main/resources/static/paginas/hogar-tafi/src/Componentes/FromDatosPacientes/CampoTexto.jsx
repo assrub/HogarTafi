@@ -1,6 +1,6 @@
 import React from 'react';
 
-function CampoTexto({ etiqueta, textoEtiqueta, tipo, readOnly }) {
+function CampoTexto({ etiqueta, textoEtiqueta, tipo, readOnly = false }) {
 
   const inputClasses = `block flex-1 border-0 text-neutral-300 bg-transparent py-1.5 pl-1 placeholder:text-white focus:ring-0 ${readOnly ? 'opacity-50 cursor-not-allowed' : ''}`;
 

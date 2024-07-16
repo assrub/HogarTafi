@@ -73,18 +73,28 @@ export default function Navegacion() {
               </Link>
             </li>
             <li>
+              <Link
+                to="/Empleados"
+                className="block px-4 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 rounded-t-md"
+              >
+                Empleados
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/Empleados"
+                className="block px-4 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 rounded-t-md"
+              >
+                Pedidos
+              </Link>
+            </li>
+            <li>
             <Link
-            to="/Empleados"
-            className="block px-4 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 rounded-t-md"
-          >
-            Empleados
-          </Link>
-            </li>
-            <li>
-              <Enlace texto={"Pedidos"} Enlace={"#"} />
-            </li>
-            <li>
-              <Enlace texto={"Lista de usuarios"} Enlace={"#"} />
+                to="/ListaDeUsuarios"
+                className="block px-4 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 rounded-t-md"
+              >
+                Lista de usuarios
+              </Link>
             </li>
           </ul>
 
@@ -135,23 +145,58 @@ export default function Navegacion() {
               </div>
               {isDropdownOpen && (
                 <div className="mt-2 w-48 bg-[#252525] rounded-md shadow-lg z-20">
-                  <Enlace texto={"Mostrar"} Enlace={"#"} />
-                  <Enlace texto={"Cargar"} Enlace={"#"} />
-                  <Enlace texto={"Modificar"} Enlace={"#"} />
+                  <Link
+                      to="/Pacientes/Mostrar"
+                      className="block px-4 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 rounded-t-md"
+                    >
+                      Mostrar
+                    </Link>
+                    <Link
+                      to="/Pacientes/Cargar"
+                      className="block px-4 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800"
+                    >
+                      Cargar
+                    </Link>
+                    <Link
+                      to="/Pacientes/Modificar"
+                      className="block px-4 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 rounded-b-md"
+                    >
+                      Modificar
+                    </Link>
                 </div>
               )}
             </li>
             <li>
-              <Enlace texto={"Stock del hogar"} Enlace={"#"} />
+              <Link
+                to="/StockDelHogar"
+                className="block px-4 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 rounded-t-md"
+              >
+                Stock del hogar
+              </Link>
             </li>
             <li>
-              <Enlace texto={"Empleados"} Enlace={"#"} />
+              <Link
+                to="/Empleados"
+                className="block px-4 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 rounded-t-md"
+              >
+                Empleados
+              </Link>
             </li>
             <li>
-              <Enlace texto={"Pedidos"} Enlace={"#"} />
+              <Link
+                to="/Pedidos"
+                className="block px-4 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 rounded-t-md"
+              >
+                Pedidos
+              </Link>
             </li>
             <li>
-              <Enlace texto={"Lista de usuarios"} Enlace={"#"} />
+            <Link
+                to="/ListaDeUsuarios"
+                className="block px-4 py-2 text-neutral-300 hover:bg-gray-200 hover:text-gray-800 rounded-t-md"
+              >
+                Lista de usuarios
+              </Link>
             </li>
             <li className="hover:bg-gray-200 hover:rounded-lg">
               <a href="#">
@@ -167,8 +212,16 @@ export default function Navegacion() {
       </div>
 
       <Routes>
-        <Route path="/Pacientes/Mostrar" element={<FromDatosPacientes mostrar={true} />} />
+        <Route
+          path="/Pacientes/Mostrar"
+          element={<FromDatosPacientes mostrar={true} />}
+        />
         <Route path="/Pacientes/Cargar" element={<FromDatosPacientes />} />
+        <Route path="/Empleados" />
+        <Route path="/Pedidos" />
+        <Route path="/ListaDeUsuarios" />
+        <Route path="/Pacientes/Stock"  />
+        <Route path="/Pacientes/Recetas" />
       </Routes>
     </BrowserRouter>
   );
