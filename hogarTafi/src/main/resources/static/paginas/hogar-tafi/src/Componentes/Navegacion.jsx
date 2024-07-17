@@ -4,6 +4,7 @@ import { Enlace } from "./Barra de navegacion/Enlace";
 import "tailwindcss/tailwind.css";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import FromDatosPacientes from "./FormDatosPaciente";
+import Stock from "./Stock";
 
 export default function Navegacion() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -220,7 +221,7 @@ export default function Navegacion() {
         <Route path="/Empleados" />
         <Route path="/Pedidos" />
         <Route path="/ListaDeUsuarios" />
-        <Route path="/Pacientes/Stock"  />
+        <Route path="/Pacientes/Stock" element={<Stock />}/>
         <Route path="/Pacientes/Recetas" />
       </Routes>
     </BrowserRouter>
