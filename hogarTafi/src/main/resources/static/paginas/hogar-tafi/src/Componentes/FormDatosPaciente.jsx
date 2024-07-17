@@ -12,6 +12,7 @@ export function FromDatosPacientes({ mostrar = false }) {
   const toggleMenuPaciente = (e) => {
     e.preventDefault();
     setMenuPaciente(!menuPaciente);
+    {/* Falta agregar para que despues de tocar el boton haga la busqueda */}
   };
 
   return (
@@ -20,8 +21,7 @@ export function FromDatosPacientes({ mostrar = false }) {
         <h2 className="text-white text-4xl">Menu de pacientes</h2>
       </div>
 
-    <div className="busqueda md:flex md:flex-grid md:gap-10 sm:grid sm:grid-cols-1 sm:grid-cols-1">
-
+      <div className="busqueda grid-cols-1 justify-center w-1/2 lg:flex lg:gap-10  ">
       <div className="busquedaporDni">
         <CampoTexto
           textoEtiqueta="Buscar por DNI"
@@ -29,18 +29,17 @@ export function FromDatosPacientes({ mostrar = false }) {
           tipo="number"
         />
         </div>
-        <div className="align-bottom content-end"> 
+        <div className="content-end flex justify-center lg:block"> 
         <h3 className="text-white text-2xl">O</h3>
         </div>
-        <div className="seleccionarPaciente align-bottom content-end">
-        <SelectPacientes/>
+        <div className="seleccionarPaciente content-end">
+        <SelectPacientes></SelectPacientes>
         </div>
 
-        <div className="boton content-end">
+        <div className="boton flex content-end">
           <Boton onClick={toggleMenuPaciente} textoBoton={"Buscar"}></Boton>
-        </div>   
-      
-      </div>
+        </div>
+        </div>
 
       <div>
         {menuPaciente && (
