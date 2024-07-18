@@ -12,7 +12,9 @@ export function FromDatosPacientes({ mostrar = false }) {
   const toggleMenuPaciente = (e) => {
     e.preventDefault();
     setMenuPaciente(!menuPaciente);
-    {/* Falta agregar para que despues de tocar el boton haga la busqueda */ }
+    {
+      /* Falta agregar para que despues de tocar el boton haga la busqueda */
+    }
   };
 
   return (
@@ -21,24 +23,28 @@ export function FromDatosPacientes({ mostrar = false }) {
         <h2 className="text-white text-4xl">Menu de pacientes</h2>
       </div>
 
-      <div className="busqueda mx-20 grid-cols-1 justify-center w-1/2 lg:flex lg:gap-10  ">
-        <div className="busquedaporDni">
-          <CampoTexto
-            textoEtiqueta="Buscar por DNI"
-            etiqueta="busqueda"
-            tipo="number"
-          />
-        </div>
-        <div className="content-end flex justify-center lg:block">
-          <h3 className="text-white text-2xl">O</h3>
-        </div>
-        <div className="seleccionarPaciente content-end">
-          <SelectPacientes></SelectPacientes>
-        </div>
+      <div>
+        {mostrar && (
+          <div className="busqueda mx-28 grid-cols-1 justify-center w-1/2 lg:flex lg:gap-10  ">
+            <div className="busquedaporDni">
+              <CampoTexto
+                textoEtiqueta="Buscar por DNI"
+                etiqueta="busqueda"
+                tipo="number"
+              />
+            </div>
+            <div className="content-end flex justify-center lg:block">
+              <h3 className="text-white text-2xl">O</h3>
+            </div>
+            <div className="seleccionarPaciente content-end">
+              <SelectPacientes></SelectPacientes>
+            </div>
 
-        <div className="boton flex content-end">
-          <Boton onClick={toggleMenuPaciente} textoBoton={"Buscar"}></Boton>
-        </div>
+            <div className="boton flex content-end">
+              <Boton onClick={toggleMenuPaciente} textoBoton={"Buscar"}></Boton>
+            </div>
+          </div>
+        )}
       </div>
 
       <div>
@@ -71,17 +77,16 @@ export function FromDatosPacientes({ mostrar = false }) {
                     tipo="text"
                     readOnly={mostrar}
                   />
+
+                  <div className="observaciones mt-4">
+                    <h3 className="text-2xl">Observaciones</h3>
+                    <textarea className="w-full rounded-lg h-56 bg-transparent border-white border-2 p-2 resize-none focus:outline-none "></textarea>
+                  </div>
+
                   <div className="flex gap-2">
                     <Link to="/Pacientes/Stock">
                       <Boton textoBoton="Stock" />
                     </Link>
-                    <Link to="/Pacientes/Recetas">
-                      <Boton textoBoton="Recetas" />
-                    </Link>
-                  </div>
-                  <div className="observaciones mt-4">
-                    <h3 className="text-2xl">Observaciones</h3>
-                    <textarea className="w-full rounded-lg h-56 bg-transparent border-white border-2 p-2 resize-none focus:outline-none"></textarea>
                   </div>
                 </form>
               </div>

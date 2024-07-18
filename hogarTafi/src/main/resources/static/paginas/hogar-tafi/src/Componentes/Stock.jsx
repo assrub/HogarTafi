@@ -1,13 +1,16 @@
 import React from 'react'
+import TablaStock from './Stock/TablaStock'
 
 
 export default function Stock() {
   return (
     <div>
-        <div className="titulo tex">
-            <h2 >Stock de </h2>    
+        <div className="titulo flex text-neutral-300 text-4xl justify-center m-10">
+            <h2>Stock de pepe </h2>    
         </div>
-
+        <div className="tabla">
+          <TablaStock></TablaStock>
+        </div>
     </div>
   )
 }
