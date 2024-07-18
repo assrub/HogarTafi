@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 
 const TablaStock = () => {
-  const [rows, setRows] = useState([{ medicacion: '', cantidad: '',cantidadMinima: '', added: false }]);
+  const [rows, setRows] = useState([{ medicacion: '', cantidad: '', cantidadMinima: '', added: false }]);
 
   const handleInputChange = (index, event) => {
     const { name, value } = event.target;
@@ -14,7 +14,7 @@ const TablaStock = () => {
   const handleAddRow = (index) => {
     const newRows = [...rows];
     newRows[index].added = true;
-    setRows([...newRows, { medicacion: '', cantidad: '',cantidadMinima: '', added: false }]);
+    setRows([...newRows, { medicacion: '', cantidad: '', cantidadMinima: '', added: false }]);
   };
 
   const handleRemoveRow = (index) => {
@@ -29,7 +29,7 @@ const TablaStock = () => {
 
   const handleClearContent = (index) => {
     const newRows = [...rows];
-    newRows[index] = { medicacion: '', cantidad: '',cantidadMinima: '', added: false };
+    newRows[index] = { medicacion: '', cantidad: '', cantidadMinima: '', added: false };
     setRows(newRows);
   };
 
@@ -49,39 +49,39 @@ const TablaStock = () => {
             <tr key={index}>
               <td className="px-4 py-2 border border-[#181818] ">
                 <div className="flex place-content-center">
-                <input
-                  className={`rounded-lg ${row.added ? 'bg-neutral-300':'bg-white'}`}
-                  type="text"
-                  name="medicacion"
-                  value={row.medicacion}
-                  onChange={(event) => handleInputChange(index, event)}
-                  disabled={row.added}
-                />
+                  <input
+                    className={`rounded-lg ${row.added ? 'bg-neutral-300' : 'bg-white'}`}
+                    type="text"
+                    name="medicacion"
+                    value={row.medicacion}
+                    onChange={(event) => handleInputChange(index, event)}
+                    disabled={row.added}
+                  />
                 </div>
               </td>
               <td className="px-4 py-2 border border-[#181818] ">
                 <div className="flex place-content-center">
-                <input
-                  className={`rounded-lg ${row.added ? 'bg-neutral-300':'bg-white'}`}
-                  type="number"
-                  name="cantidad"
-                  value={row.cantidad}
-                  onChange={(event) => handleInputChange(index, event)}
-                  disabled={row.added}
-                />
+                  <input
+                    className={`rounded-lg ${row.added ? 'bg-neutral-300' : 'bg-white'}`}
+                    type="number"
+                    name="cantidad"
+                    value={row.cantidad}
+                    onChange={(event) => handleInputChange(index, event)}
+                    disabled={row.added}
+                  />
                 </div>
               </td>
 
               <td className="px-4 py-2 border border-[#181818] ">
                 <div className="flex place-content-center">
-                <input
-                  className={`rounded-lg ${row.added ? 'bg-neutral-300':'bg-white'}`}
-                  type="number"
-                  name="cantidadMinima"
-                  value={row.cantidadMinima}
-                  onChange={(event) => handleInputChange(index, event)}
-                  disabled={row.added}
-                />
+                  <input
+                    className={`rounded-lg ${row.added ? 'bg-neutral-300' : 'bg-white'}`}
+                    type="number"
+                    name="cantidadMinima"
+                    value={row.cantidadMinima}
+                    onChange={(event) => handleInputChange(index, event)}
+                    disabled={row.added}
+                  />
                 </div>
               </td>
 
@@ -110,28 +110,38 @@ const TablaStock = () => {
                     </button>
                   )}
 
-                  {row.added &&(
-                  <button
-                    className="text-red-600 flex"
-                    onClick={() => handleRemoveRow(index)}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="size-6"
+                  {row.added && (
+                    <button
+                      className="text-red-600 flex"
+                      onClick={() => handleRemoveRow(index)}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6 18 18 6M6 6l12 12"
-                      />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18 18 6M6 6l12 12"
+                        />
+                      </svg>
+                      Eliminar
+                    </button>)}
+                    
+                    {row.added && (
+                  <button className="flex text- text-gray-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
                     </svg>
-                    Eliminar
-                  </button>)}
 
+                    Modificar
+                  </button>
+                    )}
+                    {row.added && (
                   <button className="flex text- text-gray-600">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +159,9 @@ const TablaStock = () => {
                     </svg>
                     Agregar receta.
                   </button>
+                    )}
                 </div>
+                    
               </td>
             </tr>
           ))}

@@ -13,7 +13,7 @@ export default function Stock() {
           <TablaStock></TablaStock>
         </div>
         <div className="botones space-x-4 flex justify-end m-5">
-          <Boton textoBoton={"Canelar"}/>
+          <Boton textoBoton={"Cancelar"}/>
           <Boton textoBoton={"Guardar"}/>
         </div>
     </div>
