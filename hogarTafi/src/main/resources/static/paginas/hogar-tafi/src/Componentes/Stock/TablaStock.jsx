@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { PlusCircleIcon } from "@heroicons/react/16/solid";
+
 
 const TablaStock = () => {
-  const [rows, setRows] = useState([{ medicacion: '', cantidad: '', added: false }]);
+  const [rows, setRows] = useState([{ medicacion: '', cantidad: '',cantidadMinima: '', added: false }]);
 
   const handleInputChange = (index, event) => {
     const { name, value } = event.target;
@@ -14,12 +14,22 @@ const TablaStock = () => {
   const handleAddRow = (index) => {
     const newRows = [...rows];
     newRows[index].added = true;
-    setRows([...newRows, { medicacion: '', cantidad: '', added: false }]);
+    setRows([...newRows, { medicacion: '', cantidad: '',cantidadMinima: '', added: false }]);
   };
 
   const handleRemoveRow = (index) => {
+    if (rows.length > 1) {
+      const newRows = [...rows];
+      newRows.splice(index, 1);
+      setRows(newRows);
+    } else {
+      handleClearContent(index);
+    }
+  };
+
+  const handleClearContent = (index) => {
     const newRows = [...rows];
-    newRows.splice(index, 1);
+    newRows[index] = { medicacion: '', cantidad: '',cantidadMinima: '', added: false };
     setRows(newRows);
   };
 
@@ -30,32 +40,51 @@ const TablaStock = () => {
           <tr>
             <th className="px-4 py-2 border border-[#181818]">Droga/Medicacion</th>
             <th className="px-4 py-2 border border-[#181818]">Cantidad</th>
+            <th className="px-4 py-2 border border-[#181818]">Cantidad minima</th>
             <th className="px-4 py-2 border border-[#181818]">Acciones</th>
           </tr>
         </thead>
         <tbody>
           {rows.map((row, index) => (
             <tr key={index}>
-              <td className="px-4 py-2 border border-[#181818]">
+              <td className="px-4 py-2 border border-[#181818] ">
+                <div className="flex place-content-center">
                 <input
-                  className="bg-white rounded-lg"
+                  className={`rounded-lg ${row.added ? 'bg-neutral-300':'bg-white'}`}
                   type="text"
                   name="medicacion"
                   value={row.medicacion}
                   onChange={(event) => handleInputChange(index, event)}
                   disabled={row.added}
                 />
+                </div>
               </td>
-              <td className="px-4 py-2 border border-[#181818]">
+              <td className="px-4 py-2 border border-[#181818] ">
+                <div className="flex place-content-center">
                 <input
-                  className="bg-white rounded-lg"
+                  className={`rounded-lg ${row.added ? 'bg-neutral-300':'bg-white'}`}
                   type="number"
                   name="cantidad"
                   value={row.cantidad}
                   onChange={(event) => handleInputChange(index, event)}
                   disabled={row.added}
                 />
+                </div>
               </td>
+
+              <td className="px-4 py-2 border border-[#181818] ">
+                <div className="flex place-content-center">
+                <input
+                  className={`rounded-lg ${row.added ? 'bg-neutral-300':'bg-white'}`}
+                  type="number"
+                  name="cantidadMinima"
+                  value={row.cantidadMinima}
+                  onChange={(event) => handleInputChange(index, event)}
+                  disabled={row.added}
+                />
+                </div>
+              </td>
+
               <td className="px-4 py-2 border border-[#181818]">
                 <div className="gap-10 flex place-content-center">
                   {!row.added && (
@@ -80,6 +109,8 @@ const TablaStock = () => {
                       Agregar
                     </button>
                   )}
+
+                  {row.added &&(
                   <button
                     className="text-red-600 flex"
                     onClick={() => handleRemoveRow(index)}
@@ -99,7 +130,8 @@ const TablaStock = () => {
                       />
                     </svg>
                     Eliminar
-                  </button>
+                  </button>)}
+
                   <button className="flex text- text-gray-600">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
