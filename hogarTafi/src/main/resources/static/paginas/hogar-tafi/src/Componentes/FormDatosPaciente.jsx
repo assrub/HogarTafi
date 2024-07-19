@@ -79,8 +79,8 @@ export function FromDatosPacientes({ mostrar = false }) {
                   />
 
                   <div className="observaciones mt-4">
-                    <h3 className="text-2xl">Observaciones</h3>
-                    <textarea className="w-full rounded-lg h-56 bg-transparent border-white border-2 p-2 resize-none focus:outline-none "></textarea>
+                    <h3 className="text-2xl text-neutral-300">Observaciones</h3>
+                    <textarea className="w-full rounded-lg h-56 bg-transparent border-neutral-300 border-2 p-2 resize-none focus:outline-none "></textarea>
                   </div>
 
                   <div className="flex gap-2">

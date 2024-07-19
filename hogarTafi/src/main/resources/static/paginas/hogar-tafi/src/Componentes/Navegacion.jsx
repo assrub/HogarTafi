@@ -217,7 +217,7 @@ export default function Navegacion() {
           path="/Pacientes/Mostrar"
           element={<FromDatosPacientes mostrar={true} />}
         />
-        <Route path="/Pacientes/Cargar" element={<FromDatosPacientes />} />
+        <Route path="/Pacientes/Cargar" element={<FromDatosPacientes mostrar={false}/>} />
         <Route path="/Empleados" />
         <Route path="/Pedidos" />
         <Route path="/ListaDeUsuarios" />
