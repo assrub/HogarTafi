@@ -1,4 +1,4 @@
-# Diferencias entre Docker y Docker Compose
+# 1- Diferencias entre Docker y Docker Compose
 
 ## Docker
 
