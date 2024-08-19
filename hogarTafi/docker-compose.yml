@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mi-mongodb-contenedor
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: adminpassword
+    ports:
+      - "27017:27017"
+  
+  webserver:
+    build: .
+    container_name: entorno-maven-java-HogarTafi
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/app
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://admin:adminpassword@mongodb:27017/hogarTafi
+    command: ["java", "-jar", "target/hogarTafi-0.0.1-SNAPSHOT.jar"]
