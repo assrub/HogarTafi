@@ -4,6 +4,8 @@ db.Pacientes.insert({"nombre": "alejo",
   "apellido": "diaz",
   "dni": "333333333",
   "obraSocial": "pami",
+  "activo": "true",
+  "observaciones": "no toma pastilla le gusta la pala"
 	 "fotoFrenteCarnet": "",
 	 "fotoAtrasCarnet": "",
 	 "fotoFrenteDni": "",
