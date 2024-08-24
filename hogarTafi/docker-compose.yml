@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   mongodb:
-    image: mongo:latest
-    container_name: mi-mongodb-contenedor
+    image: mongo:4.4
+    container_name: Cmongo
     ports:
       - "27017:27017"
     volumes:
