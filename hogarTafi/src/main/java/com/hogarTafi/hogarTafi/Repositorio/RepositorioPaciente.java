@@ -5,12 +5,13 @@ import org.springframework.stereotype.Repository;
 import com.hogarTafi.hogarTafi.Entidad.Paciente;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface RepositorioPacientes extends MongoRepository<Paciente, String> {
+public interface RepositorioPaciente extends MongoRepository<Paciente, String> {
     @Override
     List<Paciente> findAll();
 
-    Paciente findByDni(Integer dni);
-    void deleteByDni(Integer dni);
+    Optional<Paciente> findByDni(Integer dni);
+
 }

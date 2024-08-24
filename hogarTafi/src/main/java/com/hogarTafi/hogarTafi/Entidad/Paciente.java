@@ -13,7 +13,6 @@ public class Paciente {
     private String apellido;
     private Integer dni;
     private String obraSocial;
-    @Transient
     private Boolean activo;
     private String observaciones;
 
