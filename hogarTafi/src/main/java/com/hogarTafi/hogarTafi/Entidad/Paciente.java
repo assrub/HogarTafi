@@ -1,7 +1,7 @@
 package com.hogarTafi.hogarTafi.Entidad;
 
 import lombok.*;
-import org.springframework.data.annotation.Transient;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -9,20 +9,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Document(collection = "Pacientes")
 public class Paciente {
+    @Id
+    private Integer dni; // Usar el DNI como identificador único (_id)
     private String nombre;
     private String apellido;
-    private Integer dni;
     private String obraSocial;
     private Boolean activo;
     private String observaciones;
-
-    private byte[] fotoFrenteCarnet; // Buscar algun tipo para poder usar imagenes
-
+    private byte[] fotoFrenteCarnet;
     private byte[] fotoAtrasCarnet;
-
-    private byte[] fotoFrenteDni;// Buscar algun tipo para poder usar imagenes
-
+    private byte[] fotoFrenteDni;
     private byte[] fotoAtrasDni;
-
-
 }

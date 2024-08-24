@@ -8,10 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface RepositorioPaciente extends MongoRepository<Paciente, String> {
+public interface RepositorioPaciente extends MongoRepository<Paciente, Integer> {
     @Override
     List<Paciente> findAll();
 
     Optional<Paciente> findByDni(Integer dni);
-
 }

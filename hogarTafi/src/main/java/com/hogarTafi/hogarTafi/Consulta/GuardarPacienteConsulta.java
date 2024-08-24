@@ -20,15 +20,13 @@ public class GuardarPacienteConsulta {
     @Size(min = 0, max = 50,message = "No entra dentro de los limites")
     private String apellido;
 
-    @NotEmpty(message = "el campo dni no puede estar vacio")
     private Integer dni;
 
     @Size(min = 0, max = 50,message = "No entra dentro de los limites")
     private String obraSocial;
 
-    private Boolean activo;
 
-    @Size(min = 0, max = 50,message = "No entra dentro de los limites")
+    @Size(min = 0, max = 255,message = "No entra dentro de los limites")
     private String observaciones;
 
     private byte[] fotoFrenteCarnet;

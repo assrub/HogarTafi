@@ -25,10 +25,10 @@ public class ServicioPacientesImpl implements ServicioPacientes {
     }
 
     @Override
-    public boolean guardarPaciente(String nombre, String apellido, Integer dni, String obraSocial, Boolean activo, String observaciones, byte[] fotoFrenteCarnet,
+    public boolean guardarPaciente(Integer dni,String nombre, String apellido,  String obraSocial, Boolean activo, String observaciones, byte[] fotoFrenteCarnet,
                                    byte[] fotoAtrasCarnet, byte[] fotoFrenteDni, byte[] fotoAtrasDni) {
         // Establecer activo en true al crear un nuevo paciente
-        Paciente paciente = new Paciente(nombre, apellido, dni, obraSocial, true, observaciones, fotoFrenteCarnet, fotoAtrasCarnet, fotoFrenteDni, fotoAtrasDni);
+        Paciente paciente = new Paciente(dni, nombre, apellido, obraSocial, true, observaciones, fotoFrenteCarnet, fotoAtrasCarnet, fotoFrenteDni, fotoAtrasDni);
 
         // Verificar si el paciente ya existe
         if (repositorioPacientes.findByDni(paciente.getDni()).isPresent()) {
@@ -43,44 +43,30 @@ public class ServicioPacientesImpl implements ServicioPacientes {
 
     @Override
     public Paciente buscarPaciente(Integer dni) {
-        return repositorioPacientes.findByDni(dni).orElse(null);
+        return repositorioPacientes.findByDni(dni).orElseThrow(() -> new NoSuchElementException("Paciente con el DNI " + dni + " no se encontró."));
     }
 
     @Override
     public boolean modificarPaciente(ActualizarPacienteConsulta consulta) {
 
-        // Validaciones básicas de los parámetros
-        if (consulta == null ||
-                consulta.getDni() == null ||
-                consulta.getNombre() == null || consulta.getNombre().trim().isEmpty() ||
-                consulta.getApellido() == null || consulta.getApellido().trim().isEmpty() ||
-                consulta.getObraSocial() == null || consulta.getObraSocial().trim().isEmpty() ||
-                consulta.getFotoFrenteCarnet() == null || consulta.getFotoAtrasCarnet() == null ||
-                consulta.getFotoFrenteDni() == null || consulta.getFotoAtrasDni() == null) {
-            throw new IllegalArgumentException("Todos los campos deben estar completos y no deben ser nulos.");
-        }
-
+        // Buscar el paciente existente por DNI
         Paciente existePaciente = repositorioPacientes.findByDni(consulta.getDni())
                 .orElseThrow(() -> new NoSuchElementException("Paciente con el DNI " + consulta.getDni() + " no se encontró."));
 
-        // Actualizar los campos del paciente encontrado
+        // Actualizar los campos permitidos del paciente
         existePaciente.setNombre(consulta.getNombre());
         existePaciente.setApellido(consulta.getApellido());
         existePaciente.setObraSocial(consulta.getObraSocial());
-        existePaciente.setActivo(consulta.getActivo());
         existePaciente.setObservaciones(consulta.getObservaciones());
-        existePaciente.setFotoFrenteCarnet(consulta.getFotoFrenteCarnet());
-        existePaciente.setFotoAtrasCarnet(consulta.getFotoAtrasCarnet());
-        existePaciente.setFotoFrenteDni(consulta.getFotoFrenteDni());
-        existePaciente.setFotoAtrasDni(consulta.getFotoAtrasDni());
 
+        // Guardar los cambios en la base de datos
         repositorioPacientes.save(existePaciente);
         return true;
     }
     @Override
     public boolean desactivarPaciente(OcultarPacienteConsulta consulta) {
-        Paciente existePaciente = repositorioPacientes.findByDni(consulta.getDni())
-                .orElseThrow(() -> new NoSuchElementException("Paciente con el DNI " + consulta.getDni() + " no se encontró."));
+       Paciente existePaciente = buscarPaciente(consulta.getDni());
+
 
         // Verificar si el paciente ya está oculto
         if (!existePaciente.getActivo()) {

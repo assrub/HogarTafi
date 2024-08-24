@@ -1,6 +1,7 @@
 package com.hogarTafi.hogarTafi.Controlador;
 
 import com.hogarTafi.hogarTafi.Consulta.ActualizarPacienteConsulta;
+import com.hogarTafi.hogarTafi.Consulta.GuardarPacienteConsulta;
 import com.hogarTafi.hogarTafi.Consulta.OcultarPacienteConsulta;
 import com.hogarTafi.hogarTafi.Servicio.impl.ServicioPacientesImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,27 +25,19 @@ public class ControladorPacientes {
     }
 
     @PostMapping
-    public ResponseEntity<?> guardarPaciente(@RequestParam String nombre,
-                                             @RequestParam String apellido,
-                                             @RequestParam Integer dni,
-                                             @RequestParam String obraSocial,
-                                             @RequestParam String observaciones,
-                                             @RequestParam byte[] fotoFrenteCarnet,
-                                             @RequestParam byte[] fotoAtrasCarnet,
-                                             @RequestParam byte[] fotoFrenteDni,
-                                             @RequestParam byte[] fotoAtrasDni) {
-
-        if(servicioPacientes.guardarPaciente(nombre, apellido, dni, obraSocial, true, observaciones,
-                fotoFrenteCarnet, fotoAtrasCarnet, fotoFrenteDni, fotoAtrasDni)) {
+    public ResponseEntity<?> guardarPaciente(@RequestBody GuardarPacienteConsulta consulta) {
+        if(servicioPacientes.guardarPaciente(consulta.getDni(), consulta.getNombre(), consulta.getApellido(),
+                consulta.getObraSocial(), true, consulta.getObservaciones(),
+                consulta.getFotoFrenteCarnet(), consulta.getFotoAtrasCarnet(),
+                consulta.getFotoFrenteDni(), consulta.getFotoAtrasDni())) {
             return ResponseEntity.ok("Paciente registrado.");
         } else {
             return ResponseEntity.badRequest().body("El paciente ya está registrado.");
         }
     }
 
-    @PutMapping("/{dni}")
+    @PatchMapping("/modificar/{dni}")
     public ResponseEntity<?> modificarPaciente(@PathVariable Integer dni, @RequestBody ActualizarPacienteConsulta consulta) {
-        // Establecemos el DNI desde el Path Variable
         consulta.setDni(dni);
 
         try {
@@ -69,10 +62,11 @@ public class ControladorPacientes {
             return ResponseEntity.ok(paciente);
         }
     }
-    @PutMapping("/desactivar/{dni}")
+
+    @PatchMapping("/desactivar/{dni}")
     public ResponseEntity<?> desactivarPaciente(@PathVariable Integer dni) {
         OcultarPacienteConsulta consulta = new OcultarPacienteConsulta();
-        consulta.setDni(dni); // Establecemos el DNI desde el Path Variable
+        consulta.setDni(dni);
 
         try {
             servicioPacientes.desactivarPaciente(consulta);
