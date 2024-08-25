@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:4.4
+    container_name: Cmongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./volumenes/mongodb_data:/data/db  
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+
+  webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: entorno-maven-java-HogarTafi
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/hogarTafi
+    command: ["java", "-jar", "hogarTafi.jar"]
+
+  vite:
+    build:
+      context: .
+      dockerfile: Dockerfile.vite
+    container_name: vite-app
+    ports:
+      - "5173:5173"
+    volumes:
+    - ./src/main/resources/static/:/app
+    - /app/node_modules/
+    command: ["npm", "run", "dev"]
