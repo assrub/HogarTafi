@@ -21,16 +21,5 @@ services:
       - mongodb
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/hogarTafi
+<<<<<<< HEAD
     command: ["java", "-jar", "hogarTafi.jar"]
-
-  vite:
-    build:
-      context: .
-      dockerfile: Dockerfile.vite
-    container_name: vite-app
-    ports:
-      - "5173:5173"
-    volumes:
-    - ./src/main/resources/static/:/app
-    - /app/node_modules/
-    command: ["npm", "run", "dev"]
