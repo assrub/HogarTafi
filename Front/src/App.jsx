@@ -7,20 +7,22 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {todosLosPacientes, registrarPaciente} from "./api.js"
 
- async function botonClick(){
+async function botonClick() {
   const paciente = {
-    nombre:"Pepe",
-    apellido:"Garcia",
-    dni:"1",
-    obraSocial:"Pami",
-    fotoFrenteCarnet:'',
-    fotoAtrasCarnet:'',
-    fotoFrenteDni:'',
-    fotoAtrasDni:''
-  }
-  const datos  = await registrarPaciente(paciente);
-  console.log(datos)
- }
+    dni: 1,  // Asegúrate de enviar un número
+    nombre: "Pepe",
+    apellido: "Garcia",
+    obraSocial: "Pami",
+    observaciones: "Observaciones",
+    fotoFrenteCarnet: null,  // Envía null o un array vacío si no tienes datos
+    fotoAtrasCarnet: null,
+    fotoFrenteDni: null,
+    fotoAtrasDni: null,
+  };
+  
+  const datos = await registrarPaciente(paciente);
+  console.log(datos);
+}
 
 function App() {
 

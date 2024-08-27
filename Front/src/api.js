@@ -4,29 +4,26 @@ export async function todosLosPacientes() {
   return data;
 }
 
+
 export async function registrarPaciente(paciente = {}) {
   try {
-    const url = `http://localhost:8080/pacientes?nombre=${encodeURIComponent(
-      paciente.nombre
-    )}&apellido=${encodeURIComponent(
-      paciente.apellido
-    )}&dni=${encodeURIComponent(paciente.dni)}&obraSocial=${encodeURIComponent(
-      paciente.obraSocial
-    )}&fotoFrenteCarnet=${encodeURIComponent(
-      paciente.fotoFrenteCarnet || ""
-    )}&fotoAtrasCarnet=${encodeURIComponent(
-      paciente.fotoAtrasCarnet || ""
-    )}&fotoFrenteDni=${encodeURIComponent(
-      paciente.fotoFrenteDni || ""
-    )}&fotoAtrasDni=${encodeURIComponent(paciente.fotoAtrasDni || "")}`;
+    const url = "http://localhost:8080/pacientes";
 
     const response = await fetch(url, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",  
+      },
+      body: JSON.stringify(paciente),  
     });
 
-    return response.ok;
-  } catch (error) {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
 
+    return await response.json();
+  } catch (error) {
+    console.error("Error registrando paciente:", error);
     return error;
   }
 }

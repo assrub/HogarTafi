@@ -10,8 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.hogarTafi.hogarTafi.Entidad.Paciente;
 
+
 import java.util.List;
 import java.util.NoSuchElementException;
+
 
 @RestController
 @RequestMapping("/pacientes")
