@@ -3,7 +3,7 @@ version: '3.8'
 services:
   mongodb:
     image: mongo:4.4
-    container_name: dbmongo
+    container_name: Cmongo
     ports:
       - "27017:27017"
     volumes:
@@ -14,15 +14,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: back-server
+    container_name: entorno-maven-java-HogarTafi
     ports:
       - "8080:8080"
     depends_on:
       - mongodb
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/hogarTafi
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/hogarTafi
+      - SPRING_PROFILES_ACTIVE=dev
     volumes:
-      - .:/app
-    command: >
-      sh -c "mvn clean package -DskipTests && java -jar /app/target/hogarTafi-0.0.1-SNAPSHOT.jar"
-
+      - .:/app  # Código fuente
+    command: mvn spring-boot:run
