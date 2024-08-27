@@ -1,15 +1,20 @@
-db = db.getSiblingDB('hogarTafi'); // Cambia a la base de datos hogarTafi
-db.createCollection('Pacientes'); // Crea una colección de ejemplo
+// Conectar a la base de datos 'hogarTafi'
+db = db.getSiblingDB('hogarTafi');
 
+// Crear la colección 'Pacientes'
+db.createCollection('Pacientes');
+
+// Insertar un documento con los datos mostrados en la imagen
 db.Pacientes.insert({
-  "nombre": "alejo",
-  "apellido": "diaz",
-  "dni": "333333333",
-  "obraSocial": "pami",
-  "activo": true,  // Cambié "true" a true sin comillas para que sea un valor booleano
-  "observaciones": "no toma pastilla le gusta la pala",
-  "fotoFrenteCarnet": "",
-  "fotoAtrasCarnet": "",
-  "fotoFrenteDni": "",
-  "fotoAtrasDni": ""
-}); // Inserta un documento de ejemplo
+  "_id": 33, // Int32
+  "nombre": "Pepe",
+  "apellido": "aaaaaaaaaaaaaaaaa",
+  "obraSocial": "Obra Social",
+  "activo": true,
+  "observaciones": "Observaciones",
+  "fotoFrenteCarnet": BinData(0, ""), // Binary data
+  "fotoAtrasCarnet": BinData(0, ""), // Binary data
+  "fotoFrenteDni": BinData(0, ""), // Binary data
+  "fotoAtrasDni": BinData(0, ""), // Binary data
+  "_class": "com.hogarTafi.hogarTafi.Entidad.Paciente" // Class name in MongoDB
+});
