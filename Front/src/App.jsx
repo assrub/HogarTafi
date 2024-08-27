@@ -9,15 +9,16 @@ import {todosLosPacientes, registrarPaciente} from "./api.js"
 
 async function botonClick() {
   const paciente = {
-    dni: 1,  // Asegúrate de enviar un número
-    nombre: "Pepe",
-    apellido: "Garcia",
-    obraSocial: "Pami",
+    dni: 111,
+    nombre: "PROBANDO",
+    apellido: "PUTA MADRE",
+    obraSocial: "MALDITAS CORS",
+    activo: true,
     observaciones: "Observaciones",
-    fotoFrenteCarnet: null,  // Envía null o un array vacío si no tienes datos
-    fotoAtrasCarnet: null,
-    fotoFrenteDni: null,
-    fotoAtrasDni: null,
+    fotoFrenteCarnet: "",
+    fotoAtrasCarnet: "",
+    fotoFrenteDni: "",
+    fotoAtrasDni: "",
   };
   
   const datos = await registrarPaciente(paciente);
