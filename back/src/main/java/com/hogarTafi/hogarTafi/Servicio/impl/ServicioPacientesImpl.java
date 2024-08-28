@@ -27,16 +27,28 @@ public class ServicioPacientesImpl implements ServicioPacientes {
     @Override
     public boolean guardarPaciente(Integer dni,String nombre, String apellido,  String obraSocial, Boolean activo, String observaciones, byte[] fotoFrenteCarnet,
                                    byte[] fotoAtrasCarnet, byte[] fotoFrenteDni, byte[] fotoAtrasDni) {
-        // Establecer activo en true al crear un nuevo paciente
-        Paciente paciente = new Paciente(dni, nombre, apellido, obraSocial, true, observaciones, fotoFrenteCarnet, fotoAtrasCarnet, fotoFrenteDni, fotoAtrasDni);
-
+       
         // Verificar si el paciente ya existe
-        if (repositorioPacientes.findByDni(paciente.getDni()).isPresent()) {
+        if (repositorioPacientes.findByDni(dni).isPresent()) {
             return false; // El paciente ya está registrado
-        } else {
-            repositorioPacientes.save(paciente);
-            return true; // Paciente guardado correctamente
         }
+
+        // Crear una nueva instancia de Paciente y establecer sus propiedades
+        Paciente paciente = new Paciente();
+        paciente.setDni(dni);
+        paciente.setNombre(nombre);
+        paciente.setApellido(apellido);
+        paciente.setObraSocial(obraSocial);
+        paciente.setActivo(activo);
+        paciente.setObservaciones(observaciones);
+        paciente.setFotoFrenteCarnet(fotoFrenteCarnet);
+        paciente.setFotoAtrasCarnet(fotoAtrasCarnet);
+        paciente.setFotoFrenteDni(fotoFrenteDni);
+        paciente.setFotoAtrasDni(fotoAtrasDni);
+
+        // Guardar el paciente en la base de datos
+        repositorioPacientes.save(paciente);
+        return true; // Paciente registrado con éxito
     }
 
 

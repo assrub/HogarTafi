@@ -1,46 +1,71 @@
-import React from "react";
+import React, { useRef } from "react"; // Importa React y useRef una vez
 import CampoTexto from "./FormPacientes/CampoTexto";
 import Foto from "./FormPacientes/Foto";
 import Boton from "./Boton";
 import { registrarPaciente } from "../api";
 
+// Componente principal para registrar pacientes
 function RegistrarPacientes() {
+  // Refs para los inputs de texto y archivos
+  const dniRef = useRef(null);
+  const nombreRef = useRef(null);
+  const apellidoRef = useRef(null);
+  const obraSocialRef = useRef(null);
+  const observacionesRef = useRef(null);
+  const fotoFrenteDniRef = useRef(null);
+  const fotoAtrasDniRef = useRef(null);
+  const fotoFrenteCarnetRef = useRef(null);
+  const fotoAtrasCarnetRef = useRef(null);
 
-  async function registrar() {
-    const nuevoPaciente = {
-      dni: document.getElementById("inputDni").value.toString(),
-      nombre: document.getElementById("inputNombre").value,
-      apellido: document.getElementById("inputApellido").value,
-      obraSocial: document.getElementById("inputObraSocial").value,
-      observaciones: document.querySelector("textarea").value,
-      fotoFrenteDni: await obtenerImagenBase64("fotoFrenteDni"),
-      fotoAtrasDni: await obtenerImagenBase64("fotoAtrasDni"),
-      fotoFrenteCarnet: await obtenerImagenBase64("fotoFrenteCarnet"),
-      fotoAtrasCarnet: await obtenerImagenBase64("fotoAtrasCarnet"),
-    };
+  // Función para registrar al paciente
+  async function registrar(e) {
+    e.preventDefault();
 
-    let response = await registrarPaciente(nuevoPaciente);
-    console.log(response);
-  }
-
-  async function obtenerImagenBase64(idInput) {
-    const input = document.getElementById(idInput);
-    console.log(`Buscando elemento con ID: ${idInput}`, input); // Log para depurar
-
-    if (!input) {
-        console.error(`Elemento con ID ${idInput} no encontrado.`);
-        return ""; // Retorna una cadena vacía si el input no existe
+    // Verificar si los refs de archivos están correctamente asignados
+    if (!fotoFrenteDniRef.current || !fotoAtrasDniRef.current || !fotoFrenteCarnetRef.current || !fotoAtrasCarnetRef.current) {
+      console.error("Uno o más inputs de archivos no están correctamente referenciados.");
+      alert("Por favor, verifica que todas las imágenes han sido cargadas.");
+      return;
     }
 
-    if (input.files && input.files[0]) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-        reader.readAsDataURL(input.files[0]);
+    const formData = new FormData();
+    formData.append("dni", dniRef.current.value);
+    formData.append("nombre", nombreRef.current.value);
+    formData.append("apellido", apellidoRef.current.value);
+    formData.append("obraSocial", obraSocialRef.current.value);
+    formData.append("observaciones", observacionesRef.current.value);
+
+    // Agregar archivos al FormData solo si están presentes
+    if (fotoFrenteDniRef.current.files[0]) {
+      formData.append("fotoFrenteDni", fotoFrenteDniRef.current.files[0]);
+    }
+    if (fotoAtrasDniRef.current.files[0]) {
+      formData.append("fotoAtrasDni", fotoAtrasDniRef.current.files[0]);
+    }
+    if (fotoFrenteCarnetRef.current.files[0]) {
+      formData.append("fotoFrenteCarnet", fotoFrenteCarnetRef.current.files[0]);
+    }
+    if (fotoAtrasCarnetRef.current.files[0]) {
+      formData.append("fotoAtrasCarnet", fotoAtrasCarnetRef.current.files[0]);
+    }
+
+    try {
+      const response = await fetch("http://localhost:8080/pacientes", {
+        method: "POST",
+        body: formData,
       });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log(data);
+      alert("Paciente registrado con éxito.");
+    } catch (error) {
+      console.error("Error registrando el paciente:", error);
+      alert("Ocurrió un error al registrar el paciente.");
     }
-    return ""; // Si no se seleccionó ninguna imagen
   }
 
   return (
@@ -54,48 +79,52 @@ function RegistrarPacientes() {
 
         <div className="formulario grid grid-cols-1 xl:grid-cols-2">
           <div className="datos border-r mb-6">
-            <form action="" className="mx-2 lg:mx-10">
+            <form onSubmit={registrar} className="mx-2 lg:mx-10">
               <CampoTexto
                 textoEtiqueta="Nombre"
-                propsLabel={{ labelFor: "name" }}
+                propsLabel={{ labelFor: "inputNombre" }}
                 propsInput={{
-                  type: "name",
-                  name: "name",
+                  type: "text",
+                  name: "nombre",
                   id: "inputNombre",
                   placeholder: "Ingresa el nombre del paciente",
+                  ref: nombreRef,
                 }}
               ></CampoTexto>
 
               <CampoTexto
                 textoEtiqueta="Apellido"
-                propsLabel={{ labelFor: "lastName" }}
+                propsLabel={{ labelFor: "inputApellido" }}
                 propsInput={{
                   type: "text",
-                  name: "lastName",
+                  name: "apellido",
                   id: "inputApellido",
                   placeholder: "Ingresa el apellido del paciente",
+                  ref: apellidoRef,
                 }}
               ></CampoTexto>
 
               <CampoTexto
                 textoEtiqueta="DNI"
-                propsLabel={{ labelFor: "dni" }}
+                propsLabel={{ labelFor: "inputDni" }}
                 propsInput={{
                   type: "number",
                   name: "dni",
                   id: "inputDni",
                   placeholder: "Ingresa el DNI del paciente",
+                  ref: dniRef,
                 }}
               ></CampoTexto>
 
               <CampoTexto
                 textoEtiqueta="Obra social"
-                propsLabel={{ labelFor: "obraSocial" }}
+                propsLabel={{ labelFor: "inputObraSocial" }}
                 propsInput={{
                   type: "text",
                   name: "obraSocial",
                   id: "inputObraSocial",
                   placeholder: "Ingresa la Obra Social del paciente",
+                  ref: obraSocialRef,
                 }}
               ></CampoTexto>
 
@@ -104,16 +133,29 @@ function RegistrarPacientes() {
                 <textarea
                   id="inputObservaciones"
                   className="w-full rounded-lg h-56 bg-transparent border-neutral-300 border-2 p-2 resize-none focus:outline-none md:w-9/12"
+                  ref={observacionesRef}
                 ></textarea>
               </div>
             </form>
           </div>
 
           <div className="fotos grid grid-cols-1 mx-10 justify-items-center gap-x-3 2xl:grid-cols-2 xl:mr-10 xl:justify-items-end">
-            <Foto textoFoto={"Frente del DNI"} propsInput={{ id: "fotoFrenteDni", type: "file" }} />
-            <Foto textoFoto={"Dorso del DNI"} propsInput={{ id: "fotoAtrasDni", type: "file" }} />
-            <Foto textoFoto={"Frente del carnet"} propsInput={{ id: "fotoFrenteCarnet", type: "file" }} />
-            <Foto textoFoto={"Dorso del Carnet"} propsInput={{ id: "fotoAtrasCarnet", type: "file" }} />
+            <Foto 
+              textoFoto={"Frente del DNI"} 
+              propsInput={{ ref: fotoFrenteDniRef, type: "file" }} 
+            />
+            <Foto 
+              textoFoto={"Dorso del DNI"} 
+              propsInput={{ ref: fotoAtrasDniRef, type: "file" }} 
+            />
+            <Foto 
+              textoFoto={"Frente del carnet"} 
+              propsInput={{ ref: fotoFrenteCarnetRef, type: "file" }} 
+            />
+            <Foto 
+              textoFoto={"Dorso del Carnet"} 
+              propsInput={{ ref: fotoAtrasCarnetRef, type: "file" }} 
+            />
           </div>
         </div>
         <hr />

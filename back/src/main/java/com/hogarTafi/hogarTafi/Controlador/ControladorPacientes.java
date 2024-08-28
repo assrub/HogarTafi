@@ -10,6 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.MediaType;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,20 +31,39 @@ public class ControladorPacientes {
         return ResponseEntity.ok(servicioPacientes.todosLosPacientes());
     }
 
-    @PostMapping
-    public ResponseEntity<Map<String, String>> guardarPaciente(@RequestBody GuardarPacienteConsulta consulta) {
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Map<String, String>> guardarPaciente(
+        @RequestParam("dni") Integer dni,
+        @RequestParam("nombre") String nombre,
+        @RequestParam("apellido") String apellido,
+        @RequestParam("obraSocial") String obraSocial,
+        @RequestParam("observaciones") String observaciones,
+        @RequestParam("fotoFrenteCarnet") MultipartFile fotoFrenteCarnet,
+        @RequestParam("fotoAtrasCarnet") MultipartFile fotoAtrasCarnet,
+        @RequestParam("fotoFrenteDni") MultipartFile fotoFrenteDni,
+        @RequestParam("fotoAtrasDni") MultipartFile fotoAtrasDni
+    ) {
         Map<String, String> response = new HashMap<>();
-        if (servicioPacientes.guardarPaciente(consulta.getDni(), consulta.getNombre(), consulta.getApellido(),
-                consulta.getObraSocial(), true, consulta.getObservaciones(),
-                consulta.getFotoFrenteCarnet(), consulta.getFotoAtrasCarnet(),
-                consulta.getFotoFrenteDni(), consulta.getFotoAtrasDni())) {
-            response.put("message", "Paciente registrado.");
-            return ResponseEntity.ok(response);
-        } else {
-            response.put("message", "El paciente ya está registrado.");
-            return ResponseEntity.badRequest().body(response);
+        try {
+            boolean pacienteGuardado = servicioPacientes.guardarPaciente(
+                dni, nombre, apellido, obraSocial, true, observaciones,
+                fotoFrenteCarnet.getBytes(), fotoAtrasCarnet.getBytes(),
+                fotoFrenteDni.getBytes(), fotoAtrasDni.getBytes()
+            );
+
+            if (pacienteGuardado) {
+                response.put("message", "Paciente registrado.");
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("message", "El paciente ya está registrado.");
+                return ResponseEntity.badRequest().body(response);
+            }
+        } catch (IOException e) {
+            response.put("message", "Error al procesar las imágenes.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
 
     @PatchMapping("/modificar/{dni}")
     public ResponseEntity<Map<String, String>> modificarPaciente(@PathVariable Integer dni, @RequestBody ActualizarPacienteConsulta consulta) {

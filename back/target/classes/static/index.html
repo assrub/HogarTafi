@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JEJE</title>
+
+ 
+  <!-- Boostrap 5.3-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!--Iconos de boostrap-->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
+  <!--Google fonts-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&display=swap" rel="stylesheet">
+   <!-- Mi CSS -->
+   <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+
+  <!--Header (Barra de navegacion, imagen de fondo y seccion "Nosotros")-->
+  <header>
+    <nav class="navbar navbar-expand-lg bg-dark nav-font">
+      <div class="container-fluid">
+        <a class="navbar-brand text-white" href="#">Hogar Tafi</a>
+        <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item p-3">
+              <a class="nav-link text-white nav-li" aria-current="page" href="#nosotros"><i
+                  class="bi bi-house-door-fill"></i> Nosotros</a>
+            </li>
+            <li class="nav-item p-3">
+              <a class="nav-link text-white nav-li" href="#actividades"><i class="bi bi-dice-5-fill"></i>
+                Actividades</a>
+            </li>
+            <li class="nav-item p-3">
+              <a class="nav-link text-white nav-li" href="#servicios"><i class="bi bi-briefcase-fill"></i> Servicios</a>
+            </li>
+            <li class="nav-item p-3">
+              <a class="nav-link text-white nav-li" href="#instalaciones"><i class="bi bi-building-fill"></i>
+                Instalaciones</a>
+            </li>
+            <li class="nav-item p-3">
+              <a class="nav-link text-white nav-li" href="#contacto"><i class="bi bi-telephone-fill"></i> Contacto</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item p-3">
+              <a class="nav-link text-white nav-li" href="#"><i class="bi bi-person-fill"></i> Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <section class="bg-image vh-100 d-flex align-items-center" id="nosotros"
+      style="background-image: url('img/bg-nosotros.jpg');">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-8 text-center text-white">
+            <h1 class="h1 fw-bold">Hogar Tafi</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, distinctio. Perspiciatis quo
+              possimus velit nisi praesentium accusantium assumenda, corporis, iure sed incidunt debitis pariatur. Qui
+              quia iure dolores? Libero dolores, exercitationem maiores magnam obcaecati laborum optio ullam quia minus
+              rerum cupiditate quos nobis officia, voluptatem corrupti asperiores repudiandae praesentium eos!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <!-- Seccion "Actividades"-->
+  <section id="actividades" class="actividades-bg">
+    <div class="container">
+      <h2 class="text-center pt-5">Actividades</h2>
+      <div id="carouselExampleAutoplaying" class="carousel slide custom-carousel" data-bs-ride="carousel">
+        <div class="carousel-inner ">
+          <div class="carousel-item active">
+            <img src="img/actividades.jpg" class="d-block w-100" alt="...">
+            <p class="text-center text-dark fw-bold">Titulo</p>
+            <p class="text-center text-dark">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis
+              laudantium quas illo recusandae libero. Fugit, exercitationem accusantium. Tempore, totam sint.</p>
+          </div>
+          <div class="carousel-item">
+            <img src="img/actividades.jpg" class="d-block w-100" alt="...">
+            <p class="text-center text-dark fw-bold">Titulo</p>
+            <p class="text-center text-dark">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis
+              laudantium quas illo recusandae libero. Fugit, exercitationem accusantium. Tempore, totam sint.</p>
+          </div>
+          <div class="carousel-item">
+            <img src="img/actividades.jpg" class="d-block w-100" alt="...">
+            <p class="text-center text-dark fw-bold">Titulo</p>
+            <p class="text-center text-dark">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis
+              laudantium quas illo recusandae libero. Fugit, exercitationem accusantium. Tempore, totam sint.</p>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+          data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+          data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!--Seccion "Servicios"-->
+  <section id="servicios" class="p-2 servicios-bg text-dark">
+    <div class="container">
+      <h3 class="text-center pt-4">Servicios</h3>
+      <div class="container mt-5">
+        <div class="row">
+          <!-- Servicio 1 -->
+          <div class="col-lg-6 mb-4">
+            <div class="card">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src="img/tarjeta-servicios.jpg" class="img-fluid rounded-start h-100" alt="Imagen 1">
+                </div>
+                <div class="col-md-8  servicios-bg">
+                  <div class="card-body">
+                    <h5 class="card-title">Título 1</h5>
+                    <p class="card-text">Descripción de la tarjeta 1. Lorem ipsum dolor sit amet, consectetur adipiscing
+                      elit. Vivamus lacinia odio vitae vestibulum vestibulum.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Servicio 2 -->
+          <div class="col-lg-6 mb-4">
+            <div class="card">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src="img/tarjeta-servicios.jpg" class="img-fluid rounded-start h-100" alt="Imagen 2">
+                </div>
+                <div class="col-md-8  servicios-bg">
+                  <div class="card-body">
+                    <h5 class="card-title">Título 2</h5>
+                    <p class="card-text">Descripción de la tarjeta 2. Lorem ipsum dolor sit amet, consectetur adipiscing
+                      elit. Vivamus lacinia odio vitae vestibulum vestibulum.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Servicio 3 -->
+          <div class="col-lg-6 mb-4">
+            <div class="card">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src="img/tarjeta-servicios.jpg" class="img-fluid rounded-start h-100" alt="Imagen 3">
+                </div>
+                <div class="col-md-8 servicios-bg">
+                  <div class="card-body">
+                    <h5 class="card-title">Título 3</h5>
+                    <p class="card-text">Descripción de la tarjeta 3. Lorem ipsum dolor sit amet, consectetur adipiscing
+                      elit. Vivamus lacinia odio vitae vestibulum vestibulum.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Servicio 4 -->
+          <div class="col-lg-6 mb-4">
+            <div class="card">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src="img/tarjeta-servicios.jpg" class="img-fluid rounded-start h-100" alt="Imagen 4">
+                </div>
+                <div class="col-md-8 servicios-bg">
+                  <div class="card-body">
+                    <h5 class="card-title">Título 4</h5>
+                    <p class="card-text">Descripción de la tarjeta 4. Lorem ipsum dolor sit amet, consectetur adipiscing
+                      elit. Vivamus lacinia odio vitae vestibulum vestibulum.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seccion instalaciones-->
+  <section id="instalaciones" class="p-2 instalaciones-bg">
+    <div class="container">
+      <h2 class="h2 text-center">Instalaciones</h2>
+      <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4">
+          <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <img src="img/instalaciones.jpeg" class="img-fluid" alt="...">
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Seccion contacto-->
+  <section id="contacto" class="pt-2  contacto-bg ">
+    <h2 class="text-center">Contacto</h2>
+    <div class="d-flex justify-content-center p-2">
+    <div class="container row">
+      <div class="mapa col-md-6">
+        <div class="row h-100">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3112.9886579559634!2d-62.27961112464322!3d-38.718069386259444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95edbca5014e1a5d%3A0x9039aa43c9238a1b!2sBlandengues%20365%2C%20B8000GIG%20Bah%C3%ADa%20Blanca%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1718401035228!5m2!1ses-419!2sar"
+            style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+
+      <div class="formulario col-md-6">
+        <div class="mb-2">
+          <label for="exampleFormControlInput1" class="form-label">Nombre</label>
+          <input class="form-control" type="text" placeholder="">
+        </div>
+        <div class="mb-2">
+          <label for="exampleFormControlInput1" class="form-label">Apellido</label>
+          <input class="form-control" type="text" placeholder="">
+        </div>
+        <div class="mb-2">
+          <label for="exampleFormControlInput1" class="form-label">Email</label>
+          <input class="form-control" type="text" placeholder="">
+        </div>
+        <div class="mb-2">
+          <label for="exampleFormControlInput1" class="form-label">Telefono</label>
+          <input class="form-control" type="text" placeholder="">
+        </div>
+        <div class="mb-2">
+          <label for="exampleFormControlTextarea1" class="form-label">Mensaje</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <footer class="bg-dark text-white pt-4">
+    <div class="container">
+      <div class="row">
+        <!-- Sección de Información -->
+        <div class="col-md-4">
+          <h5>Hogar Tafi</h5>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sunt voluptatem, deleniti error enim amet
+            mollitia atque dolor cumque assumenda.</p>
+        </div>
+
+        <!-- Sección de Enlaces -->
+        <div class="col-md-4">
+          <h5>Enlaces</h5>
+          <ul class="list-unstyled">
+            <li><a href="#nosotros" class="text-white">Nosotros</a></li>
+            <li><a href="#actividades" class="text-white">Actividades</a></li>
+            <li><a href="#servicios" class="text-white">Servicios</a></li>
+            <li><a href="#contacto" class="text-white">Contacto</a></li>
+          </ul>
+        </div>
+
+        <!-- Sección de Contacto -->
+        <div class="col-md-4">
+          <h5>Contacto</h5>
+          <p>
+            <i class="bi bi-geo-alt-fill"></i> Dirección: Calle Blandengues 365, Bahia Blanca<br>
+            <i class="bi bi-telephone-fill"></i> Teléfono: +15412312123<br>
+            <i class="bi bi-envelope-fill"></i> Email: contacto@hogartafi.com
+          </p>
+        </div>
+      </div>
+
+      <!-- Sección de Derechos Reservados -->
+      <div class="row">
+        <div class="col-12 text-center mt-3">
+          <p class="mb-0">&copy; 2024 Hogar Tafi. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+</body>
+<!--<script src="js/app.js"></script>-->
+
+</html>
