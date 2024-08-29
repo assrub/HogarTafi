@@ -4,26 +4,41 @@ export async function todosLosPacientes() {
   return data;
 }
 
+async function pasarImagenABase64(file) {
+  return new Promise((resolve, reject) => {
+      if (!(file instanceof Blob)) {
+          reject(new Error("El primer parámetro debe ser un objeto de tipo Blob o File."));
+          return;
+      }
 
-export async function registrarPaciente(paciente = {}) {
-  try {
-    const url = "http://localhost:8080/pacientes";
+      const reader = new FileReader();
+      reader.onloadend = () => {
+          resolve(reader.result);
+      };
+      reader.onerror = (error) => {
+          reject(error);
+      };
+      reader.readAsDataURL(file);
+  });
+}
 
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",  
-      },
-      body: JSON.stringify(paciente),  
-    });
+export async function registrarPaciente(formData) {
+    try {
+        
+        
+        const response = await fetch("http://localhost:8080/pacientes", {
+            method: "POST",
+            body: formData,
+        });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+
+
+        return response.ok;
+    } catch (error) {
+        console.error('Error al registrar el paciente:', error);
+        return error;
     }
-
-    return await response.json();
-  } catch (error) {
-    console.error("Error registrando paciente:", error);
-    return error;
-  }
 }

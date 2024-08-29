@@ -7,23 +7,20 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {todosLosPacientes, registrarPaciente} from "./api.js"
 
-async function botonClick() {
+ async function botonClick(){
   const paciente = {
-    dni: 111,
-    nombre: "PROBANDO",
-    apellido: "PUTA MADRE",
-    obraSocial: "MALDITAS CORS",
-    activo: true,
-    observaciones: "Observaciones",
-    fotoFrenteCarnet: "",
-    fotoAtrasCarnet: "",
-    fotoFrenteDni: "",
-    fotoAtrasDni: "",
-  };
-  
-  const datos = await registrarPaciente(paciente);
-  console.log(datos);
-}
+    nombre:"Pepe",
+    apellido:"Garcia",
+    dni:"1",
+    obraSocial:"Pami",
+    fotoFrenteCarnet:'',
+    fotoAtrasCarnet:'',
+    fotoFrenteDni:'',
+    fotoAtrasDni:''
+  }
+  const datos  = await registrarPaciente(paciente);
+  console.log(datos)
+ }
 
 function App() {
 
@@ -37,7 +34,7 @@ function App() {
           <BarraNavegacion />
         </div>
 
-        <div className="bg-white shadow-lg lg:shadow-[#017a98]/50  lg:col-span-4 lg:mx-12 lg:my-6 lg:rounded-lg">
+        <div className="bg-white shadow-lg lg:shadow-[#017a98]/50  md:col-span-4 lg:mx-12 lg:my-6 lg:rounded-lg">
           <Routes>
             <Route path="/todsLospacientes" element={<ListadoPacientes/>} />
             <Route path="/paciente/registrar" element={<RegistrarPacientes />} />

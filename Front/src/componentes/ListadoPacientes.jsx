@@ -60,7 +60,7 @@ function ListadoPacientes() {
   }
   //Cada vez que se cargue la pagina trae los pacientes guardados
   useEffect(() => {
-    traerPacientes();
+    traerPacientes();  
   }, []);
 
 
@@ -68,7 +68,7 @@ function ListadoPacientes() {
 
   return (
     <>
-      <div className="titulo  flex justify-center text-xl lg:text-3xl lg:mt-5 mb-10 ">
+      <div className="titulo flex justify-center text-xl lg:text-3xl lg:mt-5 mb-10 ">
         <h2 className="font-bold">Listado de pacientes</h2>
       </div>
 

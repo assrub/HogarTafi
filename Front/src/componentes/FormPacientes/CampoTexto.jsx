@@ -4,6 +4,8 @@ export default function CampoTexto({
   textoEtiqueta = "",
   propsInput,
   propsLabel,
+  obligatorio,
+  error,
 }) {
   return (
     <div className="mt-4 text-md lg:text-xl">
@@ -14,7 +16,12 @@ export default function CampoTexto({
         {textoEtiqueta}
       </label>
       <div className="">
-        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
+      {error && obligatorio && (
+              <span className="text-sm text-red-500 font-bold ">Rellena este campo</span>
+
+      )}
+        
+        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">          
           <input
             type={propsInput.type}
             name={`${propsInput.name}`}

@@ -63,7 +63,7 @@ function buscarClick(){
   pacientes.forEach(element => {
     if (element.dni == dniPacientes){
       setPaciente(element);
-      
+      console.log(element)
     }
   })
   setcamposDeshabilitados(false)

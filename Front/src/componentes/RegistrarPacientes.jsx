@@ -1,73 +1,52 @@
-import React, { useRef } from "react"; // Importa React y useRef una vez
+import React, { useEffect, useState, useRef } from "react";
 import CampoTexto from "./FormPacientes/CampoTexto";
 import Foto from "./FormPacientes/Foto";
 import Boton from "./Boton";
 import { registrarPaciente } from "../api";
 
-// Componente principal para registrar pacientes
+
+
 function RegistrarPacientes() {
-  // Refs para los inputs de texto y archivos
-  const dniRef = useRef(null);
-  const nombreRef = useRef(null);
-  const apellidoRef = useRef(null);
-  const obraSocialRef = useRef(null);
-  const observacionesRef = useRef(null);
   const fotoFrenteDniRef = useRef(null);
-  const fotoAtrasDniRef = useRef(null);
+  const fotoDorsoDniRef = useRef(null);
   const fotoFrenteCarnetRef = useRef(null);
-  const fotoAtrasCarnetRef = useRef(null);
+  const fotoDorsoCarnetRef = useRef(null);
 
-  // Función para registrar al paciente
-  async function registrar(e) {
-    e.preventDefault();
+  const [campoIncompleto, setCampoIncompleto] = useState(false);
 
-    // Verificar si los refs de archivos están correctamente asignados
-    if (!fotoFrenteDniRef.current || !fotoAtrasDniRef.current || !fotoFrenteCarnetRef.current || !fotoAtrasCarnetRef.current) {
-      console.error("Uno o más inputs de archivos no están correctamente referenciados.");
-      alert("Por favor, verifica que todas las imágenes han sido cargadas.");
+  async function registrar() {
+    const nombrePaciente = document.getElementById("inputNombre").value;
+    const apellidoPaciente = document.getElementById("inputApellido").value;
+    const dniPaciente = document.getElementById("inputDni").value.toString();
+    const obraSocialPaciente = document.getElementById("inputObraSocial").value;
+    const observacionesPaciente = document.getElementById("observaciones").value;
+  
+    const imagenFrenteDni = fotoFrenteDniRef.current.querySelector('input[type="file"]').files[0];
+    const imagenDorsoDni = fotoDorsoDniRef.current.querySelector('input[type="file"]').files[0];
+    const imagenFrenteCarnet = fotoFrenteCarnetRef.current.querySelector('input[type="file"]').files[0];
+    const imagenDorsoCarnet = fotoDorsoCarnetRef.current.querySelector('input[type="file"]').files[0];
+  
+    if (nombrePaciente === "" || apellidoPaciente === "" || dniPaciente === "") {
+      setCampoIncompleto(true);
       return;
+    } else {
+      setCampoIncompleto(false);
     }
-
+  
     const formData = new FormData();
-    formData.append("dni", dniRef.current.value);
-    formData.append("nombre", nombreRef.current.value);
-    formData.append("apellido", apellidoRef.current.value);
-    formData.append("obraSocial", obraSocialRef.current.value);
-    formData.append("observaciones", observacionesRef.current.value);
-
-    // Agregar archivos al FormData solo si están presentes
-    if (fotoFrenteDniRef.current.files[0]) {
-      formData.append("fotoFrenteDni", fotoFrenteDniRef.current.files[0]);
-    }
-    if (fotoAtrasDniRef.current.files[0]) {
-      formData.append("fotoAtrasDni", fotoAtrasDniRef.current.files[0]);
-    }
-    if (fotoFrenteCarnetRef.current.files[0]) {
-      formData.append("fotoFrenteCarnet", fotoFrenteCarnetRef.current.files[0]);
-    }
-    if (fotoAtrasCarnetRef.current.files[0]) {
-      formData.append("fotoAtrasCarnet", fotoAtrasCarnetRef.current.files[0]);
-    }
-
-    try {
-      const response = await fetch("http://localhost:8080/pacientes", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      console.log(data);
-      alert("Paciente registrado con éxito.");
-    } catch (error) {
-      console.error("Error registrando el paciente:", error);
-      alert("Ocurrió un error al registrar el paciente.");
-    }
+    formData.append("nombre", nombrePaciente);
+    formData.append("apellido", apellidoPaciente);
+    formData.append("dni", parseInt(dniPaciente));
+    formData.append("obraSocial", obraSocialPaciente);
+    formData.append("observaciones", observacionesPaciente);
+    formData.append("fotoFrenteDni", imagenFrenteDni);
+    formData.append("fotoAtrasDni", imagenDorsoDni);
+    formData.append("fotoFrenteCarnet", imagenFrenteCarnet);
+    formData.append("fotoAtrasCarnet", imagenDorsoCarnet);
+  
+ 
+    let response = await registrarPaciente(formData);
   }
-
   return (
     <>
       <div className="registrar-pacientes">
@@ -77,85 +56,75 @@ function RegistrarPacientes() {
           </h2>
         </div>
 
-        <div className="formulario grid grid-cols-1 xl:grid-cols-2">
-          <div className="datos border-r mb-6">
-            <form onSubmit={registrar} className="mx-2 lg:mx-10">
+        <div className="formulario grid grid-cols-1  xl:grid-cols-2">
+          <div className="datos  border-r mb-6 ">
+            <form action="" className=" mx-2 lg:mx-10">
               <CampoTexto
                 textoEtiqueta="Nombre"
-                propsLabel={{ labelFor: "inputNombre" }}
+                error={campoIncompleto}
+                obligatorio={true}
+                propsLabel={{ labelFor: "name" }}
                 propsInput={{
-                  type: "text",
-                  name: "nombre",
+                  type: "name",
+                  name: "name",
                   id: "inputNombre",
-                  placeholder: "Ingresa el nombre del paciente",
-                  ref: nombreRef,
+                  placeholder: "Ingrea el nombre del paciente",
                 }}
               ></CampoTexto>
 
               <CampoTexto
                 textoEtiqueta="Apellido"
-                propsLabel={{ labelFor: "inputApellido" }}
+                error={campoIncompleto}
+                obligatorio={true}
+                propsLabel={{ labelFor: "lastName" }}
                 propsInput={{
                   type: "text",
-                  name: "apellido",
+                  name: "lastName",
                   id: "inputApellido",
-                  placeholder: "Ingresa el apellido del paciente",
-                  ref: apellidoRef,
+                  placeholder: "Ingrea el apellido del paciente",
                 }}
               ></CampoTexto>
 
               <CampoTexto
                 textoEtiqueta="DNI"
-                propsLabel={{ labelFor: "inputDni" }}
+                error={campoIncompleto}
+                obligatorio={true}
+                propsLabel={{ labelFor: "dni" }}
                 propsInput={{
                   type: "number",
                   name: "dni",
                   id: "inputDni",
-                  placeholder: "Ingresa el DNI del paciente",
-                  ref: dniRef,
+                  placeholder: "Ingrea el DNI del paciente",
                 }}
               ></CampoTexto>
 
               <CampoTexto
                 textoEtiqueta="Obra social"
-                propsLabel={{ labelFor: "inputObraSocial" }}
+                error={campoIncompleto}
+                propsLabel={{ labelFor: "obraSocial" }}
                 propsInput={{
                   type: "text",
                   name: "obraSocial",
                   id: "inputObraSocial",
-                  placeholder: "Ingresa la Obra Social del paciente",
-                  ref: obraSocialRef,
+                  placeholder: "Ingrea la Obra Social del paciente",
                 }}
               ></CampoTexto>
 
               <div className="observaciones mt-4">
                 <h3 className="text-xl font-medium">Observaciones</h3>
                 <textarea
-                  id="inputObservaciones"
+                  id="observaciones"
                   className="w-full rounded-lg h-56 bg-transparent border-neutral-300 border-2 p-2 resize-none focus:outline-none md:w-9/12"
-                  ref={observacionesRef}
                 ></textarea>
               </div>
             </form>
           </div>
 
-          <div className="fotos grid grid-cols-1 mx-10 justify-items-center gap-x-3 2xl:grid-cols-2 xl:mr-10 xl:justify-items-end">
-            <Foto 
-              textoFoto={"Frente del DNI"} 
-              propsInput={{ ref: fotoFrenteDniRef, type: "file" }} 
-            />
-            <Foto 
-              textoFoto={"Dorso del DNI"} 
-              propsInput={{ ref: fotoAtrasDniRef, type: "file" }} 
-            />
-            <Foto 
-              textoFoto={"Frente del carnet"} 
-              propsInput={{ ref: fotoFrenteCarnetRef, type: "file" }} 
-            />
-            <Foto 
-              textoFoto={"Dorso del Carnet"} 
-              propsInput={{ ref: fotoAtrasCarnetRef, type: "file" }} 
-            />
+          <div className="fotos grid grid-cols-1 mx-2 justify-items-center gap-x-3 lg:mx-10 2xl:grid-cols-2 xl:mr-10 xl:justify-items-end">
+            <Foto textoFoto={"Frente del DNI"} ref={fotoFrenteDniRef} />
+            <Foto textoFoto={"Dorso del DNI"} ref={fotoDorsoDniRef} />
+            <Foto textoFoto={"Frente del carnet"} ref={fotoFrenteCarnetRef} />
+            <Foto textoFoto={"Dorso del Carnet"} ref={fotoDorsoCarnetRef} />
           </div>
         </div>
         <hr />
