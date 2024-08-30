@@ -5,20 +5,11 @@ import RegistrarPacientes from "./componentes/RegistrarPacientes";
 import ListadoPacientes from "./componentes/ListadoPacientes";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import {todosLosPacientes, registrarPaciente} from "./api.js"
+import {todosLosPacientes, registrarPaciente, desactivarPAcientes} from "./api.js"
 
  async function botonClick(){
-  const paciente = {
-    nombre:"Pepe",
-    apellido:"Garcia",
-    dni:"1",
-    obraSocial:"Pami",
-    fotoFrenteCarnet:'',
-    fotoAtrasCarnet:'',
-    fotoFrenteDni:'',
-    fotoAtrasDni:''
-  }
-  const datos  = await registrarPaciente(paciente);
+  
+  const datos  = await desactivarPAcientes(12345678);
   console.log(datos)
  }
 

@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import TablaStock from "./FormPacientes/TablaStock";
 import TablaMedicamentos from "./FormPacientes/TablaMedicamentos";
 import { useLocation } from 'react-router-dom';
-import {todosLosPacientes} from "../api"
+import {todosLosPacientes, modificarPaciente} from "../api"
 
 function FormPacientes() {
 
@@ -14,7 +14,18 @@ function FormPacientes() {
   const [mostrarMedicamentos, SetMostrarMedicamentos] = useState(false);
   const [mostrarFotos, setMostrarFotos] = useState(false);
   const [camposDeshabilitados,setcamposDeshabilitados] = useState(true); 
-  const [paciente, setPaciente] = useState(null);
+  const [paciente, setPaciente] = useState({
+    nombre: "",
+    apellido: "",
+    dni: "",
+    obraSocial: "",
+    observaciones: "",
+    fotoFrenteDni: "",
+    fotoAtrasDni: "",
+    fotoFrenteCarnet: "",
+    fotoAtrasCarnet: ""
+  });
+  
   const [pacientes, setPacientes] = useState([]);//array de todos los pacientes
   const location = useLocation();
 
@@ -49,7 +60,9 @@ function funcionMostrarTablaMedicamentos(){
 
 async function traerPacientes() {
   const datos = await todosLosPacientes();
-  setPacientes(datos);
+  const datosFiltrados = datos.filter((paciente) => paciente !== null);
+  setPacientes(datosFiltrados);
+
 }
 
 //Cada vez que se cargue la pagina trae los pacientes guardados
@@ -123,7 +136,29 @@ function buscarClick(){
   ];
   
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setPaciente((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
 
+  async function modificar(paciente){
+
+    const formData = new FormData();
+    formData.append("nombre", paciente.nombre);
+    formData.append("apellido", paciente.apellido);
+    formData.append("dni", parseInt(paciente.dni));
+    formData.append("obraSocial", paciente.obraSocial);
+    formData.append("observaciones", paciente.observaciones);
+    formData.append("fotoFrenteDni", paciente.fotoFrenteDni);
+    formData.append("fotoAtrasDni", paciente.fotoAtrasDni);
+    formData.append("fotoFrenteCarnet", paciente.fotoFrenteDni);
+    formData.append("fotoAtrasCarnet", paciente.fotoAtrasDni);
+  
+    const response = modificarPaciente(parseInt(paciente.dni), formData)
+  }
 
 
   return (
@@ -149,65 +184,67 @@ function buscarClick(){
 
         <div className="formulario  grid grid-cols-1 mx-2 justify-items-center ">
           <div className="datos w-full mb-6 ">
-            <form action="" className=" ">
-              <CampoTexto
-                textoEtiqueta="Nombre"
-                propsLabel={{ labelFor: "name" }}
-                propsInput={{
-                  type: "name",
-                  name: "name",
-                  id: "inputNombre",
-                  disabled:camposDeshabilitados,
-                  value:paciente ?  paciente.nombre : ""
-                }}
-              ></CampoTexto>
+          <form>
+      <CampoTexto
+        textoEtiqueta="Nombre"
+        propsLabel={{ labelFor: "name" }}
+        propsInput={{
+          type: "text",
+          name: "nombre",
+          id: "inputNombre",
+          value: paciente.nombre,
+          onChange: handleInputChange
+        }}
+      />
 
-              <CampoTexto
-                textoEtiqueta="Apellido"
-                propsLabel={{ labelFor: "lastName" }}
-                propsInput={{
-                  type: "text",
-                  name: "lastName",
-                  id: "inputApellido",
-                  disabled:camposDeshabilitados,
-                  value:paciente ?  paciente.apellido : ""
-                  
-                }}
-              ></CampoTexto>
+      <CampoTexto
+        textoEtiqueta="Apellido"
+        propsLabel={{ labelFor: "lastName" }}
+        propsInput={{
+          type: "text",
+          name: "apellido",
+          id: "inputApellido",
+          value: paciente.apellido,
+          onChange: handleInputChange
+        }}
+      />
 
-              <CampoTexto
-                textoEtiqueta="DNI"
-                propsLabel={{ labelFor: "dni" }}
-                propsInput={{
-                  type: "number",
-                  name: "dni",
-                  id: "inputNDni",
-                  disabled:camposDeshabilitados,
-                  value:paciente ?  paciente.dni : ""
-                }}
-              ></CampoTexto>
+      <CampoTexto
+        textoEtiqueta="DNI"
+        propsLabel={{ labelFor: "dni" }}
+        propsInput={{
+          type: "number",
+          name: "dni",
+          id: "inputNDni",
+          value: paciente.dni,
+          onChange: handleInputChange
+        }}
+      />
 
-              <CampoTexto
-                textoEtiqueta="Obra social"
-                propsLabel={{ labelFor: "obraSocial" }}
-                propsInput={{
-                  type: "text",
-                  name: "obraSocial",
-                  id: "inputObraSocial",
-                  disabled:camposDeshabilitados,
-                  value:paciente ?  paciente.obraSocial : ""
-                }}
-              ></CampoTexto>
+      <CampoTexto
+        textoEtiqueta="Obra social"
+        propsLabel={{ labelFor: "obraSocial" }}
+        propsInput={{
+          type: "text",
+          name: "obraSocial",
+          id: "inputObraSocial",
+          value: paciente.obraSocial,
+          onChange: handleInputChange
+        }}
+      />
 
-              <div className="observaciones mt-4">
+
+<div className="observaciones mt-4">
                 <label htmlFor="observaciones" className="text-xl font-medium ">Observaciones</label>
                 <textarea name="observaciones" className=" w-full rounded-lg h-56 bg-transparent
                  border-neutral-300 border-2 
                  p-2 resize-none focus:outline-none  
                  disabled:bg-gray-300
-                enabled:bg-transparent" value={paciente ?  paciente.observaciones : "" }disabled={camposDeshabilitados}></textarea>
+                enabled:bg-transparent" value={paciente.observaciones}
+                onChange={handleInputChange}></textarea>
               </div>
-            </form>
+  
+    </form>
           </div>
 
           
@@ -231,10 +268,10 @@ function buscarClick(){
           {mostrarFotos && (
             <div>
               <div className="fotos grid grid-cols-1 md:grid-cols-2  justify-items-center gap-x-3 xl:mr-10 ">
-            <Foto textoFoto={"Frente del DNI"}  />
-            <Foto textoFoto={"Dorso del DNI"} />
-            <Foto textoFoto={"Frente del carnet"} />
-            <Foto textoFoto={"Dorso del carnet"} />
+            <Foto textoFoto={"Frente del DNI"} src={paciente.fotoFrenteDni} />
+            <Foto textoFoto={"Dorso del DNI"} src={paciente.fotoAtrasDni} />
+            <Foto textoFoto={"Frente del carnet"} src={paciente.fotoFrenteCarnet}/>
+            <Foto textoFoto={"Dorso del carnet"} src={paciente.fotoAtrasCarnet}/>
           </div>
             </div>
           )}
@@ -247,6 +284,11 @@ function buscarClick(){
           )}
         </div>
         </div>
+
+        <div className="grid justify-items-center m-4">
+          <Boton textoBoton="Modificar datos del paciente" onClick={()=> modificar(paciente)} ></Boton>
+        </div>
+
       </div>
     </>
   );

@@ -12,6 +12,7 @@
 /app/src/main/java/com/hogarTafi/hogarTafi/Servicio/impl/ServicioPacientesImpl.java
 /app/src/main/java/com/hogarTafi/hogarTafi/Entidad/Horario.java
 /app/src/main/java/com/hogarTafi/hogarTafi/Consulta/BuscarUsuarioPorDniConsulta.java
+/app/src/main/java/com/hogarTafi/hogarTafi/Controlador/prueba.java
 /app/src/main/java/com/hogarTafi/hogarTafi/Consulta/BuscarStockPorPacienteConsulta.java
 /app/src/main/java/com/hogarTafi/hogarTafi/Consulta/GuardarPacienteConsulta.java
 /app/src/main/java/com/hogarTafi/hogarTafi/Servicio/ServicioPacientes.java

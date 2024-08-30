@@ -3,7 +3,7 @@ import Boton from "../Boton";
 import { useRef, useState} from "react";
 
 
-const Foto = forwardRef(({ textoFoto, propsBoton }, ref) => {
+const Foto = forwardRef(({ textoFoto, propsBoton, src = "" }, ref) => {
   const [imagenSrc, setImagenSrc] = useState("/carnetEjemplo.png");
   const fileInputRef = useRef(null);
 
@@ -21,7 +21,12 @@ const Foto = forwardRef(({ textoFoto, propsBoton }, ref) => {
 
   return (
     <div ref={ref} className="mb-6 tarjeta flex flex-col items-center border rounded-lg md:w-full">
-      <img src={imagenSrc} id={`imagen-${textoFoto}`} alt="" className="rounded-lg w-full lg:max-w-72 lg:max-h-72 lg:min-w-40 lg:min-h-40" />
+      <img 
+        src={src !== "" ? `data:image/jpeg;base64,${src}` : imagenSrc}
+        id={`imagen-${textoFoto}`} 
+        alt="" 
+        className="rounded-lg w-full lg:max-w-72 lg:max-h-72 lg:min-w-40 lg:min-h-40" 
+      />
       <h3 className="text-xl m-4">
         <strong>{textoFoto}</strong>
       </h3>

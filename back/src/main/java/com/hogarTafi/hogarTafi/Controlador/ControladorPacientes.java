@@ -31,6 +31,9 @@ public class ControladorPacientes {
         List<Paciente> pacientes = servicioPacientes.todosLosPacientes();
         List<Map<String, Object>> pacientesConFotos = pacientes.stream().map(paciente -> {
             Map<String, Object> pacienteMap = new HashMap<>();
+
+        if (paciente.getActivo())
+        {
             pacienteMap.put("dni", paciente.getDni());
             pacienteMap.put("nombre", paciente.getNombre());
             pacienteMap.put("apellido", paciente.getApellido());
@@ -50,6 +53,11 @@ public class ControladorPacientes {
             if (paciente.getFotoAtrasDni() != null) {
                 pacienteMap.put("fotoAtrasDni", convertirABase64(paciente.getFotoAtrasDni()));
             }
+        }
+        else
+        {
+            return null;
+        }
 
             return pacienteMap;
         }).collect(Collectors.toList());

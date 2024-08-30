@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
-import {todosLosPacientes} from "../api"
+import { todosLosPacientes, desactivarPAcientes } from "../api";
 
 function ListadoPacientes() {
-  
   const [pacientes, setPacientes] = useState([]);
   //datos para probar cuando no hay api
   const datosEjemplo = [
@@ -52,19 +51,28 @@ function ListadoPacientes() {
       obraSocial: "Osecac",
     },
   ];
-  
 
   async function traerPacientes() {
     const datos = await todosLosPacientes();
-    setPacientes(datos);
+    const datosFiltrados = datos.filter((paciente) => paciente !== null);
+    setPacientes(datosFiltrados);
+  
   }
   //Cada vez que se cargue la pagina trae los pacientes guardados
   useEffect(() => {
-    traerPacientes();  
+    traerPacientes();
+    
   }, []);
 
-
-
+  async function desactivar(dni) {
+    try {
+      const datos = await desactivarPAcientes(parseInt(dni));
+      //Actualiza el estado de pacientes, asi desaparece de la lista.
+      setPacientes(pacientes.filter(paciente => paciente.dni !== dni));
+    } catch (error){
+      console.error(error);
+    }
+  }
 
   return (
     <>
@@ -109,7 +117,10 @@ function ListadoPacientes() {
                      text-red-600 font-bold border-b rounded-lg hover:bg-red-200
                       border-black"
                   >
-                    <button className="px-5 ">
+                    <button
+                      className="px-5"
+                      onClick={() => desactivar(paciente.dni)}
+                    >
                       <DeleteForeverIcon /> Eliminar
                     </button>
                   </div>
@@ -120,7 +131,7 @@ function ListadoPacientes() {
                     <Link
                       className="px-5 "
                       to={"/paciente/modificar"}
-                      state={{paciente:paciente}}
+                      state={{ paciente: paciente }}
                     >
                       <EditIcon />
                       Modificar
