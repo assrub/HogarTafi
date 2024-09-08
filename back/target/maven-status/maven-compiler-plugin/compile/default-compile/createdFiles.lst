@@ -7,6 +7,7 @@ com/hogarTafi/hogarTafi/Consulta/BuscarHorarioMedicamentosPorPacienteConsulta.cl
 com/hogarTafi/hogarTafi/Consulta/GuardarPacienteConsulta$GuardarPacienteConsultaBuilder.class
 com/hogarTafi/hogarTafi/Servicio/ServicioPacientes.class
 com/hogarTafi/hogarTafi/Consulta/ActualizarPacienteConsulta$ActualizarPacienteConsultaBuilder.class
+com/hogarTafi/hogarTafi/Controlador/prueba.class
 com/hogarTafi/hogarTafi/Entidad/Paciente.class
 com/hogarTafi/hogarTafi/Entidad/Horario.class
 com/hogarTafi/hogarTafi/Repositorio/RepositorioPaciente.class

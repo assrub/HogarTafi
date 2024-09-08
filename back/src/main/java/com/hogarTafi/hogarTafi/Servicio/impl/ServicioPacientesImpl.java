@@ -1,16 +1,16 @@
 package com.hogarTafi.hogarTafi.Servicio.impl;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.hogarTafi.hogarTafi.Consulta.ActualizarPacienteConsulta;
 import com.hogarTafi.hogarTafi.Consulta.OcultarPacienteConsulta;
 import com.hogarTafi.hogarTafi.Entidad.Paciente;
 import com.hogarTafi.hogarTafi.Repositorio.RepositorioPaciente;
 import com.hogarTafi.hogarTafi.Servicio.ServicioPacientes;
-import io.micrometer.common.util.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class ServicioPacientesImpl implements ServicioPacientes {
@@ -64,13 +64,15 @@ public class ServicioPacientesImpl implements ServicioPacientes {
         // Buscar el paciente existente por DNI
         Paciente existePaciente = repositorioPacientes.findByDni(consulta.getDni())
                 .orElseThrow(() -> new NoSuchElementException("Paciente con el DNI " + consulta.getDni() + " no se encontró."));
-
+        
         // Actualizar los campos permitidos del paciente
         existePaciente.setNombre(consulta.getNombre());
         existePaciente.setApellido(consulta.getApellido());
         existePaciente.setObraSocial(consulta.getObraSocial());
         existePaciente.setObservaciones(consulta.getObservaciones());
 
+
+        
         // Guardar los cambios en la base de datos
         repositorioPacientes.save(existePaciente);
         return true;

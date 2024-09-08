@@ -12,11 +12,6 @@ export async function registrarPaciente(formData) {
             body: formData,
         });
 
-        for (let [key, value] of formData.entries()) {
-            console.log(`${key}:`, value);
-        }
-
-
         return response.ok;
     } catch (error) {
         console.error('Error al registrar el paciente:', error);
@@ -40,4 +35,19 @@ export async function modificarPaciente(dni, formData){
     });
     return response
 
+}
+
+export async function guardarStockApi(formData, dni){
+    try {
+               
+        const response = await fetch(`http://localhost:8080/stock/${dni}`, {
+            method: "POST",
+            body: formData,
+        });
+
+        return response.ok;
+    } catch (error) {
+        console.error('Error al registrar el stock del paciente:', error);
+        return error;
+    }
 }

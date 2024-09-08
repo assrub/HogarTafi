@@ -57,7 +57,7 @@ export function BarraNavegacion() {
                 <div className="flex flex-col items-left h-full w-full ring ring-[#017a98] rounded-lg mt-2">
                   <div className="mostrarPacientes p-3">
                     <Link
-                      to="/todsLospacientes"
+                      to="todosLospacientes"
                       className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
                     >
                       <AssistWalkerIcon className="text-[#017a98]" /> Listar
@@ -66,7 +66,7 @@ export function BarraNavegacion() {
                   </div>
                   <div className="registrar p-3">
                     <Link
-                      to="/paciente/registrar"
+                      to="paciente/registrar"
                       className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
                     >
                       <AutoStoriesIcon className="text-[#017a98]" />
@@ -75,7 +75,7 @@ export function BarraNavegacion() {
                   </div>
                   <div className="modificar p-3">
                     <Link
-                      to="/paciente/modificar"
+                      to="paciente/modificar"
                       className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
                     >
                       <CreateIcon className="text-[#017a98]" />
@@ -88,7 +88,7 @@ export function BarraNavegacion() {
 
             <div className="stock-del-hogar p-3">
               <Link
-                to="/stockDelHogar"
+                to="stockDelHogar"
                 className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
               >
                 <MedicationIcon className="text-[#017a98]" />
@@ -98,7 +98,7 @@ export function BarraNavegacion() {
 
             <div className="pedidos p-3">
               <Link
-                to="/pedidos"
+                to="pedidos"
                 className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
               >
                 <ShoppingCartIcon className="text-[#017a98]" />
@@ -108,7 +108,7 @@ export function BarraNavegacion() {
 
             <div className="lista-de-usuarios p-3">
               <Link
-                to="/listaDeUsuarios"
+                to="listaDeUsuarios"
                 className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
               >
                 <FormatListBulletedIcon className="text-[#017a98]" />
@@ -119,7 +119,7 @@ export function BarraNavegacion() {
         </div>
 
         <div className="hidden lg:block cerrar-sesion lg:ml-6 lg:p-3">
-          <Link to="/cerrarSesion" className="underline">
+          <Link to="cerrarSesion" className="underline">
             Cerrar sesión
           </Link>
         </div>
@@ -156,7 +156,7 @@ export function BarraNavegacion() {
             <span className="mt-4">Nombre de usuario</span>
             <span className="opacity-70">Admin</span>
             <Link
-              to="/perfil"
+              to="perfil"
               onClick={cerrarMenuHamburguesa}
               className="block underline"
             >
@@ -178,7 +178,7 @@ export function BarraNavegacion() {
                 <div className="flex flex-col items-start mt-4 ml-6 w-full">
                   <Link
                   onClick={cerrarMenuHamburguesa}
-                    to="/todsLospacientes"
+                    to="todosLospacientes"
                     className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
                   >
                     <AssistWalkerIcon className="text-[#017a98]" /> Listar
@@ -187,7 +187,7 @@ export function BarraNavegacion() {
 
                   <Link
                     onClick={cerrarMenuHamburguesa}
-                    to="/paciente/registrar"
+                    to="paciente/registrar"
                     className="mb-2"
                   >
                     <AutoStoriesIcon className="text-[#017a98]" />
@@ -195,7 +195,7 @@ export function BarraNavegacion() {
                   </Link>
                   <Link
                     onClick={cerrarMenuHamburguesa}
-                    to="/paciente/modificar"
+                    to="paciente/modificar"
                   >
                     <CreateIcon className="text-[#017a98]" />
                     Modificar
@@ -204,7 +204,7 @@ export function BarraNavegacion() {
               )}
             </div>
             <Link
-              to="/stockDelHogar"
+              to="stockDelHogar"
               onClick={cerrarMenuHamburguesa}
               className="p-3 mt-4"
             >
@@ -212,7 +212,7 @@ export function BarraNavegacion() {
               Stock del hogar
             </Link>
             <Link
-              to="/pedidos"
+              to="pedidos"
               onClick={cerrarMenuHamburguesa}
               className="p-3 mt-4"
             >
@@ -220,7 +220,7 @@ export function BarraNavegacion() {
               Pedidos
             </Link>
             <Link
-              to="/listaDeUsuarios"
+              to="listaDeUsuarios"
               onClick={cerrarMenuHamburguesa}
               className="p-3 mt-4"
             >
@@ -230,7 +230,7 @@ export function BarraNavegacion() {
           </div>
           <div className="cerrar-sesion flex flex-grow items-end p-3">
             <Link
-              to="/cerrarSesion"
+              to="cerrarSesion"
               onClick={cerrarMenuHamburguesa}
               className="underline"
             >

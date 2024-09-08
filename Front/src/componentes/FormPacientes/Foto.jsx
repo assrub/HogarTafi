@@ -13,6 +13,13 @@ const Foto = forwardRef(({ textoFoto, propsBoton, src = "" }, ref) => {
     }
   }, [ref]);
 
+  useEffect(() => {
+    if (src) {
+      setImagenSrc(`data:image/jpeg;base64,${src}`);
+    }
+  }, [src]);
+
+
   const cargarImagen = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -22,7 +29,7 @@ const Foto = forwardRef(({ textoFoto, propsBoton, src = "" }, ref) => {
   return (
     <div ref={ref} className="mb-6 tarjeta flex flex-col items-center border rounded-lg md:w-full">
       <img 
-        src={src !== "" ? `data:image/jpeg;base64,${src}` : imagenSrc}
+        src={imagenSrc}
         id={`imagen-${textoFoto}`} 
         alt="" 
         className="rounded-lg w-full lg:max-w-72 lg:max-h-72 lg:min-w-40 lg:min-h-40" 
@@ -42,7 +49,8 @@ const Foto = forwardRef(({ textoFoto, propsBoton, src = "" }, ref) => {
           if (file) {
             const reader = new FileReader();
             reader.onload = () => {
-              setImagenSrc(reader.result);
+              const base64String = reader.result.replace(/^data:image\/(png|jpeg);base64,/, '');
+              setImagenSrc(`data:image/jpeg;base64,${base64String}`);
             };
             reader.readAsDataURL(file);
           }

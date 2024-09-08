@@ -130,7 +130,7 @@ function ListadoPacientes() {
                   >
                     <Link
                       className="px-5 "
-                      to={"/paciente/modificar"}
+                      to={"/UserPanel/paciente/modificar"}
                       state={{ paciente: paciente }}
                     >
                       <EditIcon />

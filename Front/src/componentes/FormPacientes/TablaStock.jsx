@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef } from "react";
 
 
-const TablaStock = () => {
+const TablaStock =forwardRef(({}, ref) => {
   const [rows, setRows] = useState([{ medicacion: '', cantidad: '', cantidadMinima: '', added: false }]);
 
   const handleInputChange = (index, event) => {
@@ -27,6 +27,8 @@ const TablaStock = () => {
     }
   };
 
+  
+
   const handleClearContent = (index) => {
     const newRows = [...rows];
     newRows[index] = { medicacion: '', cantidad: '', cantidadMinima: '', added: false };
@@ -35,10 +37,10 @@ const TablaStock = () => {
 
   return (
     <div className="overflow-x-auto rounded-xl">
-      <table className=" w-full bg-transparent mb-10">
+      <table className=" w-full bg-transparent mb-10" ref={ref}>
         <thead>
           <tr>
-            <th className="px-4 py-2 border border-[#181818]">Droga/Medicacion</th>
+            <th className="px-4 py-2 border border-[#181818]">Medicacion</th>
             <th className="px-4 py-2 border border-[#181818]">Cantidad</th>
             <th className="px-4 py-2 border border-[#181818]">Cantidad minima</th>
             <th className="px-4 py-2 border border-[#181818]">Acciones</th>
@@ -169,6 +171,6 @@ const TablaStock = () => {
       </table>
     </div>
   );
-};
+});
 
 export default TablaStock;
