@@ -32,13 +32,13 @@ export function BarraNavegacion() {
           <div className="perfil flex flex-col items-start mt-6 p-3 ml-6">
             <img
               src="/foto-avatar.webp"
-              className="w-1/5 rounded-3xl"
+              className="w-1/5 rounded-full"
               alt="foto de perfil"
             />
             <span className="mt-4">Nombre de usuario</span>
             <span className="opacity-70">Admin</span>
 
-            <Link to="/perfil" className="block underline">
+            <Link to="perfil" className="block underline">
               Ver perfil
             </Link>
           </div>
@@ -136,7 +136,7 @@ export function BarraNavegacion() {
 
       {menuHamburguesa && (
         <div
-          className={`fixed inset-0 bg-white flex flex-col items-start p-8 transform transition-transform duration-700 ease-in-out`}
+          className={`fixed inset-0 bg-white flex flex-col items-start p-8 transform transition-transform duration-700 z-10 ease-in-out`}
           style={{
             transform: menuHamburguesa ? "translateX(0)" : "translateX(-100%)",
           }}
@@ -150,7 +150,7 @@ export function BarraNavegacion() {
           <div className="perfil flex flex-col items-start mt-6">
             <img
               src="/foto-avatar.webp"
-              className="w-20 rounded-3xl"
+              className="w-20 rounded-full"
               alt="foto de perfil"
             />
             <span className="mt-4">Nombre de usuario</span>

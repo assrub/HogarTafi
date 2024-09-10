@@ -1,5 +1,6 @@
 package com.hogarTafi.hogarTafi.Servicio.impl;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -51,7 +52,9 @@ public class ServicioPacientesImpl implements ServicioPacientes {
         return true; // Paciente registrado con éxito
     }
 
-
+    private String convertirABase64(byte[] bytes) {
+        return Base64.getEncoder().encodeToString(bytes);
+    }
 
     @Override
     public Paciente buscarPaciente(Integer dni) {
@@ -70,8 +73,11 @@ public class ServicioPacientesImpl implements ServicioPacientes {
         existePaciente.setApellido(consulta.getApellido());
         existePaciente.setObraSocial(consulta.getObraSocial());
         existePaciente.setObservaciones(consulta.getObservaciones());
-
-
+        System.out.println(consulta.getFotoAtrasCarnet().getClass().getName());
+        existePaciente.setFotoFrenteDni(consulta.getFotoFrenteDni().getBytes());
+        existePaciente.setFotoAtrasDni(consulta.getFotoAtrasDni().getBytes());
+        existePaciente.setFotoFrenteCarnet(consulta.getFotoFrenteCarnet().getBytes());
+        existePaciente.setFotoAtrasCarnet(consulta.getFotoAtrasCarnet().getBytes());
         
         // Guardar los cambios en la base de datos
         repositorioPacientes.save(existePaciente);

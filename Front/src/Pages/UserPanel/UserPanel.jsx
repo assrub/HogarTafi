@@ -5,6 +5,7 @@ import RegistrarPacientes from "../../componentes/RegistrarPacientes";
 import ListadoPacientes from "../../componentes/ListadoPacientes";
 import "../../App.css";
 import { desactivarPAcientes } from "../../api.js";
+import Perfil from "../../componentes/perfil.jsx";
 
 async function botonClick() {
   const datos = await desactivarPAcientes(12345678);
@@ -30,11 +31,12 @@ function UserPanel() {
             <Route path="stockDelHogar" />
             <Route path="pedidos" />
             <Route path="listaDeUsuarios" />
+            <Route path="perfil" element={<Perfil/>}/>
           </Routes>
         </div>
       </div>
 
-      <div className="botonDePrueba">
+      <div className="botonDePrueba hidden">
         <button
           onClick={botonClick}
           className="p-8 text-xl bg-red-500 text-white rounded-lg"
