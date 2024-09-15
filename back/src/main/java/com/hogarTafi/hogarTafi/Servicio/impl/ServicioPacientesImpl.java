@@ -68,21 +68,14 @@ public class ServicioPacientesImpl implements ServicioPacientes {
         String obraSocial,
         Boolean activo,
         String observaciones,
-        byte[] fotoFrenteCarnet,
-        byte[] fotoAtrasCarnet,
-        byte[] fotoFrenteDni,
-        byte[] fotoAtrasDni
+        byte[] fotoFrenteCarnetBytes,
+        byte[] fotoAtrasCarnetBytes,
+        byte[] fotoFrenteDniBytes,
+        byte[] fotoAtrasDniBytes
 ) {
     // Obtener el paciente existente
     Paciente paciente = repositorioPacientes.findByDni(dni)
             .orElseThrow(() -> new NoSuchElementException("Paciente no encontrado."));
-
-
-
-        byte[] fotoFrenteCarnetBytes = fotoFrenteCarnet != null ? fotoFrenteCarnet.getBytes() : null;
-        byte[] fotoAtrasCarnetBytes = fotoAtrasCarnet != null ? fotoAtrasCarnet.getBytes() : null;
-        byte[] fotoFrenteDniBytes = fotoFrenteDni != null ? fotoFrenteDni.getBytes() : null;
-        byte[] fotoAtrasDniBytes = fotoAtrasDni != null ? fotoAtrasDni.getBytes() : null;
 
     // Actualizar solo los campos proporcionados
     if (nombre != null) paciente.setNombre(nombre);
