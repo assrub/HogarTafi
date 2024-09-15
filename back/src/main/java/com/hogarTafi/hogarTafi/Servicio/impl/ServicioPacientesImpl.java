@@ -61,28 +61,41 @@ public class ServicioPacientesImpl implements ServicioPacientes {
         return repositorioPacientes.findByDni(dni).orElseThrow(() -> new NoSuchElementException("Paciente con el DNI " + dni + " no se encontró."));
     }
 
-    @Override
-    public boolean modificarPaciente(ActualizarPacienteConsulta consulta) {
+    public boolean modificarPaciente(
+        Integer dni,
+        String nombre,
+        String apellido,
+        String obraSocial,
+        Boolean activo,
+        String observaciones,
+        byte[] fotoFrenteCarnetBytes,
+        byte[] fotoAtrasCarnetBytes,
+        byte[] fotoFrenteDniBytes,
+        byte[] fotoAtrasDniBytes
+) {
+    // Obtener el paciente existente
+    Paciente paciente = repositorioPacientes.findByDni(dni)
+            .orElseThrow(() -> new NoSuchElementException("Paciente no encontrado."));
 
-        // Buscar el paciente existente por DNI
-        Paciente existePaciente = repositorioPacientes.findByDni(consulta.getDni())
-                .orElseThrow(() -> new NoSuchElementException("Paciente con el DNI " + consulta.getDni() + " no se encontró."));
-        
-        // Actualizar los campos permitidos del paciente
-        existePaciente.setNombre(consulta.getNombre());
-        existePaciente.setApellido(consulta.getApellido());
-        existePaciente.setObraSocial(consulta.getObraSocial());
-        existePaciente.setObservaciones(consulta.getObservaciones());
-        System.out.println(consulta.getFotoAtrasCarnet().getClass().getName());
-        existePaciente.setFotoFrenteDni(consulta.getFotoFrenteDni().getBytes());
-        existePaciente.setFotoAtrasDni(consulta.getFotoAtrasDni().getBytes());
-        existePaciente.setFotoFrenteCarnet(consulta.getFotoFrenteCarnet().getBytes());
-        existePaciente.setFotoAtrasCarnet(consulta.getFotoAtrasCarnet().getBytes());
-        
-        // Guardar los cambios en la base de datos
-        repositorioPacientes.save(existePaciente);
-        return true;
-    }
+    // Actualizar solo los campos proporcionados
+    if (nombre != null) paciente.setNombre(nombre);
+    if (apellido != null) paciente.setApellido(apellido);
+    if (obraSocial != null) paciente.setObraSocial(obraSocial);
+    if (activo != null) paciente.setActivo(activo);
+    if (observaciones != null) paciente.setObservaciones(observaciones);
+
+    if (fotoFrenteCarnetBytes != null) paciente.setFotoFrenteCarnet(fotoFrenteCarnetBytes);
+    if (fotoAtrasCarnetBytes != null) paciente.setFotoAtrasCarnet(fotoAtrasCarnetBytes);
+    if (fotoFrenteDniBytes != null) paciente.setFotoFrenteDni(fotoFrenteDniBytes);
+    if (fotoAtrasDniBytes != null) paciente.setFotoAtrasDni(fotoAtrasDniBytes);
+
+    // Guardar los cambios
+    repositorioPacientes.save(paciente);
+
+    // Devolver verdadero si el paciente fue modificado correctamente
+    return true;
+}
+
     @Override
     public boolean desactivarPaciente(OcultarPacienteConsulta consulta) {
        Paciente existePaciente = buscarPaciente(consulta.getDni());

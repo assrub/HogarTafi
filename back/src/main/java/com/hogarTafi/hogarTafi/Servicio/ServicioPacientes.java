@@ -17,5 +17,14 @@ public interface ServicioPacientes {
 
     boolean desactivarPaciente(OcultarPacienteConsulta consulta);
 
-    boolean modificarPaciente(ActualizarPacienteConsulta consulta);
+    boolean modificarPaciente(Integer dni,
+                              String nombre,
+                              String apellido,
+                              String obraSocial,
+                              Boolean activo,
+                              String observaciones,
+                              byte[] fotoFrenteCarnetBytes,
+                              byte[] fotoAtrasCarnetBytes,
+                              byte[] fotoFrenteDniBytes,
+                              byte[] fotoAtrasDniBytes);
 }

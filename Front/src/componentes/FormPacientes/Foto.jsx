@@ -19,7 +19,6 @@ const Foto = forwardRef(({ textoFoto, propsBoton, src = "" }, ref) => {
     }
   }, [src]);
 
-
   const cargarImagen = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();

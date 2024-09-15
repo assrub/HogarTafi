@@ -188,7 +188,7 @@ export function BarraNavegacion() {
                   <Link
                     onClick={cerrarMenuHamburguesa}
                     to="paciente/registrar"
-                    className="mb-2"
+                    className="mb-2 relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
                   >
                     <AutoStoriesIcon className="text-[#017a98]" />
                     Registrar
@@ -196,8 +196,9 @@ export function BarraNavegacion() {
                   <Link
                     onClick={cerrarMenuHamburguesa}
                     to="paciente/modificar"
+                    className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
                   >
-                    <CreateIcon className="text-[#017a98]" />
+                    <CreateIcon className="text-[#017a98] " />
                     Modificar
                   </Link>
                 </div>
@@ -206,7 +207,7 @@ export function BarraNavegacion() {
             <Link
               to="stockDelHogar"
               onClick={cerrarMenuHamburguesa}
-              className="p-3 mt-4"
+              className="px-3 mt-4 relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
             >
               <MedicationIcon className="text-[#017a98]" />
               Stock del hogar
@@ -214,7 +215,7 @@ export function BarraNavegacion() {
             <Link
               to="pedidos"
               onClick={cerrarMenuHamburguesa}
-              className="p-3 mt-4"
+              className="px-3 mt-4 relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
             >
               <ShoppingCartIcon className="text-[#017a98]" />
               Pedidos
@@ -222,7 +223,7 @@ export function BarraNavegacion() {
             <Link
               to="listaDeUsuarios"
               onClick={cerrarMenuHamburguesa}
-              className="p-3 mt-4"
+              className="px-3 mt-4 relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
             >
               <FormatListBulletedIcon className="text-[#017a98]" />
               Lista de usuarios
