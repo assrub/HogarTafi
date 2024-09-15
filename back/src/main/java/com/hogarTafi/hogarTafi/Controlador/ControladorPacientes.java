@@ -13,10 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -117,26 +117,63 @@ public class ControladorPacientes {
     }
 
     @PatchMapping("/modificar/{dni}")
-    public ResponseEntity<Map<String, String>> modificarPaciente(@PathVariable Integer dni, @RequestBody ActualizarPacienteConsulta consulta) {
-        consulta.setDni(dni);
+    public ResponseEntity<Map<String, String>> modificarPaciente(
+            @PathVariable Integer dni,
+            @RequestParam(value = "nombre", required = false) String nombre,
+            @RequestParam(value = "apellido", required = false) String apellido,
+            @RequestParam(value = "obraSocial", required = false) String obraSocial,
+            @RequestParam(value = "observaciones", required = false) String observaciones,
+            @RequestParam(value = "activo", required = false) Boolean activo,
+            @RequestParam(value = "fotoFrenteCarnet", required = false) String fotoFrenteCarnetBase64,
+            @RequestParam(value = "fotoAtrasCarnet", required = false) String fotoAtrasCarnetBase64,
+            @RequestParam(value = "fotoFrenteDni", required = false) String fotoFrenteDniBase64,
+            @RequestParam(value = "fotoAtrasDni", required = false) String fotoAtrasDniBase64
+    ) {
         Map<String, String> response = new HashMap<>();
-
         try {
-            if (servicioPacientes.modificarPaciente(consulta)) {
+    
+            System.out.println("Nombre: " + nombre);
+            System.out.println("Apellido: " + apellido);
+            System.out.println("Obra Social: " + obraSocial);
+            System.out.println("Activo: " + activo);
+            System.out.println("Observaciones: " + observaciones);
+            System.out.println("Foto Frente Carnet: " + fotoFrenteCarnetBase64);
+            System.out.println("Foto Atras Carnet: " + fotoAtrasCarnetBase64);
+            System.out.println("Foto Frente Dni: " + fotoFrenteDniBase64);
+            System.out.println("Foto Atras Dni: " + fotoAtrasDniBase64);
+            System.out.println("------------------------");
+        
+
+
+            // Convertir imágenes de base64 a bytes
+            byte[] fotoFrenteCarnetBytes = fotoFrenteCarnetBase64 != null ? Base64.getDecoder().decode(fotoFrenteCarnetBase64) : null;
+            byte[] fotoAtrasCarnetBytes = fotoAtrasCarnetBase64 != null ? Base64.getDecoder().decode(fotoAtrasCarnetBase64) : null;
+            byte[] fotoFrenteDniBytes = fotoFrenteDniBase64 != null ? Base64.getDecoder().decode(fotoFrenteDniBase64) : null;
+            byte[] fotoAtrasDniBytes = fotoAtrasDniBase64 != null ? Base64.getDecoder().decode(fotoAtrasDniBase64) : null;
+
+            // Llamar al servicio para modificar el paciente
+            boolean pacienteActualizado = servicioPacientes.modificarPaciente(
+                    dni, nombre, apellido, obraSocial, activo, observaciones,
+                    fotoFrenteCarnetBytes, fotoAtrasCarnetBytes,
+                    fotoFrenteDniBytes, fotoAtrasDniBytes
+            );
+    
+            if (pacienteActualizado) {
                 response.put("message", "Paciente actualizado correctamente.");
                 return ResponseEntity.ok(response);
             } else {
                 response.put("message", "No se pudo actualizar el paciente.");
                 return ResponseEntity.badRequest().body(response);
             }
-        } catch (NoSuchElementException e) {
-            response.put("message", e.getMessage());
-            return ResponseEntity.badRequest().body(response);
         } catch (IllegalArgumentException e) {
             response.put("message", "Los datos proporcionados son inválidos.");
             return ResponseEntity.badRequest().body(response);
+        } catch (Exception e) {
+            response.put("message", "Error al procesar la solicitud.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+    
 
     @GetMapping("/{dni}")
     public ResponseEntity<?> buscarPaciente(@PathVariable Integer dni) {
