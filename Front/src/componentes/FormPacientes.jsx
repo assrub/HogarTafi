@@ -204,6 +204,7 @@ function buscarClick(){
       [name]: value
     }));
   };
+  
 
   async function modificar(paciente){
    
