@@ -229,7 +229,7 @@ function buscarClick(){
     formData.append("obraSocial", obraSocialPaciente);
     formData.append("observaciones", observacionesPaciente);
     formData.append("fotoFrenteDni", imagenFrenteDni ? imagenFrenteDni : paciente.fotoFrenteDni);
-    formData.append("fotoAtrasDni", imagenDorsoDni ? imagenDorsoDNi : paciente.fotoAtrasDni);
+    formData.append("fotoAtrasDni", imagenDorsoDni ? imagenDorsoDni : paciente.fotoAtrasDni);
     formData.append("fotoFrenteCarnet", imagenFrenteCarnet ? imagenFrenteCarnet : paciente.fotoFrenteCarnet);
     formData.append("fotoAtrasCarnet", imagenDorsoCarnet ? imagenDorsoCarnet : paciente.fotoAtrasCarnet);
     
