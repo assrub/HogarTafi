@@ -25,6 +25,11 @@ function FormPacientes() {
     fotoFrenteCarnet: "",
     fotoAtrasCarnet: ""
   });
+
+  const fotoFrenteDniRef = useRef(null);
+  const fotoDorsoDniRef = useRef(null);
+  const fotoFrenteCarnetRef = useRef(null);
+  const fotoDorsoCarnetRef = useRef(null);
   
   const [pacientes, setPacientes] = useState([]);//array de todos los pacientes
   const location = useLocation();
@@ -68,7 +73,9 @@ function FormPacientes() {
     return filteredRows;
   }
   
-  
+  useEffect(() => {
+
+  },[paciente])
 
 
   //si el location.state cambia, cambia el objeto paciente y si no no.
@@ -197,30 +204,46 @@ function buscarClick(){
       [name]: value
     }));
   };
+  
 
   async function modificar(paciente){
+   
+    //datos del paciente
+    const nombrePaciente = document.getElementById("inputNombre").value;
+    const apellidoPaciente = document.getElementById("inputApellido").value;
+    const dniPaciente = paciente.dni.toString()
+    const obraSocialPaciente = document.getElementById("inputObraSocial").value;
+    const observacionesPaciente = document.getElementById("observaciones").value;
+    //Encuentra las nuevas imagenes
+    const imagenFrenteDni = fotoFrenteDniRef.current.querySelector('input[type="file"]').files[0];
+    const imagenDorsoDni = fotoDorsoDniRef.current.querySelector('input[type="file"]').files[0];
+    const imagenFrenteCarnet = fotoFrenteCarnetRef.current.querySelector('input[type="file"]').files[0];
+    const imagenDorsoCarnet = fotoDorsoCarnetRef.current.querySelector('input[type="file"]').files[0];
+
+    
     //Modificacion de los datos del paciente.
     const formData = new FormData();
-    formData.append("nombre", paciente.nombre);
-    formData.append("apellido", paciente.apellido);
-    formData.append("dni", parseInt(paciente.dni));
-    formData.append("obraSocial", paciente.obraSocial);
-    formData.append("observaciones", paciente.observaciones);
-    formData.append("fotoFrenteDni", paciente.fotoFrenteDni);
-    formData.append("fotoAtrasDni", paciente.fotoAtrasDni);
-    formData.append("fotoFrenteCarnet", paciente.fotoFrenteDni);
-    formData.append("fotoAtrasCarnet", paciente.fotoAtrasDni);
+    formData.append("nombre", nombrePaciente);
+    formData.append("apellido", apellidoPaciente);
+    formData.append("dni", parseInt(dniPaciente));
+    formData.append("obraSocial", obraSocialPaciente);
+    formData.append("observaciones", observacionesPaciente);
+    formData.append("fotoFrenteDni", imagenFrenteDni ? imagenFrenteDni : paciente.fotoFrenteDni);
+    formData.append("fotoAtrasDni", imagenDorsoDni ? imagenDorsoDNi : paciente.fotoAtrasDni);
+    formData.append("fotoFrenteCarnet", imagenFrenteCarnet ? imagenFrenteCarnet : paciente.fotoFrenteCarnet);
+    formData.append("fotoAtrasCarnet", imagenDorsoCarnet ? imagenDorsoCarnet : paciente.fotoAtrasCarnet);
     
     const response = modificarPaciente(parseInt(paciente.dni), formData);
 
     //Modificacion del stock
+    /*
     const formDataStock = new FormData();
     stock.forEach((item, index) => {
       formDataStock.append(`stock[${index}][medicacion]`, item.medicacion);
       formDataStock.append(`stock[${index}][cantidad]`, item.cantidad);
       formDataStock.append(`stock[${index}][cantidadMinima]`, item.cantidadMinima);
     });
-    guardarStockApi(formDataStock,parseInt(paciente.dni))
+    guardarStockApi(formDataStock,parseInt(paciente.dni))*/
   }
 
   const clickBoton = (boton) => {
@@ -289,8 +312,9 @@ function buscarClick(){
         propsInput={{
           type: "number",
           name: "dni",
-          id: "inputNDni",
+          id: "inputDni",
           value: paciente.dni,
+          readOnly: true,
           onChange: handleInputChange
         }}
       />
@@ -310,7 +334,7 @@ function buscarClick(){
 
 <div className="observaciones mt-4">
                 <label htmlFor="observaciones" className="text-xl font-medium ">Observaciones</label>
-                <textarea name="observaciones" className=" w-full rounded-lg h-56 bg-transparent
+                <textarea id="observaciones" name="observaciones" className=" w-full rounded-lg h-56 bg-transparent
                  border-neutral-300 border-2 
                  p-2 resize-none focus:outline-none  
                  disabled:bg-gray-300
@@ -360,10 +384,10 @@ function buscarClick(){
           {mostrarFotos && (
             <div>
               <div className="fotos grid grid-cols-1 md:grid-cols-2  justify-items-center gap-x-3 xl:mr-10 ">
-            <Foto textoFoto={"Frente del DNI"} src={paciente.fotoFrenteDni} />
-            <Foto textoFoto={"Dorso del DNI"} src={paciente.fotoAtrasDni} />
-            <Foto textoFoto={"Frente del carnet"} src={paciente.fotoFrenteCarnet}/>
-            <Foto textoFoto={"Dorso del carnet"} src={paciente.fotoAtrasCarnet}/>
+            <Foto textoFoto={"Frente del DNI"} src={paciente.fotoFrenteDni} ref={fotoFrenteDniRef}/>
+            <Foto textoFoto={"Dorso del DNI"} src={paciente.fotoAtrasDni} ref={fotoDorsoDniRef}/>
+            <Foto textoFoto={"Frente del carnet"} src={paciente.fotoFrenteCarnet} ref={fotoFrenteCarnetRef}/>
+            <Foto textoFoto={"Dorso del carnet"} src={paciente.fotoAtrasCarnet} ref={fotoDorsoCarnetRef}/>
           </div>
             </div>
           )}
