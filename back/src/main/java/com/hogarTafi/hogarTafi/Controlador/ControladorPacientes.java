@@ -124,10 +124,10 @@ public class ControladorPacientes {
             @RequestParam(value = "obraSocial", required = false) String obraSocial,
             @RequestParam(value = "observaciones", required = false) String observaciones,
             @RequestParam(value = "activo", required = false) Boolean activo,
-            @RequestParam(value = "fotoFrenteCarnet", required = false) String fotoFrenteCarnetBase64,
-            @RequestParam(value = "fotoAtrasCarnet", required = false) String fotoAtrasCarnetBase64,
-            @RequestParam(value = "fotoFrenteDni", required = false) String fotoFrenteDniBase64,
-            @RequestParam(value = "fotoAtrasDni", required = false) String fotoAtrasDniBase64
+            @RequestParam(value = "fotoFrenteCarnet", required = false) MultipartFile fotoFrenteCarnet,
+            @RequestParam(value = "fotoAtrasCarnet", required = false) MultipartFile fotoAtrasCarnet,
+            @RequestParam(value = "fotoFrenteDni", required = false) MultipartFile fotoFrenteDni,
+            @RequestParam(value = "fotoAtrasDni", required = false) MultipartFile fotoAtrasDni
     ) {
         Map<String, String> response = new HashMap<>();
         try {
@@ -137,19 +137,18 @@ public class ControladorPacientes {
             System.out.println("Obra Social: " + obraSocial);
             System.out.println("Activo: " + activo);
             System.out.println("Observaciones: " + observaciones);
-            System.out.println("Foto Frente Carnet: " + fotoFrenteCarnetBase64);
-            System.out.println("Foto Atras Carnet: " + fotoAtrasCarnetBase64);
-            System.out.println("Foto Frente Dni: " + fotoFrenteDniBase64);
-            System.out.println("Foto Atras Dni: " + fotoAtrasDniBase64);
-            System.out.println("------------------------");
-        
 
+            System.out.println("Foto Frente Carnet: " + fotoFrenteCarnet);
+            System.out.println("Foto Atras Carnet: " + fotoAtrasCarnet);
+            System.out.println("Foto Frente Dni: " + fotoFrenteDni);
+            System.out.println("Foto Atras Dni: " + fotoAtrasDni);
+            System.out.println("------------------------");
 
             // Convertir imágenes de base64 a bytes
-            byte[] fotoFrenteCarnetBytes = fotoFrenteCarnetBase64 != null ? Base64.getDecoder().decode(fotoFrenteCarnetBase64) : null;
-            byte[] fotoAtrasCarnetBytes = fotoAtrasCarnetBase64 != null ? Base64.getDecoder().decode(fotoAtrasCarnetBase64) : null;
-            byte[] fotoFrenteDniBytes = fotoFrenteDniBase64 != null ? Base64.getDecoder().decode(fotoFrenteDniBase64) : null;
-            byte[] fotoAtrasDniBytes = fotoAtrasDniBase64 != null ? Base64.getDecoder().decode(fotoAtrasDniBase64) : null;
+            byte[] fotoFrenteCarnetBytes = fotoFrenteCarnet != null ? fotoFrenteCarnet.getBytes() : null;
+            byte[] fotoAtrasCarnetBytes = fotoAtrasCarnet != null ? fotoAtrasCarnet.getBytes() : null;
+            byte[] fotoFrenteDniBytes = fotoFrenteDni != null ? fotoFrenteDni.getBytes() : null;
+            byte[] fotoAtrasDniBytes = fotoAtrasDni != null ? fotoAtrasDni.getBytes() : null;
 
             // Llamar al servicio para modificar el paciente
             boolean pacienteActualizado = servicioPacientes.modificarPaciente(
