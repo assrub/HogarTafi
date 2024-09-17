@@ -3,6 +3,7 @@ import CampoTexto from "./FormPacientes/CampoTexto";
 import Foto from "./FormPacientes/Foto";
 import Boton from "./Boton";
 import { registrarPaciente } from "../api";
+import CartelAviso from "./CartelAviso";
 
 
 
@@ -11,8 +12,13 @@ function RegistrarPacientes() {
   const fotoDorsoDniRef = useRef(null);
   const fotoFrenteCarnetRef = useRef(null);
   const fotoDorsoCarnetRef = useRef(null);
-
+  const [guardado,setGuardado] = useState(false);
+  const [mostrarCartel, setMostrarCartel] = useState(false)
   const [campoIncompleto, setCampoIncompleto] = useState(false);
+
+  const toggleModal = () => setMostrarCartel(!mostrarCartel);
+
+
 
   async function registrar() {
     const nombrePaciente = document.getElementById("inputNombre").value;
@@ -46,6 +52,9 @@ function RegistrarPacientes() {
   
  
     let response = await registrarPaciente(formData);
+    setGuardado(response);
+    toggleModal();
+
   }
   return (
     <>
@@ -131,6 +140,14 @@ function RegistrarPacientes() {
         <div className="grid justify-items-center m-4">
           <Boton textoBoton="Guardar datos del paciente" onClick={registrar}></Boton>
         </div>
+            <div className="modal">
+            <CartelAviso
+        abrirModal={mostrarCartel}
+        cerrarModal={toggleModal}
+        mensaje={guardado ? 'Paciente registrado correctamente' : 'Error al registrar el paciente'}
+      />
+            </div>
+
       </div>
     </>
   );

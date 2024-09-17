@@ -7,8 +7,17 @@ import TablaStock from "./FormPacientes/TablaStock";
 import TablaMedicamentos from "./FormPacientes/TablaMedicamentos";
 import { useLocation } from 'react-router-dom';
 import {todosLosPacientes, modificarPaciente, guardarStockApi} from "../api"
+import CartelAviso from "./CartelAviso";
 
 function FormPacientes() {
+
+
+
+  const [modificado,setModificado] = useState(false);
+  const [mostrarCartel, setMostrarCartel] = useState(false)
+  const [campoIncompleto, setCampoIncompleto] = useState(false);
+
+  const toggleModal = () => setMostrarCartel(!mostrarCartel);
 
   const [mostrarStock, setMostrarStock] = useState(false);
   const [mostrarMedicamentos, SetMostrarMedicamentos] = useState(false);
@@ -120,7 +129,7 @@ async function traerPacientes() {
 useEffect(() => {
   traerPacientes();
   
-}, []);
+}, [paciente,pacientes]);
 
 function guardarStock(stockRef){
   let tablaStock = convertirTablaAJson(stockRef);
@@ -214,12 +223,23 @@ function buscarClick(){
     const dniPaciente = paciente.dni.toString()
     const obraSocialPaciente = document.getElementById("inputObraSocial").value;
     const observacionesPaciente = document.getElementById("observaciones").value;
-    //Encuentra las nuevas imagenes
-    const imagenFrenteDni = fotoFrenteDniRef.current.querySelector('input[type="file"]').files[0];
-    const imagenDorsoDni = fotoDorsoDniRef.current.querySelector('input[type="file"]').files[0];
-    const imagenFrenteCarnet = fotoFrenteCarnetRef.current.querySelector('input[type="file"]').files[0];
-    const imagenDorsoCarnet = fotoDorsoCarnetRef.current.querySelector('input[type="file"]').files[0];
 
+    let imagenFrenteDni = null;
+      let imagenDorsoDni = null;
+      let imagenFrenteCarnet = null;
+      let imagenDorsoCarnet = null;
+
+
+    //Encuentra las nuevas imagenes
+    try{
+       imagenFrenteDni = fotoFrenteDniRef.current.querySelector('input[type="file"]').files[0];
+       imagenDorsoDni = fotoDorsoDniRef.current.querySelector('input[type="file"]').files[0];
+       imagenFrenteCarnet = fotoFrenteCarnetRef.current.querySelector('input[type="file"]').files[0];
+       imagenDorsoCarnet = fotoDorsoCarnetRef.current.querySelector('input[type="file"]').files[0];
+  
+    }catch {
+    }
+   
     
     //Modificacion de los datos del paciente.
     const formData = new FormData();
@@ -235,6 +255,9 @@ function buscarClick(){
     
     const response = modificarPaciente(parseInt(paciente.dni), formData);
 
+
+    setModificado(response);
+    toggleModal();
     //Modificacion del stock
     /*
     const formDataStock = new FormData();
@@ -404,7 +427,13 @@ function buscarClick(){
         <div className="grid justify-items-center m-4">
           <Boton textoBoton="Modificar datos del paciente" onClick={()=> modificar(paciente)} ></Boton>
         </div>
-
+          <div className="modal">
+          <CartelAviso
+        abrirModal={mostrarCartel}
+        cerrarModal={toggleModal}
+        mensaje={modificado ? 'Paciente modificado correctamente' : 'Error al modificar el paciente'}
+      />
+          </div>
       </div>
     </>
   );

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\HogarTafiApplication.java
 C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Consulta\ActualizarPacienteConsulta.java
 C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Consulta\BuscarUsuarioPorDniConsulta.java
@@ -21,27 +20,3 @@ C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\c
 C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Consulta\BuscarStockPorPacienteConsulta.java
 C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Entidad\HorarioLista.java
 C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Servicio\impl\ServicioPacientesImpl.java
-=======
-/app/src/main/java/com/hogarTafi/hogarTafi/Entidad/Medicacion.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Servicio/impl/ServicioStockImpl.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Entidad/Paciente.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Consulta/OcultarPacienteConsulta.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Controlador/ControladorPacientes.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Consulta/BuscarHorarioMedicamentosPorPacienteConsulta.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Consulta/BuscarUsuarioPorNombreConsulta.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Entidad/HorarioLista.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Configuracion/WebConfig.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Entidad/EntidadHorario.java
-/app/src/main/java/com/hogarTafi/hogarTafi/HogarTafiApplication.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Repositorio/RepositorioPaciente.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Controlador/ControladorStock.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Servicio/impl/ServicioPacientesImpl.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Entidad/Horario.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Consulta/BuscarUsuarioPorDniConsulta.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Controlador/prueba.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Consulta/BuscarStockPorPacienteConsulta.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Consulta/GuardarPacienteConsulta.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Servicio/ServicioPacientes.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Consulta/ActualizarPacienteConsulta.java
-/app/src/main/java/com/hogarTafi/hogarTafi/Repositorio/RepositorioMedicacion.java
->>>>>>> 134fef04a2d7d152862240995e6c7545d17cecdf
