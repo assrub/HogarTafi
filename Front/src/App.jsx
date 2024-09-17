@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PaginaPrincipal from "./Pages/Main/Index";
 import UserPanel from "./Pages/UserPanel/UserPanel";
+import Login from "./componentes/Login";
 
  async function botonClick(){
   
@@ -16,6 +17,7 @@ function App() {
     <BrowserRouter>
           <Routes>
             <Route path="/" element={<PaginaPrincipal/>} />
+            <Route path="/login" element={<Login/>}/>
             <Route path="/userPanel/*" element={<UserPanel/>} />
           </Routes>
     </BrowserRouter>

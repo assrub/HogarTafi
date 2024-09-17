@@ -20,7 +20,7 @@ function Header() {
                 <li className="p-3"><a className="text-white flex items-center" href="#contacto"><i className="bi bi-telephone-fill mr-2" /> Contacto</a></li>
               </ul>
               <ul className="ml-auto flex space-x-4">
-                <li className="p-3"><a className="text-white flex items-center" href="/UserPanel"><i className="bi bi-person-fill mr-2" /> Login</a></li>
+                <li className="p-3"><a className="text-white flex items-center" href="/login"><i className="bi bi-person-fill mr-2" /> Login</a></li>
               </ul>
             </div>
           </div>

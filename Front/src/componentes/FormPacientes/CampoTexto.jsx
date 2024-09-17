@@ -17,7 +17,7 @@ export default function CampoTexto({
       </label>
       <div className="">
       {error && obligatorio && (
-              <span className="text-sm text-red-500 font-bold ">Rellena este campo</span>
+              <span className="text-sm text-red-500 font-bold ">Campo obligatorio</span>
 
       )}
         
