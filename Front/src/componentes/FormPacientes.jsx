@@ -216,7 +216,7 @@ function buscarClick(){
   
 
   async function modificar(paciente){
-   
+    
     //datos del paciente
     const nombrePaciente = document.getElementById("inputNombre").value;
     const apellidoPaciente = document.getElementById("inputApellido").value;
@@ -239,7 +239,14 @@ function buscarClick(){
   
     }catch {
     }
-   
+    
+
+    if (nombrePaciente === "" || apellidoPaciente === "" || dniPaciente === "") {
+      setCampoIncompleto(true);
+      return;
+    } else {
+      setCampoIncompleto(false);
+    }
     
     //Modificacion de los datos del paciente.
     const formData = new FormData();
@@ -307,6 +314,8 @@ function buscarClick(){
           <form>
       <CampoTexto
         textoEtiqueta="Nombre"
+        error={campoIncompleto}
+                obligatorio={true}
         propsLabel={{ labelFor: "name" }}
         propsInput={{
           type: "text",
@@ -319,6 +328,8 @@ function buscarClick(){
 
       <CampoTexto
         textoEtiqueta="Apellido"
+        error={campoIncompleto}
+                obligatorio={true}
         propsLabel={{ labelFor: "lastName" }}
         propsInput={{
           type: "text",
@@ -331,6 +342,8 @@ function buscarClick(){
 
       <CampoTexto
         textoEtiqueta="DNI"
+        error={campoIncompleto}
+                obligatorio={true}
         propsLabel={{ labelFor: "dni" }}
         propsInput={{
           type: "number",
