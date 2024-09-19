@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import CampoTexto from "./FormPacientes/CampoTexto";
 import Boton from "./Boton";
 import { useNavigate } from 'react-router-dom';
+import { Link, Routes, Route  } from "react-router-dom";
+
 
 export default function Login(){
     const [campoIncompleto, setCampoIncompleto] = useState(false);
@@ -22,8 +24,10 @@ export default function Login(){
 }
 
     return(
-<div className="grid h-screen place-items-center">
-    <div className="login grid place-content-center border border-black h-1/2 py-10 px-32">
+        <div className="grid h-screen place-items-center" style={{ backgroundImage: 'url("src/Assets/Images/Main/actividades-bg.jpg")' }}>
+
+
+    <div className="login grid place-content-center border border-black h-1/2 p-56 bg-white rounded-xl" >
         <div className="titulo text-3xl mb-4 font-bold">
             <h2>Inicio de sesion</h2>
         </div>
@@ -38,7 +42,7 @@ export default function Login(){
                         type: "text",
                         name: "email",
                         id: "inputEmail",
-                        placeHolder: "Correo electronico"
+                        placeholder: "Correo electronico"
                     }}
                 />
             </div>
@@ -52,15 +56,16 @@ export default function Login(){
                         type: "password",
                         name: "contraseña",
                         id: "inputContraseña",
-                        placeHolder: "Contraseña"
+                        placeholder: "Contraseña"
                     }}
                 />
-                <a href="" className="underline">¿Olvidaste la contraseña?</a>
+                <Link className="underline" to={"/recuperarContra"}>¿Olvidaste tu contraseña?</Link>
             </div>
             <div className="iniciar-sesion mt-6">
                 <Boton textoBoton="Iniciar sesion" onClick={iniciarSesion}/>
             </div>
         </div>
+       
     </div>
 </div>
     );
