@@ -3,8 +3,8 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PaginaPrincipal from "./Pages/Main/Index";
 import UserPanel from "./Pages/UserPanel/UserPanel";
-import Login from "./componentes/Login";
-import RecuperarContraseña from "./componentes/RecuperarContraseña";
+import Login from "./Pages/Login/Login";
+import RecuperarContraseña from "./Pages/Recuperar contraseña/RecuperarContraseña";
 
  async function botonClick(){
   

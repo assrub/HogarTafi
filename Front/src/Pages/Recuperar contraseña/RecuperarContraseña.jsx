@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import CampoTexto from "./FormPacientes/CampoTexto";
-import Boton from "./Boton";
+import CampoTexto from "../../componentes/FormPacientes/CampoTexto";
+import Boton from "../../componentes/Boton";
 import { useNavigate } from 'react-router-dom';
 import { Link, Routes, Route  } from "react-router-dom";
 
