@@ -142,7 +142,7 @@ async function traerPacientes() {
 useEffect(() => {
   traerPacientes();
   
-}, [paciente,pacientes]);
+}, [paciente]);
 
 function guardarStock(stockRef){
   let tablaStock = convertirTablaAJson(stockRef);
@@ -163,18 +163,20 @@ function guardarMedicamentos(medicamentosRef){
 
   const formDataMedicamentos = new FormData();
   medicamentos.forEach((item,index) => {
-    formDataMedicamentos.append(`medicamentos[${index}][medicacion]`,item.medicacion);
-    formDataMedicamentos.append(`medicamentos[${index}][6:00]`,item.desayuno);
-    formDataMedicamentos.append(`medicamentos[${index}][desayuno]`,item.desayuno);
-    formDataMedicamentos.append(`medicamentos[${index}][almuerzo]`,item.almuerzo);
-    formDataMedicamentos.append(`medicamentos[${index}][merienda]`,item.merienda);
-    formDataMedicamentos.append(`medicamentos[${index}][cena]`,item.cena);
-    formDataMedicamentos.append(`medicamentos[${index}][22:30]`,item.medicacion);
-    formDataMedicamentos.append(`medicamentos[${index}][observaciones]`,item.observaciones);
+    if (item.Medicamento != null) {
+      formDataMedicamentos.append(`medicamentos[${index}][Medicamento]`, item.Medicamento);
+      formDataMedicamentos.append(`medicamentos[${index}][6:00]`, item["6:00"]); 
+      formDataMedicamentos.append(`medicamentos[${index}][Desayuno]`, item.Desayuno);
+      formDataMedicamentos.append(`medicamentos[${index}][Almuerzo]`, item.Almuerzo);
+      formDataMedicamentos.append(`medicamentos[${index}][Merienda]`, item.Merienda);
+      formDataMedicamentos.append(`medicamentos[${index}][Cena]`, item.Cena);
+      formDataMedicamentos.append(`medicamentos[${index}][22:30]`, item["22:30"]);
+      formDataMedicamentos.append(`medicamentos[${index}][observaciones]`, item.Observaciones);
+    }
+   
   });
-  const response  = guardarMedicamentosApi(formDataMedicamentos,paciente.dni);
+  const response  = guardarMedicamentosApi(formDataMedicamentos,parseInt(paciente.dni));
   console.log(response);
-  
 }
 
 
