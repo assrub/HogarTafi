@@ -1,11 +1,9 @@
 package com.hogarTafi.hogarTafi.Servicio;
 
-import com.hogarTafi.hogarTafi.Consulta.ActualizarPacienteConsulta;
-import com.hogarTafi.hogarTafi.Consulta.GuardarPacienteConsulta;
+import java.util.List;
+
 import com.hogarTafi.hogarTafi.Consulta.OcultarPacienteConsulta;
 import com.hogarTafi.hogarTafi.Entidad.Paciente;
-
-import java.util.List;
 
 public interface ServicioPacientes {
     List<Paciente> todosLosPacientes();
@@ -21,7 +19,6 @@ public interface ServicioPacientes {
                               String nombre,
                               String apellido,
                               String obraSocial,
-                              Boolean activo,
                               String observaciones,
                               byte[] fotoFrenteCarnetBytes,
                               byte[] fotoAtrasCarnetBytes,

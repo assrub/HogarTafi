@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.hogarTafi.hogarTafi.Consulta.ActualizarPacienteConsulta;
 import com.hogarTafi.hogarTafi.Consulta.OcultarPacienteConsulta;
+import com.hogarTafi.hogarTafi.Entidad.Medicacion;
 import com.hogarTafi.hogarTafi.Entidad.Paciente;
 import com.hogarTafi.hogarTafi.Repositorio.RepositorioPaciente;
 import com.hogarTafi.hogarTafi.Servicio.ServicioPacientes;
@@ -66,7 +67,6 @@ public class ServicioPacientesImpl implements ServicioPacientes {
         String nombre,
         String apellido,
         String obraSocial,
-        Boolean activo,
         String observaciones,
         byte[] fotoFrenteCarnetBytes,
         byte[] fotoAtrasCarnetBytes,
@@ -81,7 +81,6 @@ public class ServicioPacientesImpl implements ServicioPacientes {
     if (nombre != null) paciente.setNombre(nombre);
     if (apellido != null) paciente.setApellido(apellido);
     if (obraSocial != null) paciente.setObraSocial(obraSocial);
-    if (activo != null) paciente.setActivo(activo);
     if (observaciones != null) paciente.setObservaciones(observaciones);
 
     if (fotoFrenteCarnetBytes != null) paciente.setFotoFrenteCarnet(fotoFrenteCarnetBytes);
@@ -111,5 +110,6 @@ public class ServicioPacientesImpl implements ServicioPacientes {
         repositorioPacientes.save(existePaciente);
         return true;
     }
+
 
 }

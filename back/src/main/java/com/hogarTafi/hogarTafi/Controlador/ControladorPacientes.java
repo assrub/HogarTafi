@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hogarTafi.hogarTafi.Consulta.ActualizarPacienteConsulta;
 import com.hogarTafi.hogarTafi.Consulta.OcultarPacienteConsulta;
+import com.hogarTafi.hogarTafi.Entidad.Medicamento;
 import com.hogarTafi.hogarTafi.Entidad.Paciente;
+import com.hogarTafi.hogarTafi.Servicio.impl.ServicioMedicamento;
 import com.hogarTafi.hogarTafi.Servicio.impl.ServicioPacientesImpl;
 
 @RestController
@@ -123,7 +126,6 @@ public class ControladorPacientes {
             @RequestParam(value = "apellido", required = false) String apellido,
             @RequestParam(value = "obraSocial", required = false) String obraSocial,
             @RequestParam(value = "observaciones", required = false) String observaciones,
-            @RequestParam(value = "activo", required = false) Boolean activo,
             @RequestParam(value = "fotoFrenteCarnet", required = false) MultipartFile fotoFrenteCarnet,
             @RequestParam(value = "fotoAtrasCarnet", required = false) MultipartFile fotoAtrasCarnet,
             @RequestParam(value = "fotoFrenteDni", required = false) MultipartFile fotoFrenteDni,
@@ -135,7 +137,6 @@ public class ControladorPacientes {
             System.out.println("Nombre: " + nombre);
             System.out.println("Apellido: " + apellido);
             System.out.println("Obra Social: " + obraSocial);
-            System.out.println("Activo: " + activo);
             System.out.println("Observaciones: " + observaciones);
 
             System.out.println("Foto Frente Carnet: " + fotoFrenteCarnet);
@@ -152,7 +153,7 @@ public class ControladorPacientes {
 
             // Llamar al servicio para modificar el paciente
             boolean pacienteActualizado = servicioPacientes.modificarPaciente(
-                    dni, nombre, apellido, obraSocial, activo, observaciones,
+                    dni, nombre, apellido, obraSocial, observaciones,
                     fotoFrenteCarnetBytes, fotoAtrasCarnetBytes,
                     fotoFrenteDniBytes, fotoAtrasDniBytes
             );
@@ -207,4 +208,42 @@ public class ControladorPacientes {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
+    @Autowired
+    private ServicioMedicamento servicioMedicamento;  // Inyecta el servicio
+
+    @PostMapping("/medicamentos/{dni}")
+    public ResponseEntity<Map<String, String>> registrarMedicamento(
+        @PathVariable("dni") Integer dni,  // Obtener el DNI desde la URL
+        @RequestBody Medicamento medicamentoRequest // Recibir el cuerpo como JSON
+    )
+    {  
+        Map<String, String> response = new HashMap<>();
+        try {
+            // Usar los datos del cuerpo JSON
+            boolean registrarMedicamento = servicioMedicamento.registrarMedicamento(
+                    dni,
+                    medicamentoRequest.getMedicamento(),
+                    medicamentoRequest.getAlmuerzo(),
+                    medicamentoRequest.getMerienda(),
+                    medicamentoRequest.getCena(),
+                    medicamentoRequest.getHorario(),
+                    medicamentoRequest.getObservaciones()
+            );
+
+            if (registrarMedicamento) {
+                response.put("message", "El medicamento se ha registrado.");
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("message", "Hubo un error al guardar el medicamento.");
+                return ResponseEntity.badRequest().body(response);
+            }
+        } 
+        catch (Exception e) {
+            response.put("message", "Error interno al registrar el medicamento.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+
 }
