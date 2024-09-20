@@ -6,7 +6,7 @@ import ListadoPacientes from "../../componentes/ListadoPacientes";
 import "../../App.css";
 import { desactivarPAcientes } from "../../api.js";
 import Perfil from "../../componentes/perfil.jsx";
-import CartelAviso from "../../componentes/CartelAviso.jsx";
+import ListadoUsuarios from "../../componentes/ListadoUsuarios.jsx";
 
 async function botonClick() {
   const datos = await desactivarPAcientes(12345678);
@@ -31,7 +31,7 @@ function UserPanel() {
             <Route path="paciente/modificar" element={<FormPacientes />} />
             <Route path="stockDelHogar" />
             <Route path="pedidos" />
-            <Route path="listaDeUsuarios" />
+            <Route path="listaDeUsuarios" element={<ListadoUsuarios/>}/>
             <Route path="perfil" element={<Perfil/>}/>
           </Routes>
         </div>

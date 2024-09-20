@@ -51,3 +51,18 @@ export async function guardarStockApi(formData, dni){
         return error;
     }
 }
+
+export async function guardarMedicamentosApi(formData,dni){
+    try {
+               
+        const response = await fetch(`http://localhost:8080/medicamentos/${dni}`, {
+            method: "POST",
+            body: formData,
+        });
+
+        return response.ok;
+    } catch (error) {
+        console.error('Error al registrarlos medicamentos del paciente:', error);
+        return error;
+    }
+}

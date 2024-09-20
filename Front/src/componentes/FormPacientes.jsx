@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import TablaStock from "./FormPacientes/TablaStock";
 import TablaMedicamentos from "./FormPacientes/TablaMedicamentos";
 import { useLocation } from 'react-router-dom';
-import {todosLosPacientes, modificarPaciente, guardarStockApi} from "../api"
+import {todosLosPacientes, modificarPaciente, guardarStockApi, guardarMedicamentosApi} from "../api"
 import CartelAviso from "./CartelAviso";
 
 function FormPacientes() {
@@ -48,9 +48,11 @@ function FormPacientes() {
     fotos: false,
   });
   
-  const [stock, setStock] = useState([])
+  const [stock, setStock] = useState([]);
+  const [medicamentos, setMedicamentos] = useState([]);
 
   const stockRef = useRef(null);
+  const medicamentosRef = useRef(null);
 
   function convertirTablaAJson(refTabla) {
     if (!refTabla.current) {
@@ -62,25 +64,36 @@ function FormPacientes() {
     const headers = Array.from(table.querySelectorAll('thead th')).slice(0, -1).map(th => th.textContent.trim());
   
     const rows = Array.from(table.querySelectorAll('tbody tr')).map(tr => {
-      const cells = Array.from(tr.querySelectorAll('td')).slice(0, -1); 
+      const cells = Array.from(tr.querySelectorAll('td')).slice(0, -1);
       const rowData = {};
   
-      
       cells.forEach((cell, i) => {
-        const cellValue = cell.querySelector('input') ? cell.querySelector('input').value.trim() : cell.textContent.trim();
-        if (cellValue !== "") {
-          rowData[headers[i]] = cellValue;
+        let cellValue = '';
+  
+        // Si hay un select, obtenemos el valor seleccionado
+        const select = cell.querySelector('select');
+        if (select) {
+          cellValue = select.value.trim();
+        } else if (cell.querySelector('input')) {
+          // Si hay un input, obtenemos el valor del input
+          cellValue = cell.querySelector('input').value.trim();
+        } else {
+          // Si no hay input ni select, obtenemos el contenido de texto de la celda
+          cellValue = cell.textContent.trim();
         }
+  
+        // Si el valor está vacío, lo asignamos como null
+        rowData[headers[i]] = cellValue !== "" ? cellValue : null;
       });
   
       return rowData;
     });
   
-    
-    const filteredRows = rows.filter(row => Object.keys(row).length > 0);
-  
-    return filteredRows;
+    // No filtramos las filas, ya que ahora todas deben tener todas las propiedades, aunque algunas sean null
+    return rows;
   }
+  
+  
   
   useEffect(() => {
 
@@ -135,8 +148,34 @@ function guardarStock(stockRef){
   let tablaStock = convertirTablaAJson(stockRef);
   setStock(tablaStock);
   setMostrarStock(!mostrarStock);
+  const formDataStock = new FormData();
+  stock.forEach((item, index) => {
+    formDataStock.append(`stock[${index}][medicacion]`, item.medicacion);
+    formDataStock.append(`stock[${index}][cantidad]`, item.cantidad);
+    formDataStock.append(`stock[${index}][cantidadMinima]`, item.cantidadMinima);
+  });
+  guardarStockApi(formDataStock,parseInt(paciente.dni));
 }
+function guardarMedicamentos(medicamentosRef){
+  let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
+  setMedicamentos(tablaMedicamentos);
+  //SetMostrarMedicamentos(!mostrarMedicamentos);
 
+  const formDataMedicamentos = new FormData();
+  medicamentos.forEach((item,index) => {
+    formDataMedicamentos.append(`medicamentos[${index}][medicacion]`,item.medicacion);
+    formDataMedicamentos.append(`medicamentos[${index}][6:00]`,item.desayuno);
+    formDataMedicamentos.append(`medicamentos[${index}][desayuno]`,item.desayuno);
+    formDataMedicamentos.append(`medicamentos[${index}][almuerzo]`,item.almuerzo);
+    formDataMedicamentos.append(`medicamentos[${index}][merienda]`,item.merienda);
+    formDataMedicamentos.append(`medicamentos[${index}][cena]`,item.cena);
+    formDataMedicamentos.append(`medicamentos[${index}][22:30]`,item.medicacion);
+    formDataMedicamentos.append(`medicamentos[${index}][observaciones]`,item.observaciones);
+  });
+  const response  = guardarMedicamentosApi(formDataMedicamentos,paciente.dni);
+  console.log(response);
+  
+}
 
 
 function buscarClick(){
@@ -265,15 +304,6 @@ function buscarClick(){
 
     setModificado(response);
     toggleModal();
-    //Modificacion del stock
-    /*
-    const formDataStock = new FormData();
-    stock.forEach((item, index) => {
-      formDataStock.append(`stock[${index}][medicacion]`, item.medicacion);
-      formDataStock.append(`stock[${index}][cantidad]`, item.cantidad);
-      formDataStock.append(`stock[${index}][cantidadMinima]`, item.cantidadMinima);
-    });
-    guardarStockApi(formDataStock,parseInt(paciente.dni))*/
   }
 
   const clickBoton = (boton) => {
@@ -431,7 +461,10 @@ function buscarClick(){
         <div className="tablaMedicamentos ">
           {mostrarMedicamentos && (
             <div>
-              <TablaMedicamentos/>
+              <TablaMedicamentos ref={medicamentosRef}/>
+              <div className="boton m-4">
+              <Boton textoBoton="Guardar medicamentos" onClick={() => guardarMedicamentos(medicamentosRef)}></Boton>
+              </div>
             </div>
           )}
         </div>
