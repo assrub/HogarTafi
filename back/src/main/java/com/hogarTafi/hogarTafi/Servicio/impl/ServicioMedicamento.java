@@ -45,4 +45,10 @@ public class ServicioMedicamento {
 
         return true; // Medicamento registrado con éxito
     }
+
+    
+    public Medicacion buscarMedicacionPorDni(Integer dni) {
+        return repositorioMedicacion.findByDni(dni).orElse(null);  // Devuelve null si no se encuentra medicación
+    }
+
 }

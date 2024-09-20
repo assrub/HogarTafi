@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hogarTafi.hogarTafi.Consulta.ActualizarPacienteConsulta;
 import com.hogarTafi.hogarTafi.Consulta.OcultarPacienteConsulta;
+import com.hogarTafi.hogarTafi.Entidad.Medicacion;
 import com.hogarTafi.hogarTafi.Entidad.Medicamento;
 import com.hogarTafi.hogarTafi.Entidad.Paciente;
 import com.hogarTafi.hogarTafi.Servicio.impl.ServicioMedicamento;
@@ -245,5 +246,21 @@ public class ControladorPacientes {
         }
     }
 
+    @GetMapping("/medicamentos/show/{dni}")
+    public ResponseEntity<?> obtenerMedicamentosPorDni(@PathVariable("dni") Integer dni) {
+    try {
+        // Buscar la medicación por DNI usando el servicio
+        Medicacion medicacion = servicioMedicamento.buscarMedicacionPorDni(dni);
+
+        if (medicacion == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontraron medicamentos para el DNI: " + dni);
+        }
+
+        // Devolver los medicamentos en formato JSON
+        return ResponseEntity.ok(medicacion);
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno del servidor.");
+    }
+}
 
 }
