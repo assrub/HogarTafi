@@ -65,4 +65,6 @@ export async function guardarMedicamentosApi(formData,dni){
         console.error('Error al registrarlos medicamentos del paciente:', error);
         return error;
     }
+
+    
 }
