@@ -31,14 +31,24 @@ public  class CMedicamento{
         try{
             boolean Medicamento = servicioMedicamento.registrarMedicamento( dni,
                                                                             medicamentoRequest.getMedicamento(),
+                                                                            medicamentoRequest.getHorario_1(),
+                                                                            medicamentoRequest.getDesayuno(),
                                                                             medicamentoRequest.getAlmuerzo(),
                                                                             medicamentoRequest.getMerienda(),
                                                                             medicamentoRequest.getCena(),
-                                                                            medicamentoRequest.getHorario(),
+                                                                            medicamentoRequest.getHorario_2(),
                                                                             medicamentoRequest.getObservaciones());
 
             
-        
+            System.out.println(medicamentoRequest.getMedicamento());
+            System.out.println(medicamentoRequest.getHorario_1());
+            System.out.println(medicamentoRequest.getDesayuno());
+            System.out.println(medicamentoRequest.getAlmuerzo());
+            System.out.println(medicamentoRequest.getMerienda());
+            System.out.println(medicamentoRequest.getCena());
+            System.out.println(medicamentoRequest.getHorario_2());
+            System.out.println(medicamentoRequest.getObservaciones());
+            
             if (Medicamento){
                 response.put("message", "El medicamento se ha registrado.");
                 return ResponseEntity.ok(response);

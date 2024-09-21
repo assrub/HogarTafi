@@ -20,7 +20,7 @@ public class SMedicamento {
     @Autowired
     private RPaciente repositorioPacientes;
 
-    public boolean registrarMedicamento(Integer dni, String medicamento, String almuerzo, String merienda, String cena, String horario, String observaciones) {
+    public boolean registrarMedicamento(Integer dni, String medicamento, String horario_1, String desayuno, String almuerzo, String merienda, String cena, String horario_2, String observaciones) {
         // Verificar si el paciente está registrado en la base de datos de pacientes
         if (!repositorioPacientes.findByDni(dni).isPresent()) {
             return false; // El paciente no está registrado
@@ -30,7 +30,7 @@ public class SMedicamento {
         Optional<EMedicacion> medicacionOpt = repositorioMedicacion.findByDni(dni);
 
         // Crear el objeto Medicamento con los nuevos parámetros
-        EMedicamento nuevoMedicamento = new EMedicamento(medicamento, almuerzo, merienda, cena, horario, observaciones);
+        EMedicamento nuevoMedicamento = new EMedicamento(medicamento, horario_1, desayuno, almuerzo, merienda, cena, horario_2, observaciones);
 
         if (medicacionOpt.isPresent()) {
             // Si ya existe un documento de medicación, agregar el nuevo medicamento
