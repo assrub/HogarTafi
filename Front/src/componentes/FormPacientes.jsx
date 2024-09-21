@@ -158,9 +158,10 @@ function guardarStock(stockRef){
 }
 function guardarMedicamentos(medicamentosRef){
   let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
-  setMedicamentos(tablaMedicamentos);
-  //SetMostrarMedicamentos(!mostrarMedicamentos);
 
+  setMedicamentos(medicamentosRef);
+  //SetMostrarMedicamentos(!mostrarMedicamentos);
+  console.log(medicamentos);
   const formDataMedicamentos = new FormData();
   medicamentos.forEach((item,index) => {
     if (item.Medicamento != null) {
@@ -175,8 +176,9 @@ function guardarMedicamentos(medicamentosRef){
     }
    
   });
-  const response  = guardarMedicamentosApi(formDataMedicamentos,parseInt(paciente.dni));
-  console.log(response);
+  //const response  = guardarMedicamentosApi(formDataMedicamentos,parseInt(paciente.dni));
+  //console.log(response);
+ 
 }
 
 
