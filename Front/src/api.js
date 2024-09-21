@@ -55,7 +55,7 @@ export async function guardarStockApi(formData, dni){
 export async function guardarMedicamentosApi(formData,dni){
     try {
                
-        const response = await fetch(`http://localhost:8080/medicamento/${dni}`, {
+        const response = await fetch(`http://localhost:8080/medicamentos/${dni}`, {
             method: "POST",
             body: formData,
         });
