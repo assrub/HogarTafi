@@ -156,7 +156,7 @@ const TablaMedicamentos = forwardRef(({}, ref) => {
                       <input
                         className={`rounded-lg  md:w-auto ${
                           medicamento.editable ? "bg-white" : "bg-neutral-300"
-                        } border`}
+                        } border text-center`}
                         type="number"
                         value={medicamento.horario[hora] || ""}
                         onChange={(event) => manejarCambio(index, hora, event)}
@@ -168,7 +168,7 @@ const TablaMedicamentos = forwardRef(({}, ref) => {
                     <input
                       className={`rounded-lg w-full ${
                         medicamento.editable ? "bg-white" : "bg-neutral-300"
-                      } border`}
+                      } text-center border`}
                       type="text"
                       value={medicamento.observaciones}
                       disabled={!medicamento.editable}
@@ -226,7 +226,7 @@ const TablaMedicamentos = forwardRef(({}, ref) => {
           <tr>
             <td className="px-2 py-1 border border-[#181818]">
               <select
-                className="p-2 w-full md:w-auto"
+                className="p-2 w-full md:w-auto bg-neutral-300 rounded-xl"
                 name="medicamento"
                 value={nuevoMedicamento.medicamento}
                 onChange={manejarCambioSelect}
@@ -246,7 +246,7 @@ const TablaMedicamentos = forwardRef(({}, ref) => {
                   name={hora}
                   value={nuevoMedicamento.horario[hora]}
                   onChange={manejarCambioNuevoMedicamento}
-                  className={`rounded-lg  md:w-auto  border`}
+                  className={`rounded-lg  md:w-auto text-center border`}
                   placeholder={hora}
                 />
               </td>
@@ -262,7 +262,7 @@ const TablaMedicamentos = forwardRef(({}, ref) => {
                     observaciones: e.target.value,
                   }))
                 }
-                className="w-full p-2"
+                className="w-full p-2 text-center"
                 placeholder="Observaciones"
               />
             </td>
