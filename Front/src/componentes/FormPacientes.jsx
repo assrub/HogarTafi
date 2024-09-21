@@ -160,7 +160,7 @@ function guardarMedicamentos(medicamentosRef){
   let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
   setMedicamentos(tablaMedicamentos);
   //SetMostrarMedicamentos(!mostrarMedicamentos);
-
+  console.log(tablaMedicamentos);
   const formDataMedicamentos = new FormData();
   medicamentos.forEach((item,index) => {
     if (item.Medicamento != null) {

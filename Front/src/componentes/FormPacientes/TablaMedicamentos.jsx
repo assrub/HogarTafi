@@ -118,7 +118,7 @@ const TablaMedicamentos = forwardRef(({}, ref) => {
 
   return (
     <div className="overflow-x-auto rounded-xl">
-      <table className="min-w-full table-auto mb-10">
+      <table className="min-w-full table-auto mb-10" ref={ref}>
         <thead>
           <tr>
             <th className="px-2 py-1 border border-[#181818] text-sm md:text-base">
