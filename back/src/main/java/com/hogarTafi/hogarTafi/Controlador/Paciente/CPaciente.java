@@ -1,7 +1,6 @@
 package com.hogarTafi.hogarTafi.Controlador.Paciente;
 
 import java.io.IOException;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,16 +20,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.hogarTafi.hogarTafi.Consulta.OcultarPacienteConsulta;
 import com.hogarTafi.hogarTafi.Entidad.Paciente.EPaciente;
-import com.hogarTafi.hogarTafi.Servicio.Paciente.SIPaciente;
+import com.hogarTafi.hogarTafi.Servicio.Paciente.SPaciente;
 
 @RestController
 @RequestMapping("/pacientes")
 public class CPaciente {
 
     @Autowired
-    private SIPaciente servicioPacientes;
+    private SPaciente servicioPacientes;
 
     @GetMapping
     public ResponseEntity<List<Map<String, Object>>> todosLosPacientes() {
@@ -48,16 +46,16 @@ public class CPaciente {
 
             // Convertir fotos de binario a base64
             if (paciente.getFotoFrenteCarnet() != null) {
-                pacienteMap.put("fotoFrenteCarnet", convertirABase64(paciente.getFotoFrenteCarnet()));
+                pacienteMap.put("fotoFrenteCarnet", servicioPacientes.convertirABase64(paciente.getFotoFrenteCarnet()));
             }
             if (paciente.getFotoAtrasCarnet() != null) {
-                pacienteMap.put("fotoAtrasCarnet", convertirABase64(paciente.getFotoAtrasCarnet()));
+                pacienteMap.put("fotoAtrasCarnet", servicioPacientes.convertirABase64(paciente.getFotoAtrasCarnet()));
             }
             if (paciente.getFotoFrenteDni() != null) {
-                pacienteMap.put("fotoFrenteDni", convertirABase64(paciente.getFotoFrenteDni()));
+                pacienteMap.put("fotoFrenteDni", servicioPacientes.convertirABase64(paciente.getFotoFrenteDni()));
             }
             if (paciente.getFotoAtrasDni() != null) {
-                pacienteMap.put("fotoAtrasDni", convertirABase64(paciente.getFotoAtrasDni()));
+                pacienteMap.put("fotoAtrasDni", servicioPacientes.convertirABase64(paciente.getFotoAtrasDni()));
             }
         }
         else
@@ -71,37 +69,43 @@ public class CPaciente {
         return ResponseEntity.ok(pacientesConFotos);
     }
 
-    private String convertirABase64(byte[] bytes) {
-        return Base64.getEncoder().encodeToString(bytes);
-    }
-
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Map<String, String>> guardarPaciente(
-            @RequestParam("dni") Integer dni,
-            @RequestParam("nombre") String nombre,
-            @RequestParam("apellido") String apellido,
-            @RequestParam("obraSocial") String obraSocial,
-            @RequestParam("observaciones") String observaciones,
-            @RequestParam(value = "fotoFrenteCarnet", required = false) MultipartFile fotoFrenteCarnet,
-            @RequestParam(value = "fotoAtrasCarnet", required = false) MultipartFile fotoAtrasCarnet,
-            @RequestParam(value = "fotoFrenteDni", required = false) MultipartFile fotoFrenteDni,
-            @RequestParam(value = "fotoAtrasDni", required = false) MultipartFile fotoAtrasDni
+    public ResponseEntity<Map<String, String>> guardarPaciente(@RequestParam("dni") Integer dni,
+                                                               @RequestParam("nombre") String nombre,
+                                                               @RequestParam("apellido") String apellido,
+                                                               @RequestParam("obraSocial") String obraSocial,
+                                                               @RequestParam("observaciones") String observaciones,
+                                                               @RequestParam(value = "fotoFrenteCarnet", required = false) MultipartFile fotoFrenteCarnet,
+                                                               @RequestParam(value = "fotoAtrasCarnet", required = false) MultipartFile fotoAtrasCarnet,
+                                                               @RequestParam(value = "fotoFrenteDni", required = false) MultipartFile fotoFrenteDni,
+                                                               @RequestParam(value = "fotoAtrasDni", required = false) MultipartFile fotoAtrasDni
     ) {
         Map<String, String> response = new HashMap<>();
         try {
-            // Maneja las imágenes que pueden ser null
-            byte[] fotoFrenteCarnetBytes = fotoFrenteCarnet != null ? fotoFrenteCarnet.getBytes() : null;
-            byte[] fotoAtrasCarnetBytes = fotoAtrasCarnet != null ? fotoAtrasCarnet.getBytes() : null;
-            byte[] fotoFrenteDniBytes = fotoFrenteDni != null ? fotoFrenteDni.getBytes() : null;
-            byte[] fotoAtrasDniBytes = fotoAtrasDni != null ? fotoAtrasDni.getBytes() : null;
+            // Crear instancia de EPaciente y asignar valores
+            EPaciente paciente = new EPaciente();
+            paciente.setDni(dni);
+            paciente.setNombre(nombre);
+            paciente.setApellido(apellido);
+            paciente.setObraSocial(obraSocial);
+            paciente.setActivo(true);
+            paciente.setObservaciones(observaciones);
+        
+            // Convertir archivos MultipartFile a byte[] si no están vacíos
+            if (fotoFrenteCarnet != null && !fotoFrenteCarnet.isEmpty()) {
+                paciente.setFotoFrenteCarnet(fotoFrenteCarnet.getBytes());
+            }
+            if (fotoAtrasCarnet != null && !fotoAtrasCarnet.isEmpty()) {
+                paciente.setFotoAtrasCarnet(fotoAtrasCarnet.getBytes());
+            }
+            if (fotoFrenteDni != null && !fotoFrenteDni.isEmpty()) {
+                paciente.setFotoFrenteDni(fotoFrenteDni.getBytes());
+            }
+            if (fotoAtrasDni != null && !fotoAtrasDni.isEmpty()) {
+                paciente.setFotoAtrasDni(fotoAtrasDni.getBytes());
+            } 
 
-            boolean pacienteGuardado = servicioPacientes.guardarPaciente(
-                    dni, nombre, apellido, obraSocial, true, observaciones,
-                    fotoFrenteCarnetBytes, fotoAtrasCarnetBytes,
-                    fotoFrenteDniBytes, fotoAtrasDniBytes
-            );
-
-            if (pacienteGuardado) {
+            if (servicioPacientes.guardarPaciente(paciente)) {
                 response.put("message", "Paciente registrado.");
                 return ResponseEntity.ok(response);
             } else {
@@ -115,51 +119,46 @@ public class CPaciente {
     }
 
     @PatchMapping("/modificar/{dni}")
-    public ResponseEntity<Map<String, String>> modificarPaciente(
-            @PathVariable Integer dni,
-            @RequestParam(value = "nombre", required = false) String nombre,
-            @RequestParam(value = "apellido", required = false) String apellido,
-            @RequestParam(value = "obraSocial", required = false) String obraSocial,
-            @RequestParam(value = "observaciones", required = false) String observaciones,
-            @RequestParam(value = "fotoFrenteCarnet", required = false) MultipartFile fotoFrenteCarnet,
-            @RequestParam(value = "fotoAtrasCarnet", required = false) MultipartFile fotoAtrasCarnet,
-            @RequestParam(value = "fotoFrenteDni", required = false) MultipartFile fotoFrenteDni,
-            @RequestParam(value = "fotoAtrasDni", required = false) MultipartFile fotoAtrasDni
+    public ResponseEntity<Map<String, String>> modificarPaciente(@PathVariable Integer dni,
+                                                                 @RequestParam(value = "nombre", required = false) String nombre,
+                                                                 @RequestParam(value = "apellido", required = false) String apellido,
+                                                                 @RequestParam(value = "obraSocial", required = false) String obraSocial,
+                                                                 @RequestParam(value = "observaciones", required = false) String observaciones,
+                                                                 @RequestParam(value = "fotoFrenteCarnet", required = false) MultipartFile fotoFrenteCarnet,
+                                                                 @RequestParam(value = "fotoAtrasCarnet", required = false) MultipartFile fotoAtrasCarnet,
+                                                                 @RequestParam(value = "fotoFrenteDni", required = false) MultipartFile fotoFrenteDni,
+                                                                 @RequestParam(value = "fotoAtrasDni", required = false) MultipartFile fotoAtrasDni
     ) {
         Map<String, String> response = new HashMap<>();
         try {
-    
-            System.out.println("Nombre: " + nombre);
-            System.out.println("Apellido: " + apellido);
-            System.out.println("Obra Social: " + obraSocial);
-            System.out.println("Observaciones: " + observaciones);
-
-            System.out.println("Foto Frente Carnet: " + fotoFrenteCarnet);
-            System.out.println("Foto Atras Carnet: " + fotoAtrasCarnet);
-            System.out.println("Foto Frente Dni: " + fotoFrenteDni);
-            System.out.println("Foto Atras Dni: " + fotoAtrasDni);
-            System.out.println("------------------------");
-
             // Convertir imágenes de base64 a bytes
             byte[] fotoFrenteCarnetBytes = fotoFrenteCarnet != null ? fotoFrenteCarnet.getBytes() : null;
             byte[] fotoAtrasCarnetBytes = fotoAtrasCarnet != null ? fotoAtrasCarnet.getBytes() : null;
             byte[] fotoFrenteDniBytes = fotoFrenteDni != null ? fotoFrenteDni.getBytes() : null;
             byte[] fotoAtrasDniBytes = fotoAtrasDni != null ? fotoAtrasDni.getBytes() : null;
 
-            // Llamar al servicio para modificar el paciente
-            boolean pacienteActualizado = servicioPacientes.modificarPaciente(
-                    dni, nombre, apellido, obraSocial, observaciones,
-                    fotoFrenteCarnetBytes, fotoAtrasCarnetBytes,
-                    fotoFrenteDniBytes, fotoAtrasDniBytes
-            );
+            EPaciente paciente = new EPaciente();
+
+            paciente.setDni(dni);
+            paciente.setNombre(nombre);
+            paciente.setApellido(apellido);
+            paciente.setObraSocial(obraSocial);
+            paciente.setObservaciones(observaciones);
+            paciente.setFotoFrenteCarnet(fotoFrenteCarnetBytes);
+            paciente.setFotoAtrasCarnet(fotoAtrasCarnetBytes);
+            paciente.setFotoFrenteDni(fotoFrenteDniBytes);
+            paciente.setFotoAtrasDni(fotoAtrasDniBytes);
+
+            boolean actualizar = servicioPacientes.actualizarPaciente(paciente);
     
-            if (pacienteActualizado) {
+            if (actualizar) {
                 response.put("message", "Paciente actualizado correctamente.");
                 return ResponseEntity.ok(response);
             } else {
                 response.put("message", "No se pudo actualizar el paciente.");
                 return ResponseEntity.badRequest().body(response);
             }
+
         } catch (IllegalArgumentException e) {
             response.put("message", "Los datos proporcionados son inválidos.");
             return ResponseEntity.badRequest().body(response);
@@ -172,8 +171,13 @@ public class CPaciente {
 
     @GetMapping("/{dni}")
     public ResponseEntity<?> buscarPaciente(@PathVariable Integer dni) {
-        EPaciente paciente = servicioPacientes.buscarPaciente(dni);
-        if (paciente == null) {
+        
+        EPaciente paciente = new EPaciente();
+        paciente.setDni(dni);
+
+        EPaciente existe = servicioPacientes.buscarPaciente(paciente);
+
+        if (existe == null) {
             Map<String, String> response = new HashMap<>();
             response.put("message", "Paciente no encontrado.");
             return ResponseEntity.badRequest().body(response);
@@ -184,12 +188,14 @@ public class CPaciente {
 
     @PatchMapping("/desactivar/{dni}")
     public ResponseEntity<Map<String, String>> desactivarPaciente(@PathVariable Integer dni) {
-        OcultarPacienteConsulta consulta = new OcultarPacienteConsulta();
-        consulta.setDni(dni);
+
+        EPaciente paciente = new EPaciente();
+        paciente.setDni(dni);
+        
         Map<String, String> response = new HashMap<>();
 
         try {
-            servicioPacientes.desactivarPaciente(consulta);
+            servicioPacientes.desactivarPaciente(paciente);
             response.put("message", "Paciente desactivado.");
             return ResponseEntity.ok(response);
         } catch (NoSuchElementException e) {

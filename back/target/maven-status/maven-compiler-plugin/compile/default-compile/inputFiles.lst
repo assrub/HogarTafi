@@ -1,3 +1,19 @@
+<<<<<<< HEAD
+/app/src/main/java/com/hogarTafi/hogarTafi/Servicio/Medicamento/SMedicamento.java
+/app/src/main/java/com/hogarTafi/hogarTafi/Entidad/Medicamento/EMedicamento.java
+/app/src/main/java/com/hogarTafi/hogarTafi/Entidad/Medicamento/EMedicacion.java
+/app/src/main/java/com/hogarTafi/hogarTafi/Configuracion/WebConfig.java
+/app/src/main/java/com/hogarTafi/hogarTafi/HogarTafiApplication.java
+/app/src/main/java/com/hogarTafi/hogarTafi/Servicio/Stock/SStock.java
+/app/src/main/java/com/hogarTafi/hogarTafi/Controlador/Paciente/CPaciente.java
+/app/src/main/java/com/hogarTafi/hogarTafi/Repositorio/Medicamento/RMedicamento.java
+/app/src/main/java/com/hogarTafi/hogarTafi/Servicio/Paciente/SPaciente.java
+/app/src/main/java/com/hogarTafi/hogarTafi/Controlador/Stock/CStock.java
+/app/src/main/java/com/hogarTafi/hogarTafi/Entidad/Paciente/EPaciente.java
+/app/src/main/java/com/hogarTafi/hogarTafi/Servicio/Paciente/SIPacientes.java
+/app/src/main/java/com/hogarTafi/hogarTafi/Repositorio/Paciente/RPaciente.java
+/app/src/main/java/com/hogarTafi/hogarTafi/Controlador/Medicamento/CMedicamento.java
+=======
 C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Controlador\Medicamento\CMedicamento.java
 C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\HogarTafiApplication.java
 C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Consulta\ActualizarPacienteConsulta.java
@@ -15,3 +31,4 @@ C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\c
 C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Repositorio\Paciente\RPaciente.java
 C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Servicio\Stock\SStock.java
 C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Entidad\Medicamento\EMedicacion.java
+>>>>>>> b7afbe20a21b5831f524f8bb3f54b9a8837199d8
