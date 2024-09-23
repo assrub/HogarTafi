@@ -6,7 +6,7 @@ import com.hogarTafi.hogarTafi.medicamento.entidad.EMedicacion;
 import com.hogarTafi.hogarTafi.medicamento.entidad.EMedicamento;
 
 public interface MedicamentoService {
-    boolean registrarMedicamento(Integer dni, EMedicamento medicamentoRequest);
+    boolean registrarMedicamento(Integer dni, List<EMedicamento> medicamentoRequest);
     EMedicacion buscarMedicacionPorDni(Integer dni);
     List<EMedicacion> buscarMedicacion();
 }
