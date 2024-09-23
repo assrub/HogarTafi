@@ -68,22 +68,23 @@ function FormPacientes() {
       const rowData = {};
   
       cells.forEach((cell, i) => {
-        let cellValue = null;
-      
+        let cellValue = '';
+  
+        // Si hay un select, obtenemos el valor seleccionado
         const select = cell.querySelector('select');
-        const input = cell.querySelector('input');
-        
         if (select) {
           cellValue = select.value.trim();
-        } else if (input) {
-          cellValue = input.value.trim();
+        } else if (cell.querySelector('input')) {
+          // Si hay un input, obtenemos el valor del input
+          cellValue = cell.querySelector('input').value.trim();
         } else {
-          cellValue = cell.textContent.trim() || null; // Si no hay texto, asigna null
+          // Si no hay input ni select, obtenemos el contenido de texto de la celda
+          cellValue = cell.textContent.trim();
         }
-      
-        rowData[headers[i]] = cellValue;
+  
+        // Si el valor está vacío, lo asignamos como null
+        rowData[headers[i]] = cellValue !== "" ? cellValue : null;
       });
-      
   
       return rowData;
     });
@@ -156,14 +157,6 @@ function guardarStock(stockRef){
   guardarStockApi(formDataStock,parseInt(paciente.dni));
 }
 
-<<<<<<< HEAD
-function guardarMedicamentos() {
-  let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
-  console.log("Medicamentos a guardar:", tablaMedicamentos); // Verifica los medicamentos antes de enviarlos
-  
-  // En vez de usar el estado, usa directamente la tabla convertida
-  guardarMedicamentosApi(tablaMedicamentos, paciente.dni);
-=======
 function guardarMedicamentos(medicamentosRef){
   let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
   setMedicamentos(tablaMedicamentos);
@@ -185,7 +178,6 @@ function guardarMedicamentos(medicamentosRef){
   });
   const response  = guardarMedicamentosApi(formDataMedicamentos,parseInt(paciente.dni));
  
->>>>>>> 5225144cd6842c9751caf4098941df862b10c584
 }
 
 
@@ -474,7 +466,7 @@ function buscarClick(){
             <div>
               <TablaMedicamentos ref={medicamentosRef}/>
               <div className="boton m-4">
-              <Boton textoBoton="Guardar medicamentos" onClick={() => guardarMedicamentos()}></Boton>
+              <Boton textoBoton="Guardar medicamentos" onClick={() => guardarMedicamentos(medicamentosRef)}></Boton>
               </div>
             </div>
           )}
