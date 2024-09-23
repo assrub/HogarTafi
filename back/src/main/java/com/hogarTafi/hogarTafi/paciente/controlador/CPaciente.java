@@ -1,7 +1,6 @@
 package com.hogarTafi.hogarTafi.paciente.controlador;
 
 import java.io.IOException;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,21 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-<<<<<<< HEAD:back/src/main/java/com/hogarTafi/hogarTafi/paciente/controlador/CPaciente.java
 import com.hogarTafi.hogarTafi.paciente.entidad.EPaciente;
 import com.hogarTafi.hogarTafi.paciente.servicio.PacienteService;
-=======
-import com.hogarTafi.hogarTafi.Consulta.OcultarPacienteConsulta;
-import com.hogarTafi.hogarTafi.Entidad.Paciente.EPaciente;
-import com.hogarTafi.hogarTafi.Servicio.Paciente.SIPaciente;
->>>>>>> 5225144cd6842c9751caf4098941df862b10c584:back/src/main/java/com/hogarTafi/hogarTafi/Controlador/Paciente/CPaciente.java
 
 @RestController
 @RequestMapping("/pacientes")
 public class CPaciente {
 
     @Autowired
-<<<<<<< HEAD:back/src/main/java/com/hogarTafi/hogarTafi/paciente/controlador/CPaciente.java
     private PacienteService servicioPacientes;
 
     @GetMapping
@@ -43,68 +35,19 @@ public class CPaciente {
         return ResponseEntity.ok(pacientesConFotos);
     }
     
-=======
-    private SIPaciente servicioPacientes;
-
-    @GetMapping
-    public ResponseEntity<List<Map<String, Object>>> todosLosPacientes() {
-        List<EPaciente> pacientes = servicioPacientes.todosLosPacientes();
-        List<Map<String, Object>> pacientesConFotos = pacientes.stream().map(paciente -> {
-            Map<String, Object> pacienteMap = new HashMap<>();
-
-        if (paciente.getActivo())
-        {
-            pacienteMap.put("dni", paciente.getDni());
-            pacienteMap.put("nombre", paciente.getNombre());
-            pacienteMap.put("apellido", paciente.getApellido());
-            pacienteMap.put("obraSocial", paciente.getObraSocial());
-            pacienteMap.put("observaciones", paciente.getObservaciones());
-
-            // Convertir fotos de binario a base64
-            if (paciente.getFotoFrenteCarnet() != null) {
-                pacienteMap.put("fotoFrenteCarnet", convertirABase64(paciente.getFotoFrenteCarnet()));
-            }
-            if (paciente.getFotoAtrasCarnet() != null) {
-                pacienteMap.put("fotoAtrasCarnet", convertirABase64(paciente.getFotoAtrasCarnet()));
-            }
-            if (paciente.getFotoFrenteDni() != null) {
-                pacienteMap.put("fotoFrenteDni", convertirABase64(paciente.getFotoFrenteDni()));
-            }
-            if (paciente.getFotoAtrasDni() != null) {
-                pacienteMap.put("fotoAtrasDni", convertirABase64(paciente.getFotoAtrasDni()));
-            }
-        }
-        else
-        {
-            return null;
-        }
-
-            return pacienteMap;
-        }).collect(Collectors.toList());
-
-        return ResponseEntity.ok(pacientesConFotos);
-    }
-
-    private String convertirABase64(byte[] bytes) {
-        return Base64.getEncoder().encodeToString(bytes);
-    }
-
->>>>>>> 5225144cd6842c9751caf4098941df862b10c584:back/src/main/java/com/hogarTafi/hogarTafi/Controlador/Paciente/CPaciente.java
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Map<String, String>> guardarPaciente(
-            @RequestParam("dni") Integer dni,
-            @RequestParam("nombre") String nombre,
-            @RequestParam("apellido") String apellido,
-            @RequestParam("obraSocial") String obraSocial,
-            @RequestParam("observaciones") String observaciones,
-            @RequestParam(value = "fotoFrenteCarnet", required = false) MultipartFile fotoFrenteCarnet,
-            @RequestParam(value = "fotoAtrasCarnet", required = false) MultipartFile fotoAtrasCarnet,
-            @RequestParam(value = "fotoFrenteDni", required = false) MultipartFile fotoFrenteDni,
-            @RequestParam(value = "fotoAtrasDni", required = false) MultipartFile fotoAtrasDni
+    public ResponseEntity<Map<String, String>> guardarPaciente(@RequestParam("dni") Integer dni,
+                                                               @RequestParam("nombre") String nombre,
+                                                               @RequestParam("apellido") String apellido,
+                                                               @RequestParam("obraSocial") String obraSocial,
+                                                               @RequestParam("observaciones") String observaciones,
+                                                               @RequestParam(value = "fotoFrenteCarnet", required = false) MultipartFile fotoFrenteCarnet,
+                                                               @RequestParam(value = "fotoAtrasCarnet", required = false) MultipartFile fotoAtrasCarnet,
+                                                               @RequestParam(value = "fotoFrenteDni", required = false) MultipartFile fotoFrenteDni,
+                                                               @RequestParam(value = "fotoAtrasDni", required = false) MultipartFile fotoAtrasDni
     ) {
         Map<String, String> response = new HashMap<>();
         try {
-<<<<<<< HEAD:back/src/main/java/com/hogarTafi/hogarTafi/paciente/controlador/CPaciente.java
             
             // Crear instancia de EPaciente y asignar valores
             EPaciente paciente = new EPaciente();
@@ -128,21 +71,8 @@ public class CPaciente {
             if (fotoAtrasDni != null && !fotoAtrasDni.isEmpty()) {
                 paciente.setFotoAtrasDni(fotoAtrasDni.getBytes());
             } 
-=======
-            // Maneja las imágenes que pueden ser null
-            byte[] fotoFrenteCarnetBytes = fotoFrenteCarnet != null ? fotoFrenteCarnet.getBytes() : null;
-            byte[] fotoAtrasCarnetBytes = fotoAtrasCarnet != null ? fotoAtrasCarnet.getBytes() : null;
-            byte[] fotoFrenteDniBytes = fotoFrenteDni != null ? fotoFrenteDni.getBytes() : null;
-            byte[] fotoAtrasDniBytes = fotoAtrasDni != null ? fotoAtrasDni.getBytes() : null;
->>>>>>> 5225144cd6842c9751caf4098941df862b10c584:back/src/main/java/com/hogarTafi/hogarTafi/Controlador/Paciente/CPaciente.java
 
-            boolean pacienteGuardado = servicioPacientes.guardarPaciente(
-                    dni, nombre, apellido, obraSocial, true, observaciones,
-                    fotoFrenteCarnetBytes, fotoAtrasCarnetBytes,
-                    fotoFrenteDniBytes, fotoAtrasDniBytes
-            );
-
-            if (pacienteGuardado) {
+            if (servicioPacientes.guardarPaciente(paciente)) {
                 response.put("message", "Paciente registrado.");
                 return ResponseEntity.ok(response);
             } else {
@@ -156,51 +86,46 @@ public class CPaciente {
     }
 
     @PatchMapping("/modificar/{dni}")
-    public ResponseEntity<Map<String, String>> modificarPaciente(
-            @PathVariable Integer dni,
-            @RequestParam(value = "nombre", required = false) String nombre,
-            @RequestParam(value = "apellido", required = false) String apellido,
-            @RequestParam(value = "obraSocial", required = false) String obraSocial,
-            @RequestParam(value = "observaciones", required = false) String observaciones,
-            @RequestParam(value = "fotoFrenteCarnet", required = false) MultipartFile fotoFrenteCarnet,
-            @RequestParam(value = "fotoAtrasCarnet", required = false) MultipartFile fotoAtrasCarnet,
-            @RequestParam(value = "fotoFrenteDni", required = false) MultipartFile fotoFrenteDni,
-            @RequestParam(value = "fotoAtrasDni", required = false) MultipartFile fotoAtrasDni
+    public ResponseEntity<Map<String, String>> modificarPaciente(@PathVariable Integer dni,
+                                                                 @RequestParam(value = "nombre", required = false) String nombre,
+                                                                 @RequestParam(value = "apellido", required = false) String apellido,
+                                                                 @RequestParam(value = "obraSocial", required = false) String obraSocial,
+                                                                 @RequestParam(value = "observaciones", required = false) String observaciones,
+                                                                 @RequestParam(value = "fotoFrenteCarnet", required = false) MultipartFile fotoFrenteCarnet,
+                                                                 @RequestParam(value = "fotoAtrasCarnet", required = false) MultipartFile fotoAtrasCarnet,
+                                                                 @RequestParam(value = "fotoFrenteDni", required = false) MultipartFile fotoFrenteDni,
+                                                                 @RequestParam(value = "fotoAtrasDni", required = false) MultipartFile fotoAtrasDni
     ) {
         Map<String, String> response = new HashMap<>();
         try {
-    
-            System.out.println("Nombre: " + nombre);
-            System.out.println("Apellido: " + apellido);
-            System.out.println("Obra Social: " + obraSocial);
-            System.out.println("Observaciones: " + observaciones);
-
-            System.out.println("Foto Frente Carnet: " + fotoFrenteCarnet);
-            System.out.println("Foto Atras Carnet: " + fotoAtrasCarnet);
-            System.out.println("Foto Frente Dni: " + fotoFrenteDni);
-            System.out.println("Foto Atras Dni: " + fotoAtrasDni);
-            System.out.println("------------------------");
-
             // Convertir imágenes de base64 a bytes
             byte[] fotoFrenteCarnetBytes = fotoFrenteCarnet != null ? fotoFrenteCarnet.getBytes() : null;
             byte[] fotoAtrasCarnetBytes = fotoAtrasCarnet != null ? fotoAtrasCarnet.getBytes() : null;
             byte[] fotoFrenteDniBytes = fotoFrenteDni != null ? fotoFrenteDni.getBytes() : null;
             byte[] fotoAtrasDniBytes = fotoAtrasDni != null ? fotoAtrasDni.getBytes() : null;
 
-            // Llamar al servicio para modificar el paciente
-            boolean pacienteActualizado = servicioPacientes.modificarPaciente(
-                    dni, nombre, apellido, obraSocial, observaciones,
-                    fotoFrenteCarnetBytes, fotoAtrasCarnetBytes,
-                    fotoFrenteDniBytes, fotoAtrasDniBytes
-            );
+            EPaciente paciente = new EPaciente();
+
+            paciente.setDni(dni);
+            paciente.setNombre(nombre);
+            paciente.setApellido(apellido);
+            paciente.setObraSocial(obraSocial);
+            paciente.setObservaciones(observaciones);
+            paciente.setFotoFrenteCarnet(fotoFrenteCarnetBytes);
+            paciente.setFotoAtrasCarnet(fotoAtrasCarnetBytes);
+            paciente.setFotoFrenteDni(fotoFrenteDniBytes);
+            paciente.setFotoAtrasDni(fotoAtrasDniBytes);
+
+            boolean actualizar = servicioPacientes.actualizarPaciente(paciente);
     
-            if (pacienteActualizado) {
+            if (actualizar) {
                 response.put("message", "Paciente actualizado correctamente.");
                 return ResponseEntity.ok(response);
             } else {
                 response.put("message", "No se pudo actualizar el paciente.");
                 return ResponseEntity.badRequest().body(response);
             }
+
         } catch (IllegalArgumentException e) {
             response.put("message", "Los datos proporcionados son inválidos.");
             return ResponseEntity.badRequest().body(response);
@@ -225,18 +150,9 @@ public class CPaciente {
 
     @PatchMapping("/desactivar/{dni}")
     public ResponseEntity<Map<String, String>> desactivarPaciente(@PathVariable Integer dni) {
-<<<<<<< HEAD:back/src/main/java/com/hogarTafi/hogarTafi/paciente/controlador/CPaciente.java
-=======
-        OcultarPacienteConsulta consulta = new OcultarPacienteConsulta();
-        consulta.setDni(dni);
->>>>>>> 5225144cd6842c9751caf4098941df862b10c584:back/src/main/java/com/hogarTafi/hogarTafi/Controlador/Paciente/CPaciente.java
         Map<String, String> response = new HashMap<>();
         try {
-<<<<<<< HEAD:back/src/main/java/com/hogarTafi/hogarTafi/paciente/controlador/CPaciente.java
             servicioPacientes.desactivarPaciente(dni);
-=======
-            servicioPacientes.desactivarPaciente(consulta);
->>>>>>> 5225144cd6842c9751caf4098941df862b10c584:back/src/main/java/com/hogarTafi/hogarTafi/Controlador/Paciente/CPaciente.java
             response.put("message", "Paciente desactivado.");
             return ResponseEntity.ok(response);
         } catch (NoSuchElementException e) {

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /app/src/main/java/com/hogarTafi/hogarTafi/paciente/servicio/implement/PacienteServiceImpl.java
 /app/src/main/java/com/hogarTafi/hogarTafi/medicamento/controlador/CMedicamento.java
 /app/src/main/java/com/hogarTafi/hogarTafi/paciente/controlador/CPaciente.java
@@ -13,22 +12,3 @@
 /app/src/main/java/com/hogarTafi/hogarTafi/medicamento/entidad/EMedicacion.java
 /app/src/main/java/com/hogarTafi/hogarTafi/medicamento/servicio/implement/MedicamentoServiceImpl.java
 /app/src/main/java/com/hogarTafi/hogarTafi/stock/controlador/CStock.java
-=======
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Controlador\Medicamento\CMedicamento.java
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\HogarTafiApplication.java
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Consulta\ActualizarPacienteConsulta.java
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Entidad\Paciente\EPaciente.java
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Servicio\Paciente\SIPaciente.java
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Repositorio\Medicamento\RMedicamento.java
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Configuracion\WebConfig.java
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Servicio\Medicamento\SMedicamento.java
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Consulta\OcultarPacienteConsulta.java
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Controlador\Stock\CStock.java
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Entidad\Medicamento\EMedicamento.java
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Servicio\Paciente\SPacientes.java
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Consulta\GuardarPacienteConsulta.java
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Controlador\Paciente\CPaciente.java
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Repositorio\Paciente\RPaciente.java
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Servicio\Stock\SStock.java
-C:\Users\alebe\OneDrive\Escritorio\hogarTafi-back\hogarTafi\back\src\main\java\com\hogarTafi\hogarTafi\Entidad\Medicamento\EMedicacion.java
->>>>>>> 5225144cd6842c9751caf4098941df862b10c584
