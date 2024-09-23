@@ -60,18 +60,18 @@ export async function guardarMedicamentosApi(medicamentoData, dni) {
             obj[key] = value;
         });
 
-        // Verificar qué datos se están enviando
+        
         console.log(obj);
 
         const response = await fetch(`http://localhost:8080/medicamento/${dni}`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",  // Indicar que envías un JSON
+                "Content-Type": "application/json",  
             },
-            body: JSON.stringify(obj),  // Convertir el objeto a JSON
+            body: JSON.stringify(obj), 
         });
 
-        return ok;
+        return response.ok;
     } catch (error) {
         console.error('Error al registrar los medicamentos del paciente:', error);
         return error;
