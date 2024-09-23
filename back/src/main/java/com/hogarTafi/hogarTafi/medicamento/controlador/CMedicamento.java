@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.hogarTafi.hogarTafi.medicamento.entidad.EMedicacion;
 import com.hogarTafi.hogarTafi.medicamento.entidad.EMedicamento;
 import com.hogarTafi.hogarTafi.medicamento.servicio.implement.MedicamentoServiceImpl;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -28,7 +28,8 @@ public  class CMedicamento{
 
     @PostMapping("/{dni}")
     public ResponseEntity<Map<String, String>> registrarMedicamento(@PathVariable("dni") Integer dni,
-                                                                    @RequestBody EMedicamento medicamentoRequest){
+                                                                    @RequestBody List<EMedicamento> medicamentoRequest){
+                                                                        
 
         Map<String, String> response = new HashMap<>();
         try{

@@ -1,0 +1,14 @@
+com/hogarTafi/hogarTafi/medicamento/entidad/EMedicamento.class
+com/hogarTafi/hogarTafi/paciente/repositorio/RPaciente.class
+com/hogarTafi/hogarTafi/paciente/servicio/PacienteService.class
+com/hogarTafi/hogarTafi/medicamento/repositorio/RMedicamento.class
+com/hogarTafi/hogarTafi/stock/controlador/CStock.class
+com/hogarTafi/hogarTafi/medicamento/controlador/CMedicamento.class
+com/hogarTafi/hogarTafi/HogarTafiApplication.class
+com/hogarTafi/hogarTafi/paciente/servicio/implement/PacienteServiceImpl.class
+com/hogarTafi/hogarTafi/paciente/controlador/CPaciente.class
+com/hogarTafi/hogarTafi/paciente/entidad/EPaciente.class
+com/hogarTafi/hogarTafi/configuracion/WebConfig.class
+com/hogarTafi/hogarTafi/medicamento/servicio/MedicamentoService.class
+com/hogarTafi/hogarTafi/medicamento/entidad/EMedicacion.class
+com/hogarTafi/hogarTafi/medicamento/servicio/implement/MedicamentoServiceImpl.class
