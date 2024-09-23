@@ -142,7 +142,7 @@ export default function ListadoUsuarios() {
     textoEtiqueta="Direccion"
     propsLabel={{ labelFor: "direccion" }}
     propsInput={{
-      type: "text",
+      type: "password",
       name: "direccion",
       id: "inputContra",
       value: usuario.contra,  
