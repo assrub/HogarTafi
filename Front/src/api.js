@@ -71,12 +71,25 @@ export async function guardarMedicamentosApi(medicamentos, dniPaciente) {
     };
 
     try {
+<<<<<<< HEAD
         const response = await fetch(`http://localhost:8080/medicamento/34377745`, {
+=======
+        // Convertir FormData a un objeto JavaScript
+        let obj = {};
+        medicamentoData.forEach((value, key) => {
+            obj[key] = value;
+        });
+
+        
+        console.log(obj);
+
+        const response = await fetch(`http://localhost:8080/medicamento/${dni}`, {
+>>>>>>> 5225144cd6842c9751caf4098941df862b10c584
             method: "POST",
             headers: {
-                "Content-Type": "application/json",  // Indicar que envías un JSON
+                "Content-Type": "application/json",  
             },
-            body: JSON.stringify(medicamentoData),  // Convertir el objeto a JSON
+            body: JSON.stringify(obj), 
         });
 
         // Retorna true si la respuesta es correcta
@@ -86,3 +99,12 @@ export async function guardarMedicamentosApi(medicamentos, dniPaciente) {
         return false; // Devuelve false en caso de error
     }
 }
+<<<<<<< HEAD
+=======
+
+function imprimirFormData(formData){
+    for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+}
+>>>>>>> 5225144cd6842c9751caf4098941df862b10c584

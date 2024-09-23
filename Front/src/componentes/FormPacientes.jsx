@@ -156,12 +156,36 @@ function guardarStock(stockRef){
   guardarStockApi(formDataStock,parseInt(paciente.dni));
 }
 
+<<<<<<< HEAD
 function guardarMedicamentos() {
   let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
   console.log("Medicamentos a guardar:", tablaMedicamentos); // Verifica los medicamentos antes de enviarlos
   
   // En vez de usar el estado, usa directamente la tabla convertida
   guardarMedicamentosApi(tablaMedicamentos, paciente.dni);
+=======
+function guardarMedicamentos(medicamentosRef){
+  let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
+  setMedicamentos(tablaMedicamentos);
+  //SetMostrarMedicamentos(!mostrarMedicamentos);
+  console.log(tablaMedicamentos);
+  const formDataMedicamentos = new FormData();
+  medicamentos.forEach((item,index) => {
+    if (item.Medicamento != null) {
+      formDataMedicamentos.append(`medicamentos[${index}][Medicamento]`, item.Medicamento);
+      formDataMedicamentos.append(`medicamentos[${index}][6:00]`, item["6:00"]); 
+      formDataMedicamentos.append(`medicamentos[${index}][Desayuno]`, item.Desayuno);
+      formDataMedicamentos.append(`medicamentos[${index}][Almuerzo]`, item.Almuerzo);
+      formDataMedicamentos.append(`medicamentos[${index}][Merienda]`, item.Merienda);
+      formDataMedicamentos.append(`medicamentos[${index}][Cena]`, item.Cena);
+      formDataMedicamentos.append(`medicamentos[${index}][22:30]`, item["22:30"]);
+      formDataMedicamentos.append(`medicamentos[${index}][observaciones]`, item.Observaciones);
+    }
+   
+  });
+  const response  = guardarMedicamentosApi(formDataMedicamentos,parseInt(paciente.dni));
+ 
+>>>>>>> 5225144cd6842c9751caf4098941df862b10c584
 }
 
 
