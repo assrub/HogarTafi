@@ -7,6 +7,7 @@
 /app/src/main/java/com/hogarTafi/hogarTafi/configuracion/WebConfig.java
 /app/src/main/java/com/hogarTafi/hogarTafi/HogarTafiApplication.java
 /app/src/main/java/com/hogarTafi/hogarTafi/medicamento/repositorio/RMedicamento.java
+/app/src/main/java/com/hogarTafi/hogarTafi/medicamento/controlador/object.java
 /app/src/main/java/com/hogarTafi/hogarTafi/paciente/servicio/PacienteService.java
 /app/src/main/java/com/hogarTafi/hogarTafi/medicamento/entidad/EMedicamento.java
 /app/src/main/java/com/hogarTafi/hogarTafi/medicamento/entidad/EMedicacion.java

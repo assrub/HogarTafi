@@ -157,28 +157,31 @@ function guardarStock(stockRef){
   guardarStockApi(formDataStock,parseInt(paciente.dni));
 }
 
-function guardarMedicamentos(medicamentosRef){
+function guardarMedicamentos(medicamentosRef) {
   let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
   setMedicamentos(tablaMedicamentos);
-  //SetMostrarMedicamentos(!mostrarMedicamentos);
-  console.log(tablaMedicamentos);
-  const formDataMedicamentos = new FormData();
-  medicamentos.forEach((item,index) => {
+
+  // Aquí construimos el array de objetos en lugar de usar FormData
+  const medicamentosArray = medicamentos.map((item) => {
     if (item.Medicamento != null) {
-      formDataMedicamentos.append(`medicamentos[${index}][Medicamento]`, item.Medicamento);
-      formDataMedicamentos.append(`medicamentos[${index}][6:00]`, item["6:00"]); 
-      formDataMedicamentos.append(`medicamentos[${index}][Desayuno]`, item.Desayuno);
-      formDataMedicamentos.append(`medicamentos[${index}][Almuerzo]`, item.Almuerzo);
-      formDataMedicamentos.append(`medicamentos[${index}][Merienda]`, item.Merienda);
-      formDataMedicamentos.append(`medicamentos[${index}][Cena]`, item.Cena);
-      formDataMedicamentos.append(`medicamentos[${index}][22:30]`, item["22:30"]);
-      formDataMedicamentos.append(`medicamentos[${index}][observaciones]`, item.Observaciones);
+      return {
+        medicamento: item.Medicamento,
+        horario_1: item["6:00"],
+        desayuno: item.Desayuno,
+        almuerzo: item.Almuerzo,
+        merienda: item.Merienda,
+        cena: item.Cena,
+        horario_2: item["22:30"],
+        observaciones: item.Observaciones,
+      };
     }
-   
-  });
-  const response  = guardarMedicamentosApi(formDataMedicamentos,parseInt(paciente.dni));
- 
+    return null; // Si el medicamento es null, lo ignoramos luego
+  }).filter(item => item !== null); // Filtramos los elementos null
+
+  // Llamada a la función que enviará los medicamentos
+  const response = guardarMedicamentosApi(medicamentosArray, parseInt(paciente.dni));
 }
+
 
 
 function buscarClick(){

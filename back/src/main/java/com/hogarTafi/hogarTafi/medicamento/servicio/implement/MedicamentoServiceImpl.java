@@ -36,6 +36,9 @@ public class MedicamentoServiceImpl implements MedicamentoService {
         if (medicacionOpt.isPresent()) {
             // Si ya existe un documento de medicación, lo usamos
             medicacion = medicacionOpt.get();
+    
+            // Limpiar la lista de medicamentos antes de agregar los nuevos
+            medicacion.getMedicamentos().clear();
         } else {
             // Si no existe, creamos un nuevo documento de medicación
             medicacion = new EMedicacion();
@@ -43,43 +46,29 @@ public class MedicamentoServiceImpl implements MedicamentoService {
         }
     
         // Recorrer cada medicamento de la lista
-        // Recorrer cada medicamento de la lista
-for (EMedicamento medicamentoRequest : medicamentoRequestList) {
-    EMedicamento medicamento = new EMedicamento();
+        for (EMedicamento medicamentoRequest : medicamentoRequestList) {
+            EMedicamento medicamento = new EMedicamento();
     
-    // Obtener y asignar los valores de cada atributo
-    medicamento.setMedicamento(medicamentoRequest.getMedicamento());
-    medicamento.setHorario_1(medicamentoRequest.getHorario_1());
-    medicamento.setDesayuno(medicamentoRequest.getDesayuno());
-    medicamento.setAlmuerzo(medicamentoRequest.getAlmuerzo());
-    medicamento.setMerienda(medicamentoRequest.getMerienda());
-    medicamento.setCena(medicamentoRequest.getCena());
-    medicamento.setHorario_2(medicamentoRequest.getHorario_2());
-    medicamento.setObservaciones(medicamentoRequest.getObservaciones());
-
-    // Imprimir cada atributo para verificar los valores
-    System.out.println("Medicamento: " + medicamento.getMedicamento());
-    System.out.println("Horario 1: " + medicamento.getHorario_1());
-    System.out.println("Desayuno: " + medicamento.getDesayuno());
-    System.out.println("Almuerzo: " + medicamento.getAlmuerzo());
-    System.out.println("Merienda: " + medicamento.getMerienda());
-    System.out.println("Cena: " + medicamento.getCena());
-    System.out.println("Horario 2: " + medicamento.getHorario_2());
-    System.out.println("Observaciones: " + medicamento.getObservaciones());
+            // Obtener y asignar los valores de cada atributo
+            medicamento.setMedicamento(medicamentoRequest.getMedicamento());
+            medicamento.setHorario_1(medicamentoRequest.getHorario_1());
+            medicamento.setDesayuno(medicamentoRequest.getDesayuno());
+            medicamento.setAlmuerzo(medicamentoRequest.getAlmuerzo());
+            medicamento.setMerienda(medicamentoRequest.getMerienda());
+            medicamento.setCena(medicamentoRequest.getCena());
+            medicamento.setHorario_2(medicamentoRequest.getHorario_2());
+            medicamento.setObservaciones(medicamentoRequest.getObservaciones());
     
-    // Agregar cada medicamento a la lista de medicamentos de la medicación del paciente
-    medicacion.getMedicamentos().add(medicamento);
-    
-    // Separador para cada medicamento
-    System.out.println("----------------------------------");
-}
-
+            // Agregar cada medicamento a la lista de medicamentos de la medicación del paciente
+            medicacion.getMedicamentos().add(medicamento);
+        }
     
         // Guardar o actualizar el documento de medicación con la nueva lista de medicamentos
         repositorioMedicacion.save(medicacion);
     
         return true; // Medicamentos registrados con éxito
     }
+    
     
 
     public EMedicacion buscarMedicacionPorDni(Integer dni) {

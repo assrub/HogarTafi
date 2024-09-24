@@ -53,36 +53,23 @@ export async function guardarStockApi(formData, dni){
 }
 export async function guardarMedicamentosApi(medicamentoData, dni) {
     try {
-        // Esto debe ser un array de objetos de antemano
-        const formDataArray = [];
-
-        medicamentoData.forEach((value, key) => {
-            // Divide el key por un índice si está en ese formato para agrupar objetos
-            const [index, field] = key.split(/\[(.*?)\]/);
-
-            if (!formDataArray[index]) {
-                formDataArray[index] = {};
-            }
-
-            formDataArray[index][field] = value;
-        });
-
-        console.log(formDataArray); // Asegúrate de que es un array de objetos
-
-        const response = await fetch(`http://localhost:8080/medicamento/${dni}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formDataArray), // Enviar como array
-        });
-
-        return response.ok;
+      console.log(medicamentoData); // Aquí debería mostrarse el array de objetos
+  
+      const response = await fetch(`http://localhost:8080/medicamento/${dni}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(medicamentoData), // Enviar directamente el array de objetos
+      });
+  
+      return response.ok;
     } catch (error) {
-        console.error('Error al registrar los medicamentos del paciente:', error);
-        return error;
+      console.error('Error al registrar los medicamentos del paciente:', error);
+      return error;
     }
-}
+  }
+  
 
 
 function imprimirFormData(formData){
