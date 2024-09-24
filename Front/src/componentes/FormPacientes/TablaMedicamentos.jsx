@@ -101,6 +101,15 @@ const TablaMedicamentos = forwardRef(({dni}, ref) => {
     setMedicamentos(newMedicamentos);
   };
 
+  const handleClearContent = () => {
+    setMedicamentos([{
+      medicamento: "",
+      horario: horasDelDia.reduce((acc, hora) => ({ ...acc, [hora]: "" }), {}),
+      observaciones: "",
+      editable: false,
+    }]);
+  };
+
   const handleRemoveRow = (index) => {
     if (medicamentos.length > 1) {
       const newMedicamentos = [...medicamentos];
@@ -124,6 +133,16 @@ async function traerMedicamentos(dni){
     const response = await traerMedicamentosApi(dni);
     if(response.medicamentos){
       setMedicamentos(transformarMedicamentos(response.medicamentos));
+      console.log(medicamentos)
+    }else{
+      setMedicamentos([
+        {
+          medicamento: "",
+          horario: horasDelDia.reduce((acc, hora) => ({ ...acc, [hora]: "" }), {}),
+          observaciones: "",
+          editable: false,
+        },
+      ])
     }
   }catch(error){
     console.error(error)

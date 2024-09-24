@@ -189,6 +189,9 @@ async function guardarMedicamentos(medicamentosRef) {
 
 
 function buscarClick(){
+  setMostrarFotos(false);
+  SetMostrarMedicamentos(false);
+  setMostrarStock(false);
   let dniPacientes = document.getElementById("select-paciente").value;
   //esto es para el ejemplo. Hay que hacer que busque en la base de datos
   pacientes.forEach(element => {
