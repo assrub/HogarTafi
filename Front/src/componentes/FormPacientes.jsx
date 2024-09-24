@@ -471,7 +471,7 @@ function buscarClick(){
         <div className="tablaMedicamentos ">
           {mostrarMedicamentos && (
             <div>
-              <TablaMedicamentos ref={medicamentosRef}/>
+              <TablaMedicamentos dni={paciente.dni} ref={medicamentosRef}/>
               <div className="boton m-4">
               <Boton textoBoton="Guardar medicamentos" onClick={() => guardarMedicamentos(medicamentosRef)}></Boton>
               </div>

@@ -1,6 +1,8 @@
 import React, { useEffect, useState, forwardRef } from "react";
+import { traerMedicamentosApi } from "../../api";
 
-const TablaMedicamentos = forwardRef(({}, ref) => {
+
+const TablaMedicamentos = forwardRef(({dni}, ref) => {
   const stock = [
     {
       Medicacion: "Paracetamol",
@@ -115,6 +117,40 @@ const TablaMedicamentos = forwardRef(({}, ref) => {
     newMedicamentos[index].horario[hora] = value; // Actualiza el valor del horario
     setMedicamentos(newMedicamentos);
   };
+
+
+async function traerMedicamentos(dni){
+  try{
+    const response = await traerMedicamentosApi(dni);
+    if(response.medicamentos){
+      setMedicamentos(transformarMedicamentos(response.medicamentos));
+    }
+  }catch(error){
+    console.error(error)
+  }
+  
+}
+
+//esta funcion es porque el estado de medicamentos en este componente y los medicamentos que estan en la base de datos tienen diferente forma
+function transformarMedicamentos(medicamentosBackend) {
+  return medicamentosBackend.map(medicamento => ({
+    medicamento: medicamento.medicamento,
+    horario: {
+      "6:00": medicamento.horario_1,
+      Desayuno: medicamento.desayuno,
+      Almuerzo: medicamento.almuerzo,
+      Merienda: medicamento.merienda,
+      Cena: medicamento.cena,
+      "22:30": medicamento.horario_2
+    },
+    observaciones: medicamento.observaciones || "", 
+    editable: false  
+  }));
+}
+
+  useEffect (()=>{
+    traerMedicamentos(dni)
+  },[dni])
 
   return (
     <div className="overflow-x-auto rounded-xl">

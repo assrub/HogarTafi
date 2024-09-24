@@ -79,7 +79,7 @@ function imprimirFormData(formData){
       }
 }
 
-export async function traerMedicamentos(dni){
+export async function traerMedicamentosApi(dni){
     const response = await fetch(`http://localhost:8080/medicamento/${dni}`);
   const data = await response.json();
   return data;
