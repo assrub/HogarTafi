@@ -448,8 +448,8 @@ function buscarClick(){
       />
     </div>
 <hr />
-        <div className="menuEscondido mx-6 my-2">
-          <div className="stock">
+        <div className="menuEscondido mx-6 my-2 ">
+          <div className="stock flex justify-center items-center">
           {mostrarStock && (
             <div className="">
               <TablaStock ref={stockRef}/>
@@ -471,9 +471,9 @@ function buscarClick(){
             </div>
           )}
         </div>
-        <div className="tablaMedicamentos ">
+        <div className="tablaMedicamentos flex justify-center items-center">
           {mostrarMedicamentos && (
-            <div>
+            <div className="">
               <TablaMedicamentos dni={paciente.dni} ref={medicamentosRef}/>
               <div className="boton m-4">
               <Boton textoBoton="Guardar medicamentos" onClick={() => guardarMedicamentos(medicamentosRef)}></Boton>

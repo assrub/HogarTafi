@@ -173,7 +173,7 @@ function transformarMedicamentos(medicamentosBackend) {
 
   return (
     <div className="overflow-x-auto rounded-xl">
-      <table className="min-w-full table-auto mb-10" ref={ref}>
+      <table className=" table-auto mb-10" ref={ref}>
         <thead>
           <tr>
             <th className="px-2 py-1 border border-[#181818] text-sm md:text-base">
@@ -209,7 +209,7 @@ function transformarMedicamentos(medicamentosBackend) {
                       className="px-2 py-1 border border-[#181818] break-words"
                     >
                       <input
-                        className={`rounded-lg  md:w-auto ${
+                        className={`rounded-lg sm:w-12 xl:w-20 ${
                           medicamento.editable ? "bg-white" : "bg-neutral-300"
                         } border`}
                         type="number"
@@ -221,7 +221,7 @@ function transformarMedicamentos(medicamentosBackend) {
                   ))}
                   <td className="px-2 py-1 border border-[#181818] break-all">
                     <input
-                      className={`rounded-lg w-full ${
+                      className={`rounded-lg md:w-full ${
                         medicamento.editable ? "bg-white" : "bg-neutral-300"
                       } border`}
                       type="text"
@@ -301,7 +301,7 @@ function transformarMedicamentos(medicamentosBackend) {
                   name={hora}
                   value={nuevoMedicamento.horario[hora]}
                   onChange={manejarCambioNuevoMedicamento}
-                  className={`rounded-lg  md:w-auto  border`}
+                  className={`rounded-lg  sm:w-12 xl:w-20  border`}
                   placeholder={hora}
                 />
               </td>
@@ -317,7 +317,7 @@ function transformarMedicamentos(medicamentosBackend) {
                     observaciones: e.target.value,
                   }))
                 }
-                className="w-full p-2"
+                className="md:w-full p-2"
                 placeholder="Observaciones"
               />
             </td>
