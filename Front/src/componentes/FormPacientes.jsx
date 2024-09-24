@@ -160,6 +160,7 @@ function guardarStock(stockRef){
 function guardarMedicamentos(medicamentosRef) {
   let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
   setMedicamentos(tablaMedicamentos);
+<<<<<<< HEAD
 
   // Aquí construimos el array de objetos en lugar de usar FormData
   const medicamentosArray = medicamentos.map((item) => {
@@ -180,6 +181,31 @@ function guardarMedicamentos(medicamentosRef) {
 
   // Llamada a la función que enviará los medicamentos
   const response = guardarMedicamentosApi(medicamentosArray, parseInt(paciente.dni));
+=======
+  console.log(tablaMedicamentos);
+
+  const arregloMedicacion = [];
+
+  medicamentos.forEach((item, index) => {
+    if (item.Medicamento != null) {
+      const medicamento = {
+        Medicamento: item.Medicamento,
+        "6:00": item["6:00"],
+        Desayuno: item.Desayuno,
+        Almuerzo: item.Almuerzo,
+        Merienda: item.Merienda,
+        Cena: item.Cena,
+        "22:30": item["22:30"],
+        Observaciones: item.Observaciones
+      };
+      arregloMedicacion.push(medicamento);
+    }
+  });
+
+  console.log(arregloMedicacion);
+
+  const response = guardarMedicamentosApi(arregloMedicacion, parseInt(paciente.dni));
+>>>>>>> c7bf8c2c914a8986a163261c68f49e60bc1f6e05
 }
 
 

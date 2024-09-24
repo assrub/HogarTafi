@@ -46,6 +46,7 @@ public class MedicamentoServiceImpl implements MedicamentoService {
         }
     
         // Recorrer cada medicamento de la lista
+<<<<<<< HEAD
         for (EMedicamento medicamentoRequest : medicamentoRequestList) {
             EMedicamento medicamento = new EMedicamento();
     
@@ -62,6 +63,29 @@ public class MedicamentoServiceImpl implements MedicamentoService {
             // Agregar cada medicamento a la lista de medicamentos de la medicación del paciente
             medicacion.getMedicamentos().add(medicamento);
         }
+=======
+        // Recorrer cada medicamento de la lista
+for (EMedicamento medicamentoRequest : medicamentoRequestList) {
+
+
+    // Imprimir cada atributo para verificar los valores
+    System.out.println("Medicamento: " + medicamentoRequest.getMedicamento());
+    System.out.println("Horario 1: " + medicamentoRequest.getHorario_1());
+    System.out.println("Desayuno: " + medicamentoRequest.getDesayuno());
+    System.out.println("Almuerzo: " + medicamentoRequest.getAlmuerzo());
+    System.out.println("Merienda: " + medicamentoRequest.getMerienda());
+    System.out.println("Cena: " + medicamentoRequest.getCena());
+    System.out.println("Horario 2: " + medicamentoRequest.getHorario_2());
+    System.out.println("Observaciones: " + medicamentoRequest.getObservaciones());
+    
+    // Agregar cada medicamento a la lista de medicamentos de la medicación del paciente
+    medicacion.getMedicamentos().add(medicamentoRequest);
+    
+    // Separador para cada medicamento
+    System.out.println("----------------------------------");
+}
+
+>>>>>>> c7bf8c2c914a8986a163261c68f49e60bc1f6e05
     
         // Guardar o actualizar el documento de medicación con la nueva lista de medicamentos
         repositorioMedicacion.save(medicacion);
