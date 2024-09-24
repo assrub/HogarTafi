@@ -157,27 +157,32 @@ function guardarStock(stockRef){
   guardarStockApi(formDataStock,parseInt(paciente.dni));
 }
 
-function guardarMedicamentos(medicamentosRef){
+function guardarMedicamentos(medicamentosRef) {
   let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
   setMedicamentos(tablaMedicamentos);
-  //SetMostrarMedicamentos(!mostrarMedicamentos);
   console.log(tablaMedicamentos);
-  const formDataMedicamentos = new FormData();
-  medicamentos.forEach((item,index) => {
+
+  const arregloMedicacion = [];
+
+  medicamentos.forEach((item, index) => {
     if (item.Medicamento != null) {
-      formDataMedicamentos.append(`medicamentos[${index}][Medicamento]`, item.Medicamento);
-      formDataMedicamentos.append(`medicamentos[${index}][6:00]`, item["6:00"]); 
-      formDataMedicamentos.append(`medicamentos[${index}][Desayuno]`, item.Desayuno);
-      formDataMedicamentos.append(`medicamentos[${index}][Almuerzo]`, item.Almuerzo);
-      formDataMedicamentos.append(`medicamentos[${index}][Merienda]`, item.Merienda);
-      formDataMedicamentos.append(`medicamentos[${index}][Cena]`, item.Cena);
-      formDataMedicamentos.append(`medicamentos[${index}][22:30]`, item["22:30"]);
-      formDataMedicamentos.append(`medicamentos[${index}][observaciones]`, item.Observaciones);
+      const medicamento = {
+        Medicamento: item.Medicamento,
+        "6:00": item["6:00"],
+        Desayuno: item.Desayuno,
+        Almuerzo: item.Almuerzo,
+        Merienda: item.Merienda,
+        Cena: item.Cena,
+        "22:30": item["22:30"],
+        Observaciones: item.Observaciones
+      };
+      arregloMedicacion.push(medicamento);
     }
-   
   });
-  const response  = guardarMedicamentosApi(formDataMedicamentos,parseInt(paciente.dni));
- 
+
+  console.log(arregloMedicacion);
+
+  const response = guardarMedicamentosApi(arregloMedicacion, parseInt(paciente.dni));
 }
 
 

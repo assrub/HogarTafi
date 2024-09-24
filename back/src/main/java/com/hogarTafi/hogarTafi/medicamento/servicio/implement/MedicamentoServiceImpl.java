@@ -45,30 +45,20 @@ public class MedicamentoServiceImpl implements MedicamentoService {
         // Recorrer cada medicamento de la lista
         // Recorrer cada medicamento de la lista
 for (EMedicamento medicamentoRequest : medicamentoRequestList) {
-    EMedicamento medicamento = new EMedicamento();
-    
-    // Obtener y asignar los valores de cada atributo
-    medicamento.setMedicamento(medicamentoRequest.getMedicamento());
-    medicamento.setHorario_1(medicamentoRequest.getHorario_1());
-    medicamento.setDesayuno(medicamentoRequest.getDesayuno());
-    medicamento.setAlmuerzo(medicamentoRequest.getAlmuerzo());
-    medicamento.setMerienda(medicamentoRequest.getMerienda());
-    medicamento.setCena(medicamentoRequest.getCena());
-    medicamento.setHorario_2(medicamentoRequest.getHorario_2());
-    medicamento.setObservaciones(medicamentoRequest.getObservaciones());
+
 
     // Imprimir cada atributo para verificar los valores
-    System.out.println("Medicamento: " + medicamento.getMedicamento());
-    System.out.println("Horario 1: " + medicamento.getHorario_1());
-    System.out.println("Desayuno: " + medicamento.getDesayuno());
-    System.out.println("Almuerzo: " + medicamento.getAlmuerzo());
-    System.out.println("Merienda: " + medicamento.getMerienda());
-    System.out.println("Cena: " + medicamento.getCena());
-    System.out.println("Horario 2: " + medicamento.getHorario_2());
-    System.out.println("Observaciones: " + medicamento.getObservaciones());
+    System.out.println("Medicamento: " + medicamentoRequest.getMedicamento());
+    System.out.println("Horario 1: " + medicamentoRequest.getHorario_1());
+    System.out.println("Desayuno: " + medicamentoRequest.getDesayuno());
+    System.out.println("Almuerzo: " + medicamentoRequest.getAlmuerzo());
+    System.out.println("Merienda: " + medicamentoRequest.getMerienda());
+    System.out.println("Cena: " + medicamentoRequest.getCena());
+    System.out.println("Horario 2: " + medicamentoRequest.getHorario_2());
+    System.out.println("Observaciones: " + medicamentoRequest.getObservaciones());
     
     // Agregar cada medicamento a la lista de medicamentos de la medicación del paciente
-    medicacion.getMedicamentos().add(medicamento);
+    medicacion.getMedicamentos().add(medicamentoRequest);
     
     // Separador para cada medicamento
     System.out.println("----------------------------------");

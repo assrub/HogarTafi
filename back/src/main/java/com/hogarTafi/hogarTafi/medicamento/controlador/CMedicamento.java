@@ -1,5 +1,6 @@
 package com.hogarTafi.hogarTafi.medicamento.controlador;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,15 +29,35 @@ public  class CMedicamento{
 
     @PostMapping("/{dni}")
     public ResponseEntity<Map<String, String>> registrarMedicamento(@PathVariable("dni") Integer dni,
-                                                                    @RequestBody List<EMedicamento> medicamentoRequest){
-                                                                        
+                                                                    @RequestBody List<Map<String, Object>> medicamentosRequest){
 
+
+        List<EMedicamento> listaMedicamentos = new ArrayList<>();
+
+        for (Map<String, Object> map : medicamentosRequest) {
+            EMedicamento medicamento = new EMedicamento();
+
+
+            medicamento.setMedicamento((String) map.get("Medicamento"));
+            medicamento.setHorario_1((String) map.get("6:00"));
+            medicamento.setDesayuno((String) map.get("Desayuno"));
+            medicamento.setAlmuerzo((String) map.get("Almuerzo"));
+            medicamento.setMerienda((String) map.get("Merienda"));
+            medicamento.setCena((String) map.get("Cena"));
+            medicamento.setHorario_2((String) map.get("22:30"));
+            medicamento.setObservaciones((String) map.get("Observaciones"));
+
+
+            listaMedicamentos.add(medicamento);
+        }
+
+        System.out.println(listaMedicamentos);
         Map<String, String> response = new HashMap<>();
-        try{
+       try{
 
-            boolean registrado = medicamentoService.registrarMedicamento(dni, medicamentoRequest);
+            boolean registrado = medicamentoService.registrarMedicamento(dni, listaMedicamentos);
             
-            if (registrado){
+           if (registrado){
                 response.put("message", "El medicamento se ha registrado.");
                 return ResponseEntity.ok(response);
             } else {
@@ -48,7 +69,7 @@ public  class CMedicamento{
         {
             response.put("message", "ERROR 1 - al guardar el medicamento.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }                                                                        
+        }
     }
 
     @GetMapping("/{dni}")
