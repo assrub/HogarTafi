@@ -46,46 +46,22 @@ public class MedicamentoServiceImpl implements MedicamentoService {
         }
     
         // Recorrer cada medicamento de la lista
-<<<<<<< HEAD
         for (EMedicamento medicamentoRequest : medicamentoRequestList) {
             EMedicamento medicamento = new EMedicamento();
     
             // Obtener y asignar los valores de cada atributo
-            medicamento.setMedicamento(medicamentoRequest.getMedicamento());
-            medicamento.setHorario_1(medicamentoRequest.getHorario_1());
-            medicamento.setDesayuno(medicamentoRequest.getDesayuno());
-            medicamento.setAlmuerzo(medicamentoRequest.getAlmuerzo());
-            medicamento.setMerienda(medicamentoRequest.getMerienda());
-            medicamento.setCena(medicamentoRequest.getCena());
-            medicamento.setHorario_2(medicamentoRequest.getHorario_2());
-            medicamento.setObservaciones(medicamentoRequest.getObservaciones());
+            medicamento.setMedicamento(medicamentoRequest.getMedicamento() != null ? medicamentoRequest.getMedicamento() : null);
+            medicamento.setHorario_1(medicamentoRequest.getHorario_1() != null ? medicamentoRequest.getHorario_1() : null);
+            medicamento.setDesayuno(medicamentoRequest.getDesayuno() != null ? medicamentoRequest.getDesayuno() : null);
+            medicamento.setAlmuerzo(medicamentoRequest.getAlmuerzo() != null ? medicamentoRequest.getAlmuerzo() : null);
+            medicamento.setMerienda(medicamentoRequest.getMerienda() != null ? medicamentoRequest.getMerienda() : null);
+            medicamento.setCena(medicamentoRequest.getCena() != null ? medicamentoRequest.getCena() : null);
+            medicamento.setHorario_2(medicamentoRequest.getHorario_2() != null ? medicamentoRequest.getHorario_2() : null);
+            medicamento.setObservaciones(medicamentoRequest.getObservaciones() != null ? medicamentoRequest.getObservaciones() : null);
     
             // Agregar cada medicamento a la lista de medicamentos de la medicación del paciente
             medicacion.getMedicamentos().add(medicamento);
         }
-=======
-        // Recorrer cada medicamento de la lista
-for (EMedicamento medicamentoRequest : medicamentoRequestList) {
-
-
-    // Imprimir cada atributo para verificar los valores
-    System.out.println("Medicamento: " + medicamentoRequest.getMedicamento());
-    System.out.println("Horario 1: " + medicamentoRequest.getHorario_1());
-    System.out.println("Desayuno: " + medicamentoRequest.getDesayuno());
-    System.out.println("Almuerzo: " + medicamentoRequest.getAlmuerzo());
-    System.out.println("Merienda: " + medicamentoRequest.getMerienda());
-    System.out.println("Cena: " + medicamentoRequest.getCena());
-    System.out.println("Horario 2: " + medicamentoRequest.getHorario_2());
-    System.out.println("Observaciones: " + medicamentoRequest.getObservaciones());
-    
-    // Agregar cada medicamento a la lista de medicamentos de la medicación del paciente
-    medicacion.getMedicamentos().add(medicamentoRequest);
-    
-    // Separador para cada medicamento
-    System.out.println("----------------------------------");
-}
-
->>>>>>> c7bf8c2c914a8986a163261c68f49e60bc1f6e05
     
         // Guardar o actualizar el documento de medicación con la nueva lista de medicamentos
         repositorioMedicacion.save(medicacion);

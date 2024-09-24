@@ -54,6 +54,8 @@ function FormPacientes() {
   const stockRef = useRef(null);
   const medicamentosRef = useRef(null);
 
+
+
   function convertirTablaAJson(refTabla) {
     if (!refTabla.current) {
       console.error("El refTabla no está asignado a ningún elemento.");
@@ -69,7 +71,7 @@ function FormPacientes() {
   
       cells.forEach((cell, i) => {
         let cellValue = '';
-  
+
         // Si hay un select, obtenemos el valor seleccionado
         const select = cell.querySelector('select');
         if (select) {
@@ -157,38 +159,15 @@ function guardarStock(stockRef){
   guardarStockApi(formDataStock,parseInt(paciente.dni));
 }
 
-function guardarMedicamentos(medicamentosRef) {
+async function guardarMedicamentos(medicamentosRef) {
   let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
-  setMedicamentos(tablaMedicamentos);
-<<<<<<< HEAD
-
-  // Aquí construimos el array de objetos en lugar de usar FormData
-  const medicamentosArray = medicamentos.map((item) => {
-    if (item.Medicamento != null) {
-      return {
-        medicamento: item.Medicamento,
-        horario_1: item["6:00"],
-        desayuno: item.Desayuno,
-        almuerzo: item.Almuerzo,
-        merienda: item.Merienda,
-        cena: item.Cena,
-        horario_2: item["22:30"],
-        observaciones: item.Observaciones,
-      };
-    }
-    return null; // Si el medicamento es null, lo ignoramos luego
-  }).filter(item => item !== null); // Filtramos los elementos null
-
-  // Llamada a la función que enviará los medicamentos
-  const response = guardarMedicamentosApi(medicamentosArray, parseInt(paciente.dni));
-=======
   console.log(tablaMedicamentos);
 
   const arregloMedicacion = [];
 
-  medicamentos.forEach((item, index) => {
+  tablaMedicamentos.forEach((item, index) => {
     if (item.Medicamento != null) {
-      const medicamento = {
+      const objetoMedicamento = {
         Medicamento: item.Medicamento,
         "6:00": item["6:00"],
         Desayuno: item.Desayuno,
@@ -198,14 +177,13 @@ function guardarMedicamentos(medicamentosRef) {
         "22:30": item["22:30"],
         Observaciones: item.Observaciones
       };
-      arregloMedicacion.push(medicamento);
+      arregloMedicacion.push(objetoMedicamento);
     }
   });
 
   console.log(arregloMedicacion);
 
   const response = guardarMedicamentosApi(arregloMedicacion, parseInt(paciente.dni));
->>>>>>> c7bf8c2c914a8986a163261c68f49e60bc1f6e05
 }
 
 
