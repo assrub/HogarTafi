@@ -37,19 +37,27 @@ export async function modificarPaciente(dni, formData){
 
 }
 
-export async function guardarStockApi(formData, dni){
+export async function guardarStockApi(arregloStock, dni){
     try {
                
         const response = await fetch(`http://localhost:8080/stock/${dni}`, {
             method: "POST",
-            body: formData,
+            headers: {
+                "Content-Type": "application/json",  
+            },
+            body: JSON.stringify(arregloStock), 
         });
-
         return response.ok;
     } catch (error) {
         console.error('Error al registrar el stock del paciente:', error);
         return error;
     }
+}
+
+export async function traerStockApi(dni){
+    const response = await fetch(`http://localhost:8080/stock/${dni}`);
+  const data = await response.json();
+  return data;
 }
 
 export async function guardarMedicamentosApi(arregloMedicamento, dni) {
