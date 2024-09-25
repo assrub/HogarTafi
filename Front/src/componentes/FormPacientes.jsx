@@ -141,7 +141,7 @@ async function traerPacientes() {
 }
 
 //Cada vez que se cargue la pagina trae los pacientes guardados
-useEffect(() => {
+useEffect(() => { 
   traerPacientes();
   
 }, [paciente]);

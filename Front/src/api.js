@@ -71,7 +71,7 @@ export async function guardarMedicamentosApi(arregloMedicamento, dni) {
       return error;
     }
   }
-  
+   
 
 function imprimirFormData(formData){
     for (let [key, value] of formData.entries()) {
