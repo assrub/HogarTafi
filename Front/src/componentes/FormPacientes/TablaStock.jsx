@@ -1,20 +1,47 @@
-import React, { useState, forwardRef } from "react";
+import React, { useEffect,useState, forwardRef } from "react";
+import { traerStockApi } from "../../api";
 
-
-const TablaStock =forwardRef(({}, ref) => {
+const TablaStock =forwardRef(({dni}, ref) => {
   const [rows, setRows] = useState([{ medicacion: '', cantidad: '', cantidadMinima: '', added: false }]);
+  const [nuevoStock, setNuevoStock] = useState({ medicacion: '', cantidad: '', cantidadMinima: '', added: false });
 
-  const handleInputChange = (index, event) => {
+
+
+  const handleInputChange = (event) => {
     const { name, value } = event.target;
-    const newRows = [...rows];
-    newRows[index][name] = value;
-    setRows(newRows);
+  
+    // Actualiza el valor del stock nuevo (la última fila para agregar)
+    setNuevoStock({
+      ...nuevoStock,
+      [name]: value,
+    });
   };
 
-  const handleAddRow = (index) => {
-    const newRows = [...rows];
-    newRows[index].added = true;
-    setRows([...newRows, { medicacion: '', cantidad: '', cantidadMinima: '', added: false }]);
+  const handleAddRow = () => {
+    
+    if (nuevoStock.medicacion && nuevoStock.cantidad && nuevoStock.cantidadMinima) {
+     
+      setRows((prevRows) => [
+        ...prevRows,
+        { 
+          medicacion: nuevoStock.medicacion, 
+          cantidad: nuevoStock.cantidad, 
+          cantidadMinima: nuevoStock.cantidadMinima, 
+          added: true 
+        }
+      ]);
+  
+      
+      setNuevoStock({
+        medicacion: '',
+        cantidad: '',
+        cantidadMinima: '',
+        added: false
+      });
+    } else {
+      
+      alert('Llena todos los campos');
+    }
   };
 
   const handleRemoveRow = (index) => {
@@ -27,6 +54,41 @@ const TablaStock =forwardRef(({}, ref) => {
     }
   };
 
+  async function traerStock(dni){
+    try{
+      const response  = await traerStockApi(dni);
+      if(response){
+        setRows(transformarStock(response.medicamentos));
+      }else{
+        setRows([
+          {
+            medicacion : "",
+            cantidad : "",
+            cantidadMinima: "",
+            added: false
+          }
+        ])
+      }
+      
+    
+    }catch(error){
+      console.error(error);
+    }
+  }
+
+  function transformarStock(stockBackend) {
+    return stockBackend.map(stock => ({
+      medicacion: stock.medicacion,
+      cantidad : stock.cantidad,
+      cantidadMinima : stock.cant_minima,
+      added: true  
+    }));
+  }
+
+  useEffect(()=>{
+    traerStock(dni);
+  },[])
+  
   
 
   const handleClearContent = (index) => {
@@ -52,7 +114,7 @@ const TablaStock =forwardRef(({}, ref) => {
               <td className="px-4 py-2 border border-[#181818] ">
                 <div className="flex place-content-center">
                   <input
-                    className={`rounded-lg ${row.added ? 'bg-neutral-300' : 'bg-white'} border `}
+                    className={`rounded-lg flex text-center w-32 ${row.added ? 'bg-neutral-300' : 'bg-white'} border `}
                     type="text"
                     name="medicacion"
                     value={row.medicacion}
@@ -64,7 +126,7 @@ const TablaStock =forwardRef(({}, ref) => {
               <td className="px-4 py-2 border border-[#181818] ">
                 <div className="flex place-content-center">
                   <input
-                    className={`rounded-lg ${row.added ? 'bg-neutral-300' : 'bg-white'} border`}
+                    className={`rounded-lg flex text-center w-32 ${row.added ? 'bg-neutral-300' : 'bg-white'} border`}
                     type="number"
                     name="cantidad"
                     value={row.cantidad}
@@ -77,7 +139,7 @@ const TablaStock =forwardRef(({}, ref) => {
               <td className="px-4 py-2 border border-[#181818] ">
                 <div className="flex place-content-center">
                   <input
-                    className={`rounded-lg ${row.added ? 'bg-neutral-300' : 'bg-white'} border`}
+                    className={`rounded-lg flex text-center w-32 ${row.added ? 'bg-neutral-300' : 'bg-white'} border`}
                     type="number"
                     name="cantidadMinima"
                     value={row.cantidadMinima}
@@ -167,6 +229,54 @@ const TablaStock =forwardRef(({}, ref) => {
               </td>
             </tr>
           ))}
+
+<tr>
+            <td className="px-4 py-2 border border-[#181818]">
+              <div className="flex place-content-center">
+                <input
+                  className="rounded-lg w-32 flex text-center bg-white border"
+                  type="text"
+                  name="medicacion"
+                  value={nuevoStock.medicacion}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </td>
+            <td className="px-4 py-2 border border-[#181818]">
+              <div className="flex place-content-center">
+                <input
+                  className="rounded-lg w-32 flex text-center bg-white border"
+                  type="number"
+                  name="cantidad"
+                  value={nuevoStock.cantidad}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </td>
+            <td className="px-4 py-2 border border-[#181818]">
+              <div className="flex place-content-center">
+                <input
+                  className="rounded-lg w-32 flex text-center bg-white border"
+                  type="number"
+                  name="cantidadMinima"
+                  value={nuevoStock.cantidadMinima}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </td>
+            <td className="px-4 py-2 border border-[#181818]">
+              <div className="gap-10 flex place-content-center">
+                <button className="text-green-600 flex" onClick={handleAddRow}>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>
+                  Agregar
+                </button>
+              </div>
+            </td>
+          </tr>
+
+
         </tbody>
       </table>
     </div>
