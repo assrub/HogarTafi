@@ -1,0 +1,14 @@
+/app/src/main/java/com/hogarTafi/hogarTafi/paciente/servicio/implement/PacienteServiceImpl.java
+/app/src/main/java/com/hogarTafi/hogarTafi/medicamento/controlador/CMedicamento.java
+/app/src/main/java/com/hogarTafi/hogarTafi/paciente/controlador/CPaciente.java
+/app/src/main/java/com/hogarTafi/hogarTafi/medicamento/servicio/MedicamentoService.java
+/app/src/main/java/com/hogarTafi/hogarTafi/paciente/repositorio/RPaciente.java
+/app/src/main/java/com/hogarTafi/hogarTafi/paciente/entidad/EPaciente.java
+/app/src/main/java/com/hogarTafi/hogarTafi/configuracion/WebConfig.java
+/app/src/main/java/com/hogarTafi/hogarTafi/HogarTafiApplication.java
+/app/src/main/java/com/hogarTafi/hogarTafi/medicamento/repositorio/RMedicamento.java
+/app/src/main/java/com/hogarTafi/hogarTafi/paciente/servicio/PacienteService.java
+/app/src/main/java/com/hogarTafi/hogarTafi/medicamento/entidad/EMedicamento.java
+/app/src/main/java/com/hogarTafi/hogarTafi/medicamento/entidad/EMedicacion.java
+/app/src/main/java/com/hogarTafi/hogarTafi/medicamento/servicio/implement/MedicamentoServiceImpl.java
+/app/src/main/java/com/hogarTafi/hogarTafi/stock/controlador/CStock.java

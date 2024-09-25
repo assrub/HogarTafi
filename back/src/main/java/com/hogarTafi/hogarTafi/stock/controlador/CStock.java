@@ -1,5 +1,23 @@
 package com.hogarTafi.hogarTafi.stock.controlador;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.hogarTafi.hogarTafi.medicamento.entidad.EMedicacion;
+import com.hogarTafi.hogarTafi.stock.Entidad.EArregloStock;
+import com.hogarTafi.hogarTafi.stock.Entidad.EStock;
+import com.hogarTafi.hogarTafi.stock.servicio.implement.StockServiceImpl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
@@ -7,4 +25,74 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CStock {
 
     
+    @Autowired
+    private StockServiceImpl stockService;
+
+     @PostMapping("/{dni}")
+    public ResponseEntity<Map<String, String>> registrarMedicamento(@PathVariable("dni") Integer dni,
+                                                                    @RequestBody List<Map<String, Object>> stockRequest){
+
+        List<EStock> listaStock = new ArrayList<>();
+
+        for (Map<String, Object> map : stockRequest) {
+
+            EStock MStock = new EStock();
+
+            MStock.setMedicacion((String) map.get("medicacion"));
+            MStock.setCantidad((String) map.get("cantidad"));
+            MStock.setCant_minima((String) map.get("cant_minima"));
+
+            listaStock.add(MStock);
+        }
+
+        
+        System.out.println(listaStock);
+
+        Map<String, String> response = new HashMap<>();
+        
+        try{
+
+            boolean registrado = stockService.registrarStock(dni, listaStock);
+            
+           if (registrado){
+                response.put("message", "El stock se ha registrado.");
+                return ResponseEntity.ok(response);
+            } else {
+                response.put("message", "ERROR 2 - al guardar el stock.");
+                return ResponseEntity.badRequest().body(response);
+            }
+        }
+        catch (Exception e)
+        {
+            response.put("message", "ERROR 1 - al guardar el stock.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    
+    @GetMapping("/{dni}")
+    public ResponseEntity<?> obtenerMedicamentosPorDni(@PathVariable("dni") Integer dni) {
+        try {
+            // Buscar la medicación por DNI usando el servicio
+            EArregloStock arregloStock = stockService.buscarStockPorDni(dni);
+        
+            if (arregloStock == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontraron stocks para el DNI: " + dni);
+            }
+        
+            // Devolver los medicamentos en formato JSON
+            return ResponseEntity.ok(arregloStock);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno del servidor.");
+        }
+    }
+
+
+    @GetMapping("/")
+    public ResponseEntity<?> getMethodName() {
+        List<EArregloStock> listaDeStocks = stockService.buscarStock();
+
+        return ResponseEntity.ok(listaDeStocks);
+    }
+
 }
