@@ -138,17 +138,7 @@ export default function ListadoUsuarios() {
     }}
   />
 
-<CampoTexto
-    textoEtiqueta="Direccion"
-    propsLabel={{ labelFor: "direccion" }}
-    propsInput={{
-      type: "password",
-      name: "direccion",
-      id: "inputContra",
-      value: usuario.contra,  
-      onChange: handleInputChange 
-    }}
-  />
+
 
   <div className="botones mt-4">
     <Boton textoBoton="Volver" onClick={volver} />

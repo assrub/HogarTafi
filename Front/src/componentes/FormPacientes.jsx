@@ -170,8 +170,7 @@ function guardarStock(stockRef){
 async function guardarMedicamentos(medicamentosRef) {
   let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
   
-  
-
+  let arregloMedicacion = [];
   tablaMedicamentos.forEach((item, index) => {
     if (item.Medicamento != null) {
       const objetoMedicamento = {
