@@ -187,8 +187,6 @@ async function guardarMedicamentos(medicamentosRef) {
     }
   });
 
-  console.log(arregloMedicacion);
-
   const response = guardarMedicamentosApi(arregloMedicacion, parseInt(paciente.dni));
 }
 
