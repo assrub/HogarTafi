@@ -141,29 +141,36 @@ async function traerPacientes() {
 }
 
 //Cada vez que se cargue la pagina trae los pacientes guardados
-useEffect(() => {
+useEffect(() => { 
   traerPacientes();
   
 }, [paciente]);
 
 function guardarStock(stockRef){
   let tablaStock = convertirTablaAJson(stockRef);
-  setStock(tablaStock);
-  setMostrarStock(!mostrarStock);
-  const formDataStock = new FormData();
-  stock.forEach((item, index) => {
-    formDataStock.append(`stock[${index}][medicacion]`, item.medicacion);
-    formDataStock.append(`stock[${index}][cantidad]`, item.cantidad);
-    formDataStock.append(`stock[${index}][cantidadMinima]`, item.cantidadMinima);
+  console.log(tablaStock);
+
+
+  const arregloStock = [];
+  tablaStock.forEach((item,index) =>{
+    if(item.Medicacion != null){
+      const objetoStock = {
+        medicacion : item.Medicacion,
+        cantidad : item.Cantidad,
+        cant_minima : item["Cantidad minima"]
+      };
+      arregloStock.push(objetoStock)
+    }
   });
-  guardarStockApi(formDataStock,parseInt(paciente.dni));
+
+
+  guardarStockApi(arregloStock,parseInt(paciente.dni));
 }
 
 async function guardarMedicamentos(medicamentosRef) {
   let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
-  console.log(tablaMedicamentos);
-
-  const arregloMedicacion = [];
+  
+  
 
   tablaMedicamentos.forEach((item, index) => {
     if (item.Medicamento != null) {
@@ -452,7 +459,7 @@ function buscarClick(){
           <div className="stock flex justify-center items-center">
           {mostrarStock && (
             <div className="">
-              <TablaStock ref={stockRef}/>
+              <TablaStock dni={paciente.dni} ref={stockRef}/>
               <div className="boton m-4">
               <Boton textoBoton="Guardar stock" onClick={() => guardarStock(stockRef)}></Boton>
               </div>
