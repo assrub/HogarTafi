@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hogarTafi.hogarTafi.paciente.entidad.EPaciente;
-import com.hogarTafi.hogarTafi.paciente.servicio.PacienteService;
+import com.hogarTafi.hogarTafi.paciente.servicio.SPaciente;
 
 @RestController
 @RequestMapping("/pacientes")
 public class CPaciente {
 
     @Autowired
-    private PacienteService servicioPacientes;
+    private SPaciente servicioPacientes;
 
     @GetMapping
     public ResponseEntity<List<Map<String, Object>>> todosLosPacientes() {

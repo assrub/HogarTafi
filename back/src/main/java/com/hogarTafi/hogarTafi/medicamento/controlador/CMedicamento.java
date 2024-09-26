@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.hogarTafi.hogarTafi.medicamento.entidad.EMedicacion;
 import com.hogarTafi.hogarTafi.medicamento.entidad.EMedicamento;
-import com.hogarTafi.hogarTafi.medicamento.servicio.implement.MedicamentoServiceImpl;
+import com.hogarTafi.hogarTafi.medicamento.entidad.EListMedicamento;
+import com.hogarTafi.hogarTafi.medicamento.servicio.implement.SIMedicamento;
 
 
 
@@ -25,17 +25,17 @@ import com.hogarTafi.hogarTafi.medicamento.servicio.implement.MedicamentoService
 @RequestMapping("/medicamento")
 public  class CMedicamento{
     @Autowired
-    private MedicamentoServiceImpl medicamentoService;
+    private SIMedicamento medicamentoService;
 
     @PostMapping("/{dni}")
     public ResponseEntity<Map<String, String>> registrarMedicamento(@PathVariable("dni") Integer dni,
                                                                     @RequestBody List<Map<String, Object>> medicamentosRequest){
 
 
-        List<EMedicamento> listaMedicamentos = new ArrayList<>();
+        List<EListMedicamento> listaMedicamentos = new ArrayList<>();
 
         for (Map<String, Object> map : medicamentosRequest) {
-            EMedicamento medicamento = new EMedicamento();
+            EListMedicamento medicamento = new EListMedicamento();
 
 
             medicamento.setMedicamento((String) map.get("Medicamento"));
@@ -76,7 +76,7 @@ public  class CMedicamento{
     public ResponseEntity<?> obtenerMedicamentosPorDni(@PathVariable("dni") Integer dni) {
         try {
             // Buscar la medicación por DNI usando el servicio
-            EMedicacion medicacion = medicamentoService.buscarMedicacionPorDni(dni);
+            EMedicamento medicacion = medicamentoService.buscarMedicacionPorDni(dni);
         
             if (medicacion == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontraron medicamentos para el DNI: " + dni);
@@ -91,7 +91,7 @@ public  class CMedicamento{
 
     @GetMapping("/")
     public ResponseEntity<?> getMethodName() {
-        List<EMedicacion> medicacion = medicamentoService.buscarMedicacion();
+        List<EMedicamento> medicacion = medicamentoService.buscarMedicacion();
 
         return ResponseEntity.ok(medicacion);
     }

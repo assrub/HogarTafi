@@ -1,4 +1,4 @@
-package com.hogarTafi.hogarTafi.Configuracion;
+package com.hogarTafi.hogarTafi.configuracion;
 
 
 import org.springframework.context.annotation.Configuration;

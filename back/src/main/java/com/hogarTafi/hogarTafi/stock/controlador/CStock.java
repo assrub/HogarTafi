@@ -1,10 +1,9 @@
 package com.hogarTafi.hogarTafi.stock.controlador;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hogarTafi.hogarTafi.medicamento.entidad.EMedicacion;
-import com.hogarTafi.hogarTafi.stock.Entidad.EArregloStock;
-import com.hogarTafi.hogarTafi.stock.Entidad.EStock;
-import com.hogarTafi.hogarTafi.stock.servicio.implement.StockServiceImpl;
+import com.hogarTafi.hogarTafi.stock.entidad.EStock;
+import com.hogarTafi.hogarTafi.stock.entidad.EListStock;
+import com.hogarTafi.hogarTafi.stock.servicio.implement.SIStock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,17 +25,17 @@ public class CStock {
 
     
     @Autowired
-    private StockServiceImpl stockService;
+    private SIStock stockService;
 
      @PostMapping("/{dni}")
     public ResponseEntity<Map<String, String>> registrarMedicamento(@PathVariable("dni") Integer dni,
                                                                     @RequestBody List<Map<String, Object>> stockRequest){
 
-        List<EStock> listaStock = new ArrayList<>();
+        List<EListStock> listaStock = new ArrayList<>();
 
         for (Map<String, Object> map : stockRequest) {
 
-            EStock MStock = new EStock();
+            EListStock MStock = new EListStock();
 
             MStock.setMedicacion((String) map.get("medicacion"));
             MStock.setCantidad((String) map.get("cantidad"));
@@ -74,7 +73,7 @@ public class CStock {
     public ResponseEntity<?> obtenerMedicamentosPorDni(@PathVariable("dni") Integer dni) {
         try {
             // Buscar la medicación por DNI usando el servicio
-            EArregloStock arregloStock = stockService.buscarStockPorDni(dni);
+            EStock arregloStock = stockService.buscarStockPorDni(dni);
         
             if (arregloStock == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontraron stocks para el DNI: " + dni);
@@ -90,7 +89,7 @@ public class CStock {
 
     @GetMapping("/")
     public ResponseEntity<?> getMethodName() {
-        List<EArregloStock> listaDeStocks = stockService.buscarStock();
+        List<EStock> listaDeStocks = stockService.buscarStock();
 
         return ResponseEntity.ok(listaDeStocks);
     }
