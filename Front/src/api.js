@@ -109,8 +109,22 @@ export async function registrarUsuarioApi(formData) {
     }
 }
 
-export default async  function traerUsuariosApi(){
+export default async function traerUsuariosApi(){
     const response = await fetch("http://localhost:8080/usuarios");
     const data = await response.json();
-    return data;
+
+
+    return await data;
+}
+
+export  async function desactivarUsuarioApi(dni){
+    try{
+        const response = await fetch(`http://localhost:8080/usuarios/desactivar/${dni}`, {
+            method: "PATCH",
+        });
+        return response
+    }catch(error){
+        console.error(error);
+    }
+    
 }

@@ -1,6 +1,7 @@
 package com.hogarTafi.hogarTafi.usuario.repositorio;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.hogarTafi.hogarTafi.usuario.entidad.EUsuario;
@@ -14,4 +15,6 @@ public interface RUsuario extends MongoRepository<EUsuario, Integer> {
     List<EUsuario> findAll();
 
     Optional<EUsuario> findByDni(Integer dni);
+
+
 }

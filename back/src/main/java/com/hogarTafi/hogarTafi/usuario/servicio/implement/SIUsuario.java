@@ -25,6 +25,7 @@ public class SIUsuario implements SUsuario{
     @Autowired
     public List<EUsuario> todosLosUsuarios(){
         return repositorioUsuario.findAll();
+
     }
 
     @Override
@@ -43,6 +44,8 @@ public class SIUsuario implements SUsuario{
     public EUsuario buscarUsuarioPorDni(Integer dni) {
         return repositorioUsuario.findByDni(dni).orElseThrow(() -> new NoSuchElementException("Paciente con el DNI " + dni + " no se encontró."));
     }
+
+
 
     @Override
     public boolean actualizarUsuario(EUsuario usuarioDtos) {
@@ -79,12 +82,12 @@ public class SIUsuario implements SUsuario{
         // Verificar si el paciente ya está oculto
         if (!usuario.getActivo()) {
             throw new IllegalArgumentException("El usuario ya está oculto.");
+        }else{
+            // Si el paciente está activo, se desactiva
+            usuario.setActivo(false);
+            repositorioUsuario.save(usuario);
+            return true; // Usuario desactivado con éxito
         }
-        
-        // Si el paciente está activo, se desactiva
-        usuario.setActivo(false);
-        repositorioUsuario.save(usuario);
-        return true; // Usuario desactivado con éxito
     }
 
     @Override

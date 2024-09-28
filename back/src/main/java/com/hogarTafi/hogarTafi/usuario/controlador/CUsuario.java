@@ -33,6 +33,7 @@ public class CUsuario {
     @GetMapping
     public ResponseEntity<List<Map<String, Object>>> TodosLosUsuarios() {
         List<Map<String, Object>> usuariosConFotos = usuarioService.obtenerUsuariosConFotos();
+        System.out.println(usuariosConFotos);
         return ResponseEntity.ok(usuariosConFotos);
     }
 
@@ -45,7 +46,6 @@ public class CUsuario {
                                                                 @RequestParam("direccion") String direccion,
                                                                 @RequestParam("asociado") String asociado,
                                                                 @RequestParam("tipo") String tipo,
-
                                                                 @RequestParam("password") String password,               
                                                                 @RequestParam(value = "fotoCarnet", required = false) MultipartFile fotoCarnet
     ){

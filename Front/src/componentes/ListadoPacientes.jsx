@@ -56,6 +56,7 @@ function ListadoPacientes() {
     const datos = await todosLosPacientes();
     const datosFiltrados = datos.filter((paciente) => paciente !== null);
     setPacientes(datosFiltrados);
+    console.log(datos)
   
   }
   //Cada vez que se cargue la pagina trae los pacientes guardados
