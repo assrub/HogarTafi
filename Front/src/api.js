@@ -96,17 +96,16 @@ export async function traerMedicamentosApi(dni){
 export async function registrarUsuarioApi(formData) {
     try {
                
-        const response = await fetch("http://localhost:8080/usuario", {
+        const response = await fetch("http://localhost:8080/usuarios", {
             method: "POST",
             body: formData,
         });
 
         imprimirFormData(formData)
-
+        return response;
 
     } catch (error) {
         console.error('Error al registrar el usuario:', error);
         return error;
-    }finally
-    {return response}
+    }
 }

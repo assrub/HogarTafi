@@ -47,23 +47,28 @@ public class SIUsuario implements SUsuario{
     @Override
     public boolean actualizarUsuario(EUsuario usuarioDtos) {
         // Obtener el usuario existente
-        EUsuario usuario = repositorioUsuario.findByDni(usuarioDtos.getDni()).orElseThrow(() -> new NoSuchElementException("Usuario no encontrado."));
-        
-        // Actualizar los datos del usuario
-        usuario.setNombre(usuarioDtos.getNombre());
-        usuario.setApellido(usuarioDtos.getApellido());
-        usuario.setEmail(usuarioDtos.getEmail());
-        usuario.setTelefono(usuarioDtos.getTelefono());
-        usuario.setDireccion(usuarioDtos.getDireccion());
-        usuario.setAsociado(usuarioDtos.getAsociado());	
-        usuario.setTipo(usuarioDtos.getTipo());
-        usuario.setUser_id(usuarioDtos.getUser_id());
-        usuario.setPassword(usuarioDtos.getPassword());
-        usuario.setFotoCarnet(usuarioDtos.getFotoCarnet());
+        try{
+            EUsuario usuario = repositorioUsuario.findByDni(usuarioDtos.getDni()).orElseThrow(() -> new NoSuchElementException("Usuario no encontrado."));
 
-        // Guardar los cambios en la base de datos
-        repositorioUsuario.save(usuario);
-        return true; // Usuario actualizado con éxito
+            // Actualizar los datos del usuario
+            usuario.setNombre(usuarioDtos.getNombre());
+            usuario.setApellido(usuarioDtos.getApellido());
+            usuario.setEmail(usuarioDtos.getEmail());
+            usuario.setTelefono(usuarioDtos.getTelefono());
+            usuario.setDireccion(usuarioDtos.getDireccion());
+            usuario.setAsociado(usuarioDtos.getAsociado());
+            usuario.setTipo(usuarioDtos.getTipo());
+
+            usuario.setPassword(usuarioDtos.getPassword());
+            usuario.setFotoCarnet(usuarioDtos.getFotoCarnet());
+
+            // Guardar los cambios en la base de datos
+            repositorioUsuario.save(usuario);
+            return true; // Usuario actualizado con éxito
+        }catch (Error error){
+            System.out.println(error);
+            return false;
+        }
     }
 
     @Override
@@ -103,7 +108,7 @@ public class SIUsuario implements SUsuario{
                 usuarioMap.put("direccion", usuario.getDireccion());
                 usuarioMap.put("asociado", usuario.getAsociado());
                 usuarioMap.put("tipo", usuario.getTipo());
-                usuarioMap.put("user_id", usuario.getUser_id());
+
                 usuarioMap.put("password", usuario.getPassword());
                 
                 if (usuario.getFotoCarnet()!= null) {

@@ -20,9 +20,9 @@ public class EUsuario {
     private String email;
     private String telefono;
     private String direccion;
-    private Integer asociado;
+    private String asociado;
     private String tipo;
-    private String user_id;
+
     private String password;
     private byte[] fotoCarnet;
 }

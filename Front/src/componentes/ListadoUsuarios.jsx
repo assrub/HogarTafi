@@ -86,18 +86,23 @@ export default function ListadoUsuarios() {
 
       async function registrarUsuario(e){
 
-
-        const pacienteAsociado = document.getElementById("select-paciente").value ?document.getElementById("select-paciente").value: null ;
+        e.preventDefault();
         const tipoSeleccionado = Object.keys(tipoUsuario).find(key => tipoUsuario[key] === true);
+        let pacienteAsociado = null;
+        if(tipoSeleccionado == "familiar"){
+          pacienteAsociado = document.getElementById("select-paciente").value; ;
+        }
+        
+        
         const formData = new FormData();
         formData.append("nombre",usuario.nombre);
         formData.append("apellido",usuario.apellido),
-        formData.append("dni",usuario.dni);
+        formData.append("dni",parseInt(usuario.dni));
         formData.append("email",usuario.email);
         formData.append("password", usuario.contra);
         formData.append("direccion",usuario.direccion);
         formData.append("telefono",usuario.telefono);
-        formData.append("asociado", pacienteAsociado);
+        formData.append("asociado", pacienteAsociado ? pacienteAsociado : null);
         formData.append("tipo",tipoSeleccionado);
         const response = await registrarUsuarioApi(formData);
         console.log(response);

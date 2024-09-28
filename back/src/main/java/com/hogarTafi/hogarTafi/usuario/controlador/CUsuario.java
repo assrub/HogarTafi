@@ -43,12 +43,19 @@ public class CUsuario {
                                                                 @RequestParam("email") String email,
                                                                 @RequestParam("telefono") String telefono,
                                                                 @RequestParam("direccion") String direccion,
-                                                                @RequestParam("asociado") Integer asociado,
+                                                                @RequestParam("asociado") String asociado,
                                                                 @RequestParam("tipo") String tipo,
-                                                                @RequestParam("user_id") String user_id,
+
                                                                 @RequestParam("password") String password,               
                                                                 @RequestParam(value = "fotoCarnet", required = false) MultipartFile fotoCarnet
     ){
+
+        if(asociado == "null"){
+            asociado = null;
+        }else{
+            asociado = asociado.toString();
+        }
+
         Map<String, String> response = new HashMap<>();
         try {
             //crear instancia de EUsuario y asignar valores
@@ -62,9 +69,10 @@ public class CUsuario {
             usuario.setDireccion(direccion);
             usuario.setAsociado(asociado);
             usuario.setTipo(tipo);
-            usuario.setUser_id(user_id);
+
             usuario.setPassword(password);
 
+            System.out.println(usuario);
             if (fotoCarnet != null && !fotoCarnet.isEmpty())
             {
                 usuario.setFotoCarnet(fotoCarnet.getBytes());
@@ -95,7 +103,7 @@ public class CUsuario {
                                                                 @RequestParam(value = "email", required = false) String email,
                                                                 @RequestParam(value = "telefono", required = false) String telefono,
                                                                 @RequestParam(value = "direccion", required = false) String direccion,
-                                                                @RequestParam(value = "asociado", required = false) Integer asociado,
+                                                                @RequestParam(value = "asociado", required = false) String asociado,
                                                                 @RequestParam(value = "tipo", required = false) String tipo,
                                                                 @RequestParam(value = "user_id", required = false) String user_id,
                                                                 @RequestParam(value = "password", required = false) String password,
@@ -114,7 +122,6 @@ public class CUsuario {
             usuario.setDireccion(direccion);
             usuario.setAsociado(asociado);
             usuario.setTipo(tipo);
-            usuario.setUser_id(user_id);
             usuario.setPassword(password);
 
             

@@ -248,6 +248,7 @@ const TablaStock =forwardRef(({dni}, ref) => {
                   className="rounded-lg w-32 flex text-center bg-white border"
                   type="number"
                   name="cantidad"
+                  min={0}
                   value={nuevoStock.cantidad}
                   onChange={handleInputChange}
                 />
@@ -259,6 +260,7 @@ const TablaStock =forwardRef(({dni}, ref) => {
                   className="rounded-lg w-32 flex text-center bg-white border"
                   type="number"
                   name="cantidadMinima"
+                  min={0}
                   value={nuevoStock.cantidadMinima}
                   onChange={handleInputChange}
                 />

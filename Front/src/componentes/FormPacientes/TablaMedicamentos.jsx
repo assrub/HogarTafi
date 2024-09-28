@@ -307,6 +307,7 @@ function transformarStock(stockBackend) {
                 <input
                   type="number"
                   name={hora}
+                  min={0}
                   value={nuevoMedicamento.horario[hora]}
                   onChange={manejarCambioNuevoMedicamento}
                   className={`rounded-lg sm:w-12 xl:w-20  border`}
