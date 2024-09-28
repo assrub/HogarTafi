@@ -101,11 +101,16 @@ export async function registrarUsuarioApi(formData) {
             body: formData,
         });
 
-        imprimirFormData(formData)
         return response;
 
     } catch (error) {
         console.error('Error al registrar el usuario:', error);
         return error;
     }
+}
+
+export default async  function traerUsuariosApi(){
+    const response = await fetch("http://localhost:8080/usuarios");
+    const data = await response.json();
+    return data;
 }

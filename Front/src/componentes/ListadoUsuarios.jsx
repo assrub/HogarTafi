@@ -3,6 +3,7 @@ import Listado from "./ListadoUsuarios/Listado";
 import CampoTexto from "./FormPacientes/CampoTexto";
 import Boton from "./Boton"
 import { todosLosPacientes, registrarUsuarioApi } from "../api";
+import CartelAviso from "./CartelAviso";
 
 
 export default function ListadoUsuarios() {
@@ -28,6 +29,13 @@ export default function ListadoUsuarios() {
   })
   const [pacientes, setPacientes] = useState([]);
 
+  const [guardado,setGuardado] = useState(null);
+  const [mostrarCartel, setMostrarCartel] = useState(false)
+  const [campoIncompleto, setCampoIncompleto] = useState(false);
+
+  const toggleModal = () => setMostrarCartel(!mostrarCartel);
+
+
   async function traerPacientes() {
     const datos = await todosLosPacientes();
     const datosFiltrados = datos.filter((paciente) => paciente !== null);
@@ -35,6 +43,9 @@ export default function ListadoUsuarios() {
   
   }
   
+  useEffect(() =>{
+
+  },[formregistrar])
  
   useEffect(() => { 
     traerPacientes();
@@ -105,6 +116,31 @@ export default function ListadoUsuarios() {
         formData.append("asociado", pacienteAsociado ? pacienteAsociado : null);
         formData.append("tipo",tipoSeleccionado);
         const response = await registrarUsuarioApi(formData);
+
+        if (response.ok){
+          setGuardado(true);
+        }else{
+          setGuardado(false);
+        }
+
+      
+
+        toggleModal();
+        if(guardado){
+        
+          setUsuario({
+            nombre: "",
+            apellido: "",
+            email: "",
+            dni: "",
+            telefono: "",
+            direccion: "",
+            contra: "",
+            tipo: "",
+            asociado: ""
+          });
+        }
+
         console.log(response);
         console.log(usuario);
         console.log(pacienteAsociado);
@@ -261,6 +297,14 @@ export default function ListadoUsuarios() {
     <Boton textoBoton="Registrar" onClick={registrarUsuario} />     
   </div>
 </form>
+
+<div className="modal">
+            <CartelAviso
+        abrirModal={mostrarCartel}
+        cerrarModal={toggleModal}
+        mensaje={guardado ? 'Usuario registrado correctamente' : 'Error al registrar el usuario'}
+      />
+            </div>
       </div>
     )}
     {!formregistrar && (

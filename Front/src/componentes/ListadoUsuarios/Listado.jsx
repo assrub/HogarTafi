@@ -1,55 +1,72 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-
+import traerUsuariosApi, {todosLosPacientes} from "../../api";
 
 export default function Listado(){
 
-    //Ejemplo
-    const usuarios = [
-        {
-          nombre: "Juan",
-          apellido: "Pérez",
-          email: "juan.perez@example.com",
-          dni: "123",
-          telefono: "123-456-7890",
-          direccion: "Calle Falsa 123",
-          pacienteAsociado: "Paciente A",
-          tipoDeUsuario: "admin"
-        },
-        {
-          nombre: "María",
-          apellido: "Gómez",
-          email: "maria.gomez@example.com",
-          dni: "456",
-          telefono: "234-567-8901",
-          direccion: "Avenida Siempre Viva 456",
-          pacienteAsociado: "Paciente B",
-          tipoDeUsuario: "familiar"
-        },
-        {
-          nombre: "Carlos",
-          apellido: "López",
-          email: "carlos.lopez@example.com",
-          dni: "789",
-          telefono: "345-678-9012",
-          direccion: "Boulevard de los Sueños 789",
-          pacienteAsociado: "No",
-          tipoDeUsuario: "empleado"
-        },
-        {
-          nombre: "Ana",
-          apellido: "Martínez",
-          email: "ana.martinez@example.com",
-          dni: "6757",
-          telefono: "456-789-0123",
-          direccion: "Plaza Mayor 101",
-          pacienteAsociado: "Paciente D",
-          tipoDeUsuario: "familiar"
+   
+    const [usuario, setUsuario] = useState({
+      nombre: "",
+      apellido: "",
+      email: "",
+      dni: "",
+      telefono: "",
+      direccion: "",
+      contra: "",
+      tipo: "",
+      asociado: "",
+      nombreAsociado: ""
+    });
+
+    
+  const [pacientes, setPacientes] = useState([]);
+
+    const [usuarios, setUsuarios] = useState([]);
+
+    async function traerUsuarios(){
+      const response = await traerUsuariosApi();
+      console.log(response);
+      if(response)
+        { 
+          setUsuarios(response);
+          
         }
-      ];
+    };
 
-      
+  //esto es para que en vez del DNI del paciente asociado al familiar, aparezca el nombre.
+  useEffect(() => {   
+    if (usuarios.length > 0 && pacientes.length > 0) {
+      const usuariosActualizados = usuarios.map(user => {
+        if (user.tipo === "familiar") {
+          const pacienteAsociado = pacientes.find(
+            paciente => parseInt(paciente.dni) === parseInt(user.asociado)
+          );       
+          if (pacienteAsociado) {
+            return {
+              ...user,
+              nombreAsociado: `${pacienteAsociado.nombre} ${pacienteAsociado.apellido}`
+            };
+          }
+        }
+        return user; 
+      });
+      setUsuarios(usuariosActualizados); 
+    }
+  }, [usuarios, pacientes]); 
 
+
+
+    async function traerPacientes() {
+      const datos = await todosLosPacientes();
+      const datosFiltrados = datos.filter((paciente) => paciente !== null);
+      setPacientes(datosFiltrados);
+    
+    }
+
+    useEffect(() =>{
+      traerUsuarios();
+      traerPacientes();
+    },[]);
 
     return (
         <>
@@ -95,10 +112,10 @@ export default function Listado(){
                   {usuario.direccion}
                 </td>
                 <td className="px-4 py-2 border border-[#181818] items-center">
-                  {usuario.pacienteAsociado}
+                  {usuario.tipo == "familiar" ? usuario.nombreAsociado : ""}
                 </td>
                 <td className="px-4 py-2 border border-[#181818] items-center">
-                  {usuario.tipoDeUsuario}
+                  {usuario.tipo}
                 </td>
                 <div
                     className="eliminar py-2 flex justify-center
