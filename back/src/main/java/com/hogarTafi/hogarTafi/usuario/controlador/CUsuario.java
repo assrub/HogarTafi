@@ -7,17 +7,12 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 
+import com.hogarTafi.hogarTafi.usuario.entidad.ELogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -61,9 +56,10 @@ public class CUsuario {
             //crear instancia de EUsuario y asignar valores
             EUsuario usuario = new EUsuario();
             usuario.setDni(dni);
-            usuario.setActivo(true);
+
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
+            usuario.setActivo(true);
             usuario.setEmail(email);
             usuario.setTelefono(telefono);
             usuario.setDireccion(direccion);
@@ -152,6 +148,27 @@ public class CUsuario {
             return ResponseEntity.ok(usuario);
         }
     }
+
+    @PostMapping("/inicioSesion")
+    public ResponseEntity<?> iniciarSesion(@RequestBody Map<String,Object> datosLogin) {
+
+
+
+        String nombreDeUsuario = datosLogin.get("nombreUsuario").toString();
+        String password = datosLogin.get("password").toString();
+
+        System.out.println(datosLogin + " NombreUsuario: "+nombreDeUsuario+ " Password: "+ password);
+
+        if (!usuarioService.iniciarSesion(nombreDeUsuario, password)) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Usuario o contraseña incorrecta");
+            return ResponseEntity.badRequest().body(response);
+        } else {
+            return ResponseEntity.ok("Iniciando sesión");
+        }
+    }
+
+
 
     @PatchMapping("/desactivar/{dni}")
     public ResponseEntity<Map<String, String>> desactivarUsuario(@PathVariable Integer dni) {

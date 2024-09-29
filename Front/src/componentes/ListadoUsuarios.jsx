@@ -99,6 +99,10 @@ export default function ListadoUsuarios() {
 
         e.preventDefault();
         const tipoSeleccionado = Object.keys(tipoUsuario).find(key => tipoUsuario[key] === true);
+        if(tipoSeleccionado == undefined){
+          alert("Selecciona el tipo de usuario");
+          return
+        }
         let pacienteAsociado = null;
         if(tipoSeleccionado == "familiar"){
           pacienteAsociado = document.getElementById("select-paciente").value; ;
@@ -139,12 +143,13 @@ export default function ListadoUsuarios() {
             tipo: "",
             asociado: ""
           });
+          setTipoUsuario({"familiar" : false,
+            "admin" : false,
+            "empleado": false
+          });
         }
 
-        console.log(response);
-        console.log(usuario);
-        console.log(pacienteAsociado);
-        console.log(tipoSeleccionado);
+        
       }
 
   
@@ -282,7 +287,7 @@ export default function ListadoUsuarios() {
   <div className="select-pacientes mt-4">
     <h3>Selecciona el paciente asociado al familiar</h3>
   <select name="paciente" id="select-paciente" className="bg-gray-200 rounded-lg w-2/5 p-2" >
-            <option selected disabled value="seleccionar-un-paciente">Selecciona un paciente</option>
+            <option selected disabled value="null">Selecciona un paciente</option>
             {pacientes.map((paciente,index) =>(
               <option key={index} value={paciente.dni}>{paciente.nombre + ' ' + paciente.apellido}</option>
             ))}  

@@ -13,4 +13,6 @@ public interface SUsuario {
     boolean desactivarUsuario(Integer dni);
     String convertirABase64(byte[] bytes);
     List<Map<String, Object>> obtenerUsuariosConFotos();
+    boolean iniciarSesion(String nombreDeUsuario, String password);
+    EUsuario buscarPorEmail(String email);
 }

@@ -14,9 +14,11 @@ import lombok.NoArgsConstructor;
 public class EUsuario {
     @Id
     private Integer dni;
-    private Boolean activo;
+
     private String nombre;
+
     private String apellido;
+    private Boolean activo;
     private String email;
     private String telefono;
     private String direccion;

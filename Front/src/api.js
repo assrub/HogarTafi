@@ -128,3 +128,22 @@ export  async function desactivarUsuarioApi(dni){
     }
     
 }
+
+export async function iniciarSesionApi(datosUsuario){
+    try {
+               
+        const response = await fetch('http://localhost:8080/usuarios/inicioSesion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(datosUsuario), 
+        });
+
+        return response;
+
+    } catch (error) {
+        console.error('Error al iniciar sesion:', error);
+        return error;
+    }
+}

@@ -3,26 +3,47 @@ import CampoTexto from "../../componentes/FormPacientes/CampoTexto";
 import Boton from "../../componentes/Boton";
 import { useNavigate } from 'react-router-dom';
 import { Link, Routes, Route  } from "react-router-dom";
+import { iniciarSesionApi } from "../../api";
 
 
 export default function Login(){
     const [campoIncompleto, setCampoIncompleto] = useState(false);
+    const [usuario,setUsuario] = useState({"usuario": "",
+        "contra": ""
+    })
     const navigate = useNavigate();
-    function iniciarSesion(){
-        const email = document.getElementById("inputEmail").value;
-    const contraseña = document.getElementById("inputContraseña").value;
+    async function iniciarSesion(){
+
     
-        if (email === "" || contraseña === ""){
+        if (usuario.usuario === "" || usuario.contra === ""){
             setCampoIncompleto(true);
             return;
           } else {
             setCampoIncompleto(false);
           }
 
-          navigate('/userPanel')
+          const datosUsuario = {"nombreUsuario" : usuario.usuario,
+            "password" : usuario.contra
+          }
+          
+          const response  = await iniciarSesionApi(datosUsuario);
+          console.log(response);
+
+          if(response.ok){
+            navigate('/userPanel');
+          }else{
+            alert("Datos incorrectos")
+          }
+          
 
 }
-
+const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUsuario((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
     return(
         <div className="grid h-screen place-items-center" style={{ backgroundImage: 'url("src/Assets/Images/Main/actividades-bg.jpg")' }}>
 
@@ -40,9 +61,11 @@ export default function Login(){
                     propsLabel={{ labelFor: "email" }}
                     propsInput={{
                         type: "text",
-                        name: "email",
+                        name: "usuario",
                         id: "inputEmail",
-                        placeholder: "Correo electronico"
+                        value:usuario.usuario,
+                        placeholder: "Correo electronico",
+                        onChange: handleInputChange
                     }}
                 />
             </div>
@@ -54,9 +77,11 @@ export default function Login(){
                     propsLabel={{ labelFor: "password" }}
                     propsInput={{
                         type: "password",
-                        name: "contraseña",
+                        name: "contra",
+                        value: usuario.contra,
                         id: "inputContraseña",
-                        placeholder: "Contraseña"
+                        placeholder: "Contraseña",
+                        onChange: handleInputChange
                     }}
                 />
                 <Link className="underline" to={"/recuperarContra"}>¿Olvidaste tu contraseña?</Link>

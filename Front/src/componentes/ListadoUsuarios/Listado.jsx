@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import traerUsuariosApi, {todosLosPacientes} from "../../api";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import traerUsuariosApi, {desactivarUsuarioApi, todosLosPacientes} from "../../api";
 
 export default function Listado(){
 
-   
+   /*
     const [usuario, setUsuario] = useState({
       nombre: "",
       apellido: "",
@@ -16,57 +17,63 @@ export default function Listado(){
       tipo: "",
       asociado: "",
       nombreAsociado: ""
-    });
+    }); */
 
     
   const [pacientes, setPacientes] = useState([]);
 
     const [usuarios, setUsuarios] = useState([]);
 
-    async function traerUsuarios(){
-      const response = await traerUsuariosApi();
-      console.log(response);
-      if(response)
-        { 
-          setUsuarios(response);
-          
-        }
-    };
-
-  //esto es para que en vez del DNI del paciente asociado al familiar, aparezca el nombre.
-  useEffect(() => {   
-    if (usuarios.length > 0 && pacientes.length > 0) {
-      const usuariosActualizados = usuarios.map(user => {
-        if (user.tipo === "familiar") {
-          const pacienteAsociado = pacientes.find(
-            paciente => parseInt(paciente.dni) === parseInt(user.asociado)
-          );       
-          if (pacienteAsociado) {
-            return {
-              ...user,
-              nombreAsociado: `${pacienteAsociado.nombre} ${pacienteAsociado.apellido}`
-            };
-          }
-        }
-        return user; 
-      });
-      setUsuarios(usuariosActualizados); 
-    }
-  }, [usuarios, pacientes]); 
-
-
-
     async function traerPacientes() {
       const datos = await todosLosPacientes();
       const datosFiltrados = datos.filter((paciente) => paciente !== null);
       setPacientes(datosFiltrados);
-    
+      return datosFiltrados; // Devolvemos los pacientes
     }
-
-    useEffect(() =>{
-      traerUsuarios();
-      traerPacientes();
-    },[]);
+  
+    // Función para traer usuarios y asociar con los pacientes
+    async function traerUsuarios(pacientesCargados) {
+      const response = await traerUsuariosApi();
+      console.log("Usuarios traídos:", response); // Verifica la respuesta
+  
+      if (response && pacientesCargados.length > 0) {
+        const usuariosActualizados = response.map((user) => {
+          if (user.tipo === "familiar") {
+            const pacienteAsociado = pacientesCargados.find(
+              (paciente) => parseInt(paciente.dni) === parseInt(user.asociado)
+            );
+            if (pacienteAsociado) {
+              return {
+                ...user,
+                nombreAsociado: `${pacienteAsociado.nombre} ${pacienteAsociado.apellido}`,
+              };
+            }
+          }
+          return user;
+        });
+        setUsuarios(usuariosActualizados); // Actualizamos usuarios
+      }
+    }
+  
+    // Cargar pacientes y luego usuarios en el orden correcto
+    useEffect(() => {
+      async function cargarDatos() {
+        const pacientesCargados = await traerPacientes();
+        await traerUsuarios(pacientesCargados); 
+      }
+      cargarDatos();
+    }, []);
+  
+    // Función para desactivar un usuario
+    async function desactivar(dni) {
+      try {
+        await desactivarUsuarioApi(parseInt(dni));
+        // Actualiza el estado de usuarios, eliminando el usuario desactivado de la lista
+        setUsuarios(usuarios.filter((usuario) => usuario.dni !== dni));
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
     return (
         <>
@@ -117,18 +124,35 @@ export default function Listado(){
                 <td className="px-4 py-2 border border-[#181818] items-center">
                   {usuario.tipo}
                 </td>
-                <div
-                    className="eliminar py-2 flex justify-center
-                     text-red-600 font-bold border-r border-b border-[#181818] hover:bg-red-200
-                     "
+                {usuario.activo && (
+                  <div
+                  className="eliminar py-2 flex justify-center
+                   text-red-600 font-bold border-r border-b border-[#181818] hover:bg-red-200
+                   "
+                >
+                  <button
+                    className="px-5"
+                    onClick={() => desactivar(usuario.dni)}
                   >
-                    <button
-                      className="px-5"
-                      onClick={() => desactivar(paciente.dni)}
-                    >
-                      <DeleteForeverIcon /> Desactivar usuario
-                    </button>
-                  </div>
+                    <DeleteForeverIcon /> Desactivar usuario
+                  </button>
+                </div>
+                )}
+                {!usuario.activo && (
+                   <div
+                   className="activar-usuario py-2 flex justify-center
+                    text-green-600 font-bold border-r border-b border-[#181818] hover:bg-green-200
+                    "
+                 >
+                   <button
+                     className="px-5"
+                     onClick={() => desactivar(usuario.dni)}
+                   >
+                     <CheckCircleOutlineIcon /> Reactivar usuario
+                   </button>
+                 </div>
+                )}
+                
                 
             </tr>
             ))}

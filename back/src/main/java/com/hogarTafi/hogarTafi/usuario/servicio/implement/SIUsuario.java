@@ -24,7 +24,7 @@ public class SIUsuario implements SUsuario{
 
     @Autowired
     public List<EUsuario> todosLosUsuarios(){
-        return repositorioUsuario.findAll();
+        return repositorioUsuario.findUsuariosConCampos();
 
     }
 
@@ -42,7 +42,41 @@ public class SIUsuario implements SUsuario{
 
     @Override
     public EUsuario buscarUsuarioPorDni(Integer dni) {
-        return repositorioUsuario.findByDni(dni).orElseThrow(() -> new NoSuchElementException("Paciente con el DNI " + dni + " no se encontró."));
+        return repositorioUsuario.findByDni(dni).orElseThrow(() -> new NoSuchElementException("Usuario con el DNI " + dni + " no se encontró."));
+    }
+
+    @Override
+    public EUsuario buscarPorEmail(String email) {
+        return repositorioUsuario.findByEmail(email).orElseThrow(() -> new NoSuchElementException("Usuario con el email " + email + " no se encontró."));
+    }
+    @Override
+    public boolean iniciarSesion(String nombreDeUsuario, String password) {
+        EUsuario usuario = null;
+        System.out.print(nombreDeUsuario + " " + password);
+        // Intentar iniciar sesión con DNI (asumiendo que el DNI es un número)
+        if (nombreDeUsuario.matches("\\d+")) { // Verifica si solo contiene dígitos
+            try {
+                int dni = Integer.parseInt(nombreDeUsuario);
+                usuario = buscarUsuarioPorDni(dni);
+                if (usuario != null && password.equals(usuario.getPassword())) {
+                    return true;
+                }
+            } catch (NumberFormatException e) {
+                // Esto no debería ocurrir si la validación anterior es correcta
+                System.out.println("Error al convertir DNI a número: " + e.getMessage());
+            }
+        } else {
+            System.out.println("El nombre de usuario no es un DNI, intentando con email");
+        }
+
+        // Intentar iniciar sesión con email si no es un DNI
+        usuario = buscarPorEmail(nombreDeUsuario);
+        if (usuario != null && password.equals(usuario.getPassword())) {
+            return true;
+        }
+
+        // Si ninguna de las dos formas funciona, retorna false
+        return false;
     }
 
 
@@ -101,9 +135,11 @@ public class SIUsuario implements SUsuario{
         List<EUsuario> usuarios = todosLosUsuarios();
 
         return usuarios.stream().map(usuario -> {
+            System.out.println("Usuario getActivo"+usuario.getActivo());
             Map<String, Object> usuarioMap = new HashMap<>();
-            if (usuario.getActivo()){
+
                 usuarioMap.put("dni", usuario.getDni());
+                usuarioMap.put("activo",usuario.getActivo());
                 usuarioMap.put("nombre", usuario.getNombre());
                 usuarioMap.put("apellido", usuario.getApellido());
                 usuarioMap.put("email", usuario.getEmail());
@@ -117,7 +153,8 @@ public class SIUsuario implements SUsuario{
                 if (usuario.getFotoCarnet()!= null) {
                     usuarioMap.put("fotoCarnet", convertirABase64(usuario.getFotoCarnet()));
                 }
-            }
+
+
             return usuarioMap;
         }).collect(Collectors.toList());
     }
