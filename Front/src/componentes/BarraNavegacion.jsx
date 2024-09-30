@@ -8,8 +8,10 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import CreateIcon from "@mui/icons-material/Create";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import AssistWalkerIcon from "@mui/icons-material/AssistWalker";
+import { useSesionUsuario } from "../contexto/sesionUsuario";
 
 export function BarraNavegacion() {
+  const { cerrarSesionContexto } = useSesionUsuario();
   const [menuPaciente, setMenuPaciente] = useState(false);
   const [menuHamburguesa, setMenuHamburguesa] = useState(false);
   const toggleDropdownMenuPaciente = (e) => {
@@ -23,6 +25,10 @@ export function BarraNavegacion() {
 
   function cerrarMenuHamburguesa() {
     setMenuHamburguesa(false);
+  }
+
+  function cerrarSesion (){
+    cerrarSesionContexto()
   }
 
   return (
@@ -119,7 +125,7 @@ export function BarraNavegacion() {
         </div>
 
         <div className="hidden lg:block cerrar-sesion lg:ml-6 lg:p-3">
-          <Link to="cerrarSesion" className="underline">
+          <Link to="cerrarSesion" className="underline" onClick={cerrarSesion}>
             Cerrar sesión
           </Link>
         </div>
@@ -232,8 +238,9 @@ export function BarraNavegacion() {
           <div className="cerrar-sesion flex flex-grow items-end p-3">
             <Link
               to="cerrarSesion"
-              onClick={cerrarMenuHamburguesa}
+              onClick={cerrarSesion}
               className="underline"
+
             >
               Cerrar sesión
             </Link>

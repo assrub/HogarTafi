@@ -50,16 +50,15 @@ public class SIUsuario implements SUsuario{
         return repositorioUsuario.findByEmail(email).orElseThrow(() -> new NoSuchElementException("Usuario con el email " + email + " no se encontró."));
     }
     @Override
-    public boolean iniciarSesion(String nombreDeUsuario, String password) {
+    public EUsuario iniciarSesion(String nombreDeUsuario, String password) {
         EUsuario usuario = null;
-        System.out.print(nombreDeUsuario + " " + password);
         // Intentar iniciar sesión con DNI (asumiendo que el DNI es un número)
         if (nombreDeUsuario.matches("\\d+")) { // Verifica si solo contiene dígitos
             try {
                 int dni = Integer.parseInt(nombreDeUsuario);
                 usuario = buscarUsuarioPorDni(dni);
                 if (usuario != null && password.equals(usuario.getPassword())) {
-                    return true;
+                    return usuario;
                 }
             } catch (NumberFormatException e) {
                 // Esto no debería ocurrir si la validación anterior es correcta
@@ -72,11 +71,11 @@ public class SIUsuario implements SUsuario{
         // Intentar iniciar sesión con email si no es un DNI
         usuario = buscarPorEmail(nombreDeUsuario);
         if (usuario != null && password.equals(usuario.getPassword())) {
-            return true;
+            return usuario;
         }
 
         // Si ninguna de las dos formas funciona, retorna false
-        return false;
+        return null;
     }
 
 
@@ -135,7 +134,7 @@ public class SIUsuario implements SUsuario{
         List<EUsuario> usuarios = todosLosUsuarios();
 
         return usuarios.stream().map(usuario -> {
-            System.out.println("Usuario getActivo"+usuario.getActivo());
+
             Map<String, Object> usuarioMap = new HashMap<>();
 
                 usuarioMap.put("dni", usuario.getDni());

@@ -4,14 +4,18 @@ import Boton from "../../componentes/Boton";
 import { useNavigate } from 'react-router-dom';
 import { Link, Routes, Route  } from "react-router-dom";
 import { iniciarSesionApi } from "../../api";
+import { useSesionUsuario } from "../../contexto/sesionUsuario";
 
 
-export default function Login(){
+export default  function Login(){
+    const { iniciarSesionContexto } = useSesionUsuario();
     const [campoIncompleto, setCampoIncompleto] = useState(false);
     const [usuario,setUsuario] = useState({"usuario": "",
         "contra": ""
     })
     const navigate = useNavigate();
+    
+    
     async function iniciarSesion(){
 
     
@@ -29,7 +33,21 @@ export default function Login(){
           const response  = await iniciarSesionApi(datosUsuario);
           console.log(response);
 
-          if(response.ok){
+          if (response.ok) {
+            const datos = await response.json();
+            const datosDelUsuario = {
+              nombre: datos.nombre,
+              apellido: datos.apellido,
+              email: datos.email,
+              dni: datos.dni,
+              telefono: datos.telefono,
+              direccion: datos.direccion,
+              tipo: datos.tipo,
+              asociado: datos.asociado
+            };
+      
+            iniciarSesionContexto(datosDelUsuario); 
+      
             navigate('/userPanel');
           }else{
             alert("Datos incorrectos")

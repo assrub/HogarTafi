@@ -4,11 +4,13 @@ import FormPacientes from "../../componentes/FormPacientes";
 import RegistrarPacientes from "../../componentes/RegistrarPacientes";
 import ListadoPacientes from "../../componentes/ListadoPacientes";
 import "../../App.css";
-
 import Perfil from "../../componentes/perfil.jsx";
 import ListadoUsuarios from "../../componentes/ListadoUsuarios.jsx";
 
 async function botonClick() {
+
+ 
+
   const datos = await traerMedicamentos(1111111111
   );
   console.log(datos);

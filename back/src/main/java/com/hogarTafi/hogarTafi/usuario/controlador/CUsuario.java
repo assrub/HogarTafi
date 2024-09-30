@@ -28,7 +28,7 @@ public class CUsuario {
     @GetMapping
     public ResponseEntity<List<Map<String, Object>>> TodosLosUsuarios() {
         List<Map<String, Object>> usuariosConFotos = usuarioService.obtenerUsuariosConFotos();
-        System.out.println(usuariosConFotos);
+
         return ResponseEntity.ok(usuariosConFotos);
     }
 
@@ -68,7 +68,7 @@ public class CUsuario {
 
             usuario.setPassword(password);
 
-            System.out.println(usuario);
+
             if (fotoCarnet != null && !fotoCarnet.isEmpty())
             {
                 usuario.setFotoCarnet(fotoCarnet.getBytes());
@@ -150,21 +150,22 @@ public class CUsuario {
     }
 
     @PostMapping("/inicioSesion")
-    public ResponseEntity<?> iniciarSesion(@RequestBody Map<String,Object> datosLogin) {
+    public ResponseEntity<EUsuario> iniciarSesion(@RequestBody Map<String,Object> datosLogin) {
 
 
 
         String nombreDeUsuario = datosLogin.get("nombreUsuario").toString();
         String password = datosLogin.get("password").toString();
 
-        System.out.println(datosLogin + " NombreUsuario: "+nombreDeUsuario+ " Password: "+ password);
 
-        if (!usuarioService.iniciarSesion(nombreDeUsuario, password)) {
+        EUsuario usuario  = usuarioService.iniciarSesion(nombreDeUsuario, password);
+        if (usuario  == null) {
             Map<String, String> response = new HashMap<>();
             response.put("message", "Usuario o contraseña incorrecta");
-            return ResponseEntity.badRequest().body(response);
+            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         } else {
-            return ResponseEntity.ok("Iniciando sesión");
+            System.out.print("Sesion iniciada usuario: " + usuario);
+            return ResponseEntity.ok(usuario);
         }
     }
 
