@@ -162,7 +162,7 @@ public class CUsuario {
         if (usuario  == null) {
             Map<String, String> response = new HashMap<>();
             response.put("message", "Usuario o contraseña incorrecta");
-            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         } else {
             System.out.print("Sesion iniciada usuario: " + usuario);
             return ResponseEntity.ok(usuario);
