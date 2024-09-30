@@ -1,4 +1,4 @@
-import React, {createContext, useState, useContext} from "react";
+import React, {createContext, useState, useContext, useEffect} from "react";
 
 export const contextoSesionUsuario = createContext();
 
@@ -21,9 +21,22 @@ export function ProveedorSesion({ children }) {
     asociado: ""
   });
 
+
+  useEffect(() => {
+    
+    const usuarioGuardado = localStorage.getItem('usuario');
+    if (usuarioGuardado) {
+      try {
+        setUsuario(JSON.parse(usuarioGuardado));
+      } catch (error) {
+        console.error("Error al parsear los datos del usuario desde localStorage:", error);
+      }
+    }
+  }, []);
  
   const iniciarSesionContexto = (datosUsuario) => {
     setUsuario(datosUsuario);
+
   };
 
 
@@ -38,6 +51,7 @@ export function ProveedorSesion({ children }) {
       tipo: "",
       asociado: ""
     });
+    localStorage.removeItem('usuario');
   };
 
   return (

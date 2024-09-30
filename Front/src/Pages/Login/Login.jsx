@@ -45,7 +45,9 @@ export default  function Login(){
               tipo: datos.tipo,
               asociado: datos.asociado
             };
-      
+            
+            localStorage.setItem('usuario', JSON.stringify(datosDelUsuario)); 
+          
             iniciarSesionContexto(datosDelUsuario); 
       
             navigate('/userPanel');

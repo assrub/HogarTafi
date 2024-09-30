@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import React from "react";
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
@@ -9,8 +9,10 @@ import CreateIcon from "@mui/icons-material/Create";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import AssistWalkerIcon from "@mui/icons-material/AssistWalker";
 import { useSesionUsuario } from "../contexto/sesionUsuario";
+import { contextoSesionUsuario } from '../contexto/sesionUsuario';
 
 export function BarraNavegacion() {
+  const { usuario } = useContext(contextoSesionUsuario);
   const { cerrarSesionContexto } = useSesionUsuario();
   const [menuPaciente, setMenuPaciente] = useState(false);
   const [menuHamburguesa, setMenuHamburguesa] = useState(false);
@@ -30,7 +32,7 @@ export function BarraNavegacion() {
   function cerrarSesion (){
     cerrarSesionContexto()
   }
-
+  
   return (
     <div>
       <div className={`flex flex-col justify-between h-screen text-xl`}>
@@ -112,15 +114,18 @@ export function BarraNavegacion() {
               </Link>
             </div>
 
-            <div className="lista-de-usuarios p-3">
-              <Link
-                to="listaDeUsuarios"
-                className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
-              >
-                <FormatListBulletedIcon className="text-[#017a98]" />
-                Lista de usuarios
-              </Link>
-            </div>
+              {usuario.tipo == "admin" && (
+                <div className="lista-de-usuarios p-3">
+                <Link
+                  to="listaDeUsuarios"
+                  className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
+                >
+                  <FormatListBulletedIcon className="text-[#017a98]" />
+                  Lista de usuarios
+                </Link>
+              </div>
+              )}
+            
           </div>
         </div>
 

@@ -6,6 +6,7 @@ import ListadoPacientes from "../../componentes/ListadoPacientes";
 import "../../App.css";
 import Perfil from "../../componentes/perfil.jsx";
 import ListadoUsuarios from "../../componentes/ListadoUsuarios.jsx";
+import RutaPrivadaInterna from "./RutaPrivadaInterna.jsx";
 
 async function botonClick() {
 
@@ -34,7 +35,7 @@ function UserPanel() {
             <Route path="paciente/modificar" element={<FormPacientes />} />
             <Route path="stockDelHogar" />
             <Route path="pedidos" />
-            <Route path="listaDeUsuarios" element={<ListadoUsuarios/>}/>
+            <Route path="listaDeUsuarios" element={<ListadoUsuarios></ListadoUsuarios>}/>
             <Route path="perfil" element={<Perfil/>}/>
           </Routes>
         </div>

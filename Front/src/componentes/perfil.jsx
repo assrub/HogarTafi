@@ -1,11 +1,12 @@
 import React from "react";
 import CampoTexto from "./FormPacientes/CampoTexto";
 import Checkbox from "@mui/icons-material/CheckBox"
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { contextoSesionUsuario } from '../contexto/sesionUsuario';
 
 export default function Perfil() {
 
-
+  const { usuario } = useContext(contextoSesionUsuario);
  
 
   return (
@@ -30,6 +31,8 @@ export default function Perfil() {
               type: "text",
               name: "nombre",
               id: "inputNombre",
+              disabled:true,
+              value: usuario.nombre
             }}
           />
           <CampoTexto
@@ -39,6 +42,8 @@ export default function Perfil() {
               type: "text",
               name: "apellido",
               id: "inputApellido",
+              disabled:true,
+              value: usuario.apellido
             }}
           />
 
@@ -49,6 +54,8 @@ export default function Perfil() {
               type: "text",
               name: "email",
               id: "inputeEmail",
+              disabled:true,
+              value: usuario.email   
             }}
           />
 
@@ -59,6 +66,8 @@ export default function Perfil() {
               type: "number",
               name: "phone",
               id: "inputeTelefono",
+              disabled:true,
+              value: usuario.telefono
             }}
           />
           <CampoTexto
@@ -68,21 +77,23 @@ export default function Perfil() {
               type: "text",
               name: "address",
               id: "inputeDireccion",
+              disabled:true,
+              value: usuario.direccion
             }}
           />
           </form>
           <div className="tipoUsuario p-4 my-2 border">
             <span className=""><strong>Tipo de usuario</strong></span>
             <br />
-            <span className="text-gray-400">admin</span>
+            <span className="text-gray-400">{usuario.tipo}</span>
           </div>
 
           <div className="idioma my-4 p-4 border" >
             <span><strong>Idioma preferido</strong></span>
             <br />
           <select name="paciente" id="select-paciente" className="bg-gray-200 rounded-lg my-2 py-2 w-2/5">
-          <option value={"español"}>Español</option>
-          <option value={"english"}>English</option>
+          <option value={"es"}>Español</option>
+          <option value={"en"}>English</option>
           </select>
           </div>
 
