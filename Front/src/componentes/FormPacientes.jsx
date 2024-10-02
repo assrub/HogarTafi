@@ -204,7 +204,10 @@ function buscarClick(){
      
     }
   })
-  setcamposDeshabilitados(false)
+
+  if (dniPacientes != "null"){
+    setcamposDeshabilitados(false);
+  }
 
   }
 
@@ -346,7 +349,7 @@ function buscarClick(){
 
         <div className="elegir-paciente flex  justify-center ">
           <select name="paciente" id="select-paciente" className="bg-gray-200 rounded-lg w-2/5">
-          <option selected disabled value="seleccionar-un-paciente">Selecciona un paciente</option>
+          <option selected disabled value="null">Selecciona un paciente</option>
           {pacientes.map((paciente,index) =>(
             <option key={index} value={paciente.dni}>{paciente.nombre + ' ' + paciente.apellido}</option>
           ))}  

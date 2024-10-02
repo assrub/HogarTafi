@@ -76,6 +76,11 @@ const TablaStock =forwardRef(({dni}, ref) => {
     }
   }
 
+  useEffect(() => {
+    traerStock(dni);
+  }, []);
+
+  
   function transformarStock(stockBackend) {
     return stockBackend.map(stock => ({
       medicacion: stock.medicacion,
