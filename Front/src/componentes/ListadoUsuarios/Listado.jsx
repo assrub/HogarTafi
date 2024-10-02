@@ -34,8 +34,6 @@ export default function Listado(){
     // Función para traer usuarios y asociar con los pacientes
     async function traerUsuarios(pacientesCargados) {
       const response = await traerUsuariosApi();
-      console.log("Usuarios traídos:", response); // Verifica la respuesta
-  
       if (response && pacientesCargados.length > 0) {
         const usuariosActualizados = response.map((user) => {
           if (user.tipo === "familiar") {

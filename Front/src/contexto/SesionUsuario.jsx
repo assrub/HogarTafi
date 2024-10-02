@@ -24,7 +24,7 @@ export function ProveedorSesion({ children }) {
 
   useEffect(() => {
     
-    const usuarioGuardado = localStorage.getItem('usuario');
+    const usuarioGuardado = sessionStorage.getItem('usuario');
     if (usuarioGuardado) {
       try {
         setUsuario(JSON.parse(usuarioGuardado));
@@ -51,7 +51,7 @@ export function ProveedorSesion({ children }) {
       tipo: "",
       asociado: ""
     });
-    localStorage.removeItem('usuario');
+    sessionStorage.removeItem('usuario');
   };
 
   return (

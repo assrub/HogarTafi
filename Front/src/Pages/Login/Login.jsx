@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import CampoTexto from "../../componentes/FormPacientes/CampoTexto";
 import Boton from "../../componentes/Boton";
 import { useNavigate } from 'react-router-dom';
 import { Link, Routes, Route  } from "react-router-dom";
 import { iniciarSesionApi } from "../../api";
 import { useSesionUsuario } from "../../contexto/sesionUsuario";
+import { Navigate } from 'react-router-dom';
 
 
 export default  function Login(){
@@ -16,6 +17,15 @@ export default  function Login(){
     const navigate = useNavigate();
     
     
+
+    useEffect(() =>{
+      const usuarioGuardado = sessionStorage.getItem('usuario');
+      if (usuarioGuardado != null){
+        navigate('/userPanel');
+        iniciarSesion(usuarioGuardado)
+      }
+    },[])
+
     async function iniciarSesion(){
 
     
@@ -31,7 +41,7 @@ export default  function Login(){
           }
           
           const response  = await iniciarSesionApi(datosUsuario);
-          console.log(response);
+      
 
           if (response.ok) {
             const datos = await response.json();
@@ -46,7 +56,7 @@ export default  function Login(){
               asociado: datos.asociado
             };
             
-            localStorage.setItem('usuario', JSON.stringify(datosDelUsuario)); 
+            sessionStorage.setItem('usuario', JSON.stringify(datosDelUsuario)); 
           
             iniciarSesionContexto(datosDelUsuario); 
       
