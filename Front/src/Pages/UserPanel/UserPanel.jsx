@@ -6,7 +6,7 @@ import ListadoPacientes from "../../componentes/ListadoPacientes";
 import "../../App.css";
 import Perfil from "../../componentes/perfil.jsx";
 import ListadoUsuarios from "../../componentes/ListadoUsuarios.jsx";
-import RutaPrivadaInterna from "./RutaPrivadaInterna.jsx";
+
 
 async function botonClick() {
 

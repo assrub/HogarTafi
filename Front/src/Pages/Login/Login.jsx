@@ -51,8 +51,10 @@ export default  function Login(){
             iniciarSesionContexto(datosDelUsuario); 
       
             navigate('/userPanel');
-          }else{
+          }else if (response.status == 401){
             alert("Datos incorrectos")
+          }else{
+            alert("Error al iniciar sesion")
           }
           
 
