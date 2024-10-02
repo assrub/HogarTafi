@@ -40,6 +40,11 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.4</version>
+		</dependency>
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
@@ -59,7 +64,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
                 	<fork>true</fork> <!-- Mejora rendimiento al usar un proceso separado -->
-                	<incremental>true</incremental> <!-- Compilación incremental -->
+
 					<source>17</source>
 					<target>17</target>
 				</configuration>

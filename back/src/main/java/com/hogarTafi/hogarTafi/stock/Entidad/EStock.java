@@ -1,5 +1,6 @@
-package com.hogarTafi.hogarTafi.stock.entidad;
+package com.hogarTafi.hogarTafi.stock.Entidad;
 
+import com.hogarTafi.hogarTafi.stock.Entidad.EListStock;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

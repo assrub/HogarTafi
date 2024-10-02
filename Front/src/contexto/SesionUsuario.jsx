@@ -29,7 +29,7 @@ export function ProveedorSesion({ children }) {
       try {
         setUsuario(JSON.parse(usuarioGuardado));
       } catch (error) {
-        console.error("Error al parsear los datos del usuario desde localStorage:", error);
+        console.error("Error al parsear los datos del usuario desde sessionStorage:", error);
       }
     }
   }, []);

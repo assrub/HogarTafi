@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import com.hogarTafi.hogarTafi.usuario.entidad.EUsuario;
@@ -30,12 +31,15 @@ public class SIUsuario implements SUsuario{
 
     @Override
     public boolean guardarUsuario(EUsuario usuarioDtos) {
-
         // Verificar si el usuario ya existe
         if (repositorioUsuario.findByDni(usuarioDtos.getDni()).isPresent()) {
             return false; // El usuario ya está registrado
         }
-        
+
+        // Hashear la contraseña antes de guardar
+        String hashedPassword = BCrypt.hashpw(usuarioDtos.getPassword(), BCrypt.gensalt());
+        usuarioDtos.setPassword(hashedPassword); // Establecer la contraseña hasheada
+
         repositorioUsuario.save(usuarioDtos);
         return true; // Usuario registrado con éxito
     }
@@ -52,16 +56,16 @@ public class SIUsuario implements SUsuario{
     @Override
     public EUsuario iniciarSesion(String nombreDeUsuario, String password) {
         EUsuario usuario = null;
+
         // Intentar iniciar sesión con DNI (asumiendo que el DNI es un número)
         if (nombreDeUsuario.matches("\\d+")) { // Verifica si solo contiene dígitos
             try {
                 int dni = Integer.parseInt(nombreDeUsuario);
                 usuario = buscarUsuarioPorDni(dni);
-                if (usuario != null && password.equals(usuario.getPassword())) {
-                    return usuario;
+                if (usuario != null && BCrypt.checkpw(password, usuario.getPassword())) {
+                    return usuario; // La contraseña es correcta
                 }
             } catch (NumberFormatException e) {
-                // Esto no debería ocurrir si la validación anterior es correcta
                 System.out.println("Error al convertir DNI a número: " + e.getMessage());
             }
         } else {
@@ -70,11 +74,11 @@ public class SIUsuario implements SUsuario{
 
         // Intentar iniciar sesión con email si no es un DNI
         usuario = buscarPorEmail(nombreDeUsuario);
-        if (usuario != null && password.equals(usuario.getPassword())) {
-            return usuario;
+        if (usuario != null && BCrypt.checkpw(password, usuario.getPassword())) {
+            return usuario; // La contraseña es correcta
         }
 
-        // Si ninguna de las dos formas funciona, retorna false
+        // Si ninguna de las dos formas funciona, retorna null
         return null;
     }
 
