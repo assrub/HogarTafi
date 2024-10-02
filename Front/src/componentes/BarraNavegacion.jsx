@@ -114,7 +114,7 @@ export function BarraNavegacion() {
               </Link>
             </div>
 
-              {usuario.tipo == "admin" && (
+            {usuario.tipo == "admin" && (
                 <div className="lista-de-usuarios p-3">
                 <Link
                   to="listaDeUsuarios"
@@ -231,14 +231,17 @@ export function BarraNavegacion() {
               <ShoppingCartIcon className="text-[#017a98]" />
               Pedidos
             </Link>
-            <Link
-              to="listaDeUsuarios"
-              onClick={cerrarMenuHamburguesa}
-              className="px-3 mt-4 relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
-            >
-              <FormatListBulletedIcon className="text-[#017a98]" />
-              Lista de usuarios
-            </Link>
+            {usuario.tipo == "admin" && (
+                <div className="lista-de-usuarios p-3">
+                <Link
+                  to="listaDeUsuarios"
+                  className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
+                >
+                  <FormatListBulletedIcon className="text-[#017a98]" />
+                  Lista de usuarios
+                </Link>
+              </div>
+              )}
           </div>
           <div className="cerrar-sesion flex flex-grow items-end p-3">
             <Link
