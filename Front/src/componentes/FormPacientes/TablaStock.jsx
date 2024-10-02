@@ -85,10 +85,7 @@ const TablaStock =forwardRef(({dni}, ref) => {
     }));
   }
 
-  useEffect(()=>{
-    traerStock(dni);
-  },[])
-  
+
   
 
   const handleClearContent = (index) => {
@@ -109,7 +106,10 @@ const TablaStock =forwardRef(({dni}, ref) => {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, index) => (
+          {rows
+          .filter((row) => row.medicacion !== "")
+          .map((row, index) => (
+            
             <tr key={index}>
               <td className="px-4 py-2 border border-[#181818] ">
                 <div className="flex place-content-center">
