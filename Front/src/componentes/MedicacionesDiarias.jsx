@@ -19,6 +19,51 @@ export default function MedicacionesDiarias(){
 
       const medicamentosRef = useRef(null);
 
+
+
+
+      function convertirTablaAJson(refTabla) {
+        if (!refTabla.current) {
+          console.error("El refTabla no está asignado a ningún elemento.");
+          return [];
+        }
+      
+        const table = refTabla.current;
+        const headers = Array.from(table.querySelectorAll('thead th')).slice(0, -1).map(th => th.textContent.trim());
+      
+        const rows = Array.from(table.querySelectorAll('tbody tr')).map(tr => {
+          const cells = Array.from(tr.querySelectorAll('td')).slice(0, -1);
+          const rowData = {};
+      
+          cells.forEach((cell, i) => {
+            let cellValue = '';
+    
+            // Si hay un select, obtenemos el valor seleccionado
+            const select = cell.querySelector('select');
+            if (select) {
+              cellValue = select.value.trim();
+            } else if (cell.querySelector('input')) {
+              // Si hay un input, obtenemos el valor del input
+              cellValue = cell.querySelector('input').value.trim();
+            } else {
+              // Si no hay input ni select, obtenemos el contenido de texto de la celda
+              cellValue = cell.textContent.trim();
+            }
+      
+            // Si el valor está vacío, lo asignamos como null
+            rowData[headers[i]] = cellValue !== "" ? cellValue : null;
+          });
+      
+          return rowData;
+        });
+      
+        // No filtramos las filas, ya que ahora todas deben tener todas las propiedades, aunque algunas sean null
+        return rows;
+      }
+      
+      
+
+
       async function traerPacientes() {
         const datos = await todosLosPacientes();
         const datosFiltrados = datos.filter((paciente) => paciente !== null);
@@ -40,12 +85,35 @@ export default function MedicacionesDiarias(){
             setPaciente(element);
            
           }
-        })
+        });}
+
+        async function restarMedicacion(){
+            try{
+                let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
+        
+            let arregloMedicacion = [];
+            tablaMedicamentos.forEach((item, index) => {
+            if (item.Medicamento != null) {
+                const objetoMedicamento = {
+                Medicamento: item.Medicamento,
+                "6:00": item["6:00"],
+                Desayuno: item.Desayuno,
+                Almuerzo: item.Almuerzo,
+                Merienda: item.Merienda,
+                Cena: item.Cena,
+                "22:30": item["22:30"],
+                Observaciones: item.Observaciones
+                };
+                arregloMedicacion.push(objetoMedicamento);
+            }
+            });
       
-        if (dniPacientes != "null"){
-          setcamposDeshabilitados(false);
-        }
-      
+        const response = restarMedicaionApi(arregloMedicacion, parseInt(paciente.dni));
+
+            }catch(error)
+            {console.error(error)
+
+            }
         }
 
     return (
@@ -68,8 +136,14 @@ export default function MedicacionesDiarias(){
         </div>
 
           {paciente.dni && (
-            <div className="tabla-medicamentos">
-            <TablaMedicamentos dni={paciente.dni} ref={medicamentosRef}/>
+            <div>
+            <div className="tabla-medicamentos mx-4 my-6">
+            <TablaMedicamentos dni={paciente.dni} ref={medicamentosRef} menuMedicaionpaciente={true}/>
+            </div>
+
+            <div className="restar-medicacion">
+                <Boton textoBoton="Restar medicaion" onClick={restarMedicacion}/>
+            </div>
             </div>
           )}
         

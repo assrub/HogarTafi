@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import React from "react";
-import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import MedicationIcon from "@mui/icons-material/Medication";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -11,6 +11,7 @@ import AssistWalkerIcon from "@mui/icons-material/AssistWalker";
 import { useSesionUsuario } from "../contexto/sesionUsuario";
 import { contextoSesionUsuario } from '../contexto/sesionUsuario';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 
 export function BarraNavegacion() {
   const { usuario } = useContext(contextoSesionUsuario);
@@ -135,7 +136,15 @@ export function BarraNavegacion() {
                 </Link>
               </div>
               )}
-            
+            <div className="fotos p-3">
+                <Link
+                  to="fotos"
+                  className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
+                >
+                  <InsertPhotoIcon className="text-[#017a98]" />
+                  Fotos
+                </Link>
+              </div>
           </div>
         </div>
 
@@ -237,22 +246,26 @@ export function BarraNavegacion() {
                 </div>
               )}
             </div>
-            <Link
-              to="stockDelHogar"
-              onClick={cerrarMenuHamburguesa}
-              className="px-3 mt-4 relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
-            >
-              <MedicationIcon className="text-[#017a98]" />
-              Stock del hogar
-            </Link>
-            <Link
-              to="pedidos"
-              onClick={cerrarMenuHamburguesa}
-              className="px-3 mt-4 relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
-            >
-              <ShoppingCartIcon className="text-[#017a98]" />
-              Pedidos
-            </Link>
+            <div className="stock-del-hogar p-3">
+              <Link
+                to="stockDelHogar"
+                className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
+              >
+                <MedicationIcon className="text-[#017a98]" />
+                Stock del hogar
+              </Link>
+            </div>
+
+            <div className="pedidos p-3">
+              <Link
+                to="pedidos"
+                className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
+              >
+                <ShoppingCartIcon className="text-[#017a98]" />
+                Pedidos
+              </Link>
+            </div>
+
             {usuario.tipo == "admin" && (
                 <div className="lista-de-usuarios p-3">
                 <Link
@@ -264,6 +277,15 @@ export function BarraNavegacion() {
                 </Link>
               </div>
               )}
+            <div className="fotos p-3">
+                <Link
+                  to="fotos"
+                  className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
+                >
+                  <InsertPhotoIcon className="text-[#017a98]" />
+                  Fotos
+                </Link>
+              </div>
           </div>
           <div className="cerrar-sesion flex flex-grow items-end p-3">
             <Link

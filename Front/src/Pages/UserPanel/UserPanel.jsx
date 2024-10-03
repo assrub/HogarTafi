@@ -7,6 +7,7 @@ import "../../App.css";
 import Perfil from "../../componentes/perfil.jsx";
 import ListadoUsuarios from "../../componentes/ListadoUsuarios.jsx";
 import MedicacionesDiarias from "../../componentes/MedicacionesDiarias.jsx";
+import FotosFamiliares from "../../componentes/FotosFamiliares.jsx";
 
 
 async function botonClick() {
@@ -37,6 +38,7 @@ function UserPanel() {
             <Route path="paciente/medicacionesDiarias" element={<MedicacionesDiarias/>} />
             <Route path="stockDelHogar" />
             <Route path="pedidos" />
+            <Route path="fotos" element={<FotosFamiliares/>}/>
             <Route path="listaDeUsuarios" element={<ListadoUsuarios></ListadoUsuarios>}/>
             <Route path="perfil" element={<Perfil/>}/>
           </Routes>

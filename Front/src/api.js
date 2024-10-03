@@ -62,9 +62,6 @@ export async function traerStockApi(dni){
 
 export async function guardarMedicamentosApi(arregloMedicamento, dni) {
     try {
-
-        console.log(JSON.stringify(arregloMedicamento));
-
         const response = await fetch(`http://localhost:8080/medicamento/${dni}`, {
             method: "POST",
             headers: {
@@ -147,3 +144,20 @@ export async function iniciarSesionApi(datosUsuario){
         return error;
     }
 }
+
+export async function restarMedicaionApi(arregloMedicamento,dni){
+    try {
+        const response = await fetch(`http://localhost:8080/stock/${dni}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",  
+            },
+            body: JSON.stringify(arregloMedicamento), 
+        });
+
+        return response.ok;
+    } catch (error) {
+      console.error('Error al restar los medicamentos del stock del paciente:', error);
+      return error;
+    }
+  }

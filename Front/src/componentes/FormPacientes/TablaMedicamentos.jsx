@@ -2,7 +2,7 @@ import React, { useEffect, useState, forwardRef } from "react";
 import { traerMedicamentosApi, traerStockApi } from "../../api";
 
 
-const TablaMedicamentos = forwardRef(({dni}, ref) => {
+const TablaMedicamentos = forwardRef(({dni, menuMedicaionpaciente = false}, ref) => {
 
 const [stock,setStock] = useState([
   {
@@ -286,7 +286,10 @@ function transformarStock(stockBackend) {
                 </tr>
               )
           )}
-          <tr>
+          
+          
+          {!menuMedicaionpaciente && (
+            <tr>
             <td className="px-2 py-1 border border-[#181818]">
             <select
   className="p-2 w-full md:w-auto"
@@ -353,6 +356,8 @@ function transformarStock(stockBackend) {
               </button>
             </td>
           </tr>
+          )}
+          
         </tbody>
       </table>
     </div>
