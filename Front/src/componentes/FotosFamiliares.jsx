@@ -52,13 +52,13 @@ export default function FotosFamiliares(){
     };
 
     const handleSelectChange = (e) => {
-        const dni = e.target.value;
+        const dni = parseInt(e.target.value);
         const pacienteSeleccionado = pacientes.find(paciente => paciente.dni === dni);
-        console.log(pacienteSeleccionado)
-        // Verifica si el paciente ya está en la lista
+    
         if (pacienteSeleccionado && !pacientesSeleccionados.some(p => p.dni === pacienteSeleccionado.dni)) {
             setPacientesSeleccionados([...pacientesSeleccionados, pacienteSeleccionado]);
         }
+    
     };
 
     const handleDeleteChip = (dni) => {
@@ -148,16 +148,20 @@ export default function FotosFamiliares(){
                 
                 </div>
                 <div className="mt-4">
-                {pacientesSeleccionados.map((paciente) => (
-                    <Chip
-                        key={paciente.dni}
-                        label={paciente.nombre + ' ' + paciente.apellido}
-                        onDelete={() => handleDeleteChip(paciente.dni)}
-                        color="primary"
-                        style={{ margin: '5px' }}
-                    />
-                ))}
-            </div>
+    {pacientesSeleccionados.length === 0 ? (
+        <p>No hay pacientes seleccionados</p>
+    ) : (
+        pacientesSeleccionados.map((paciente) => (
+            <Chip
+                key={paciente.dni}
+                label={paciente.nombre + ' ' + paciente.apellido}
+                onDelete={() => handleDeleteChip(paciente.dni)}
+                color="primary"
+                style={{ margin: '5px' }}
+            />
+        ))
+    )}
+</div>
 
 
                 <div className="botones"></div>
