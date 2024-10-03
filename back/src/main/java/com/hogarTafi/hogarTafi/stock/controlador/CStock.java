@@ -1,8 +1,8 @@
 package com.hogarTafi.hogarTafi.stock.controlador;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hogarTafi.hogarTafi.stock.Entidad.EStock;
-import com.hogarTafi.hogarTafi.stock.Entidad.EListStock;
+import com.hogarTafi.hogarTafi.stock.entidad.EStock;
+import com.hogarTafi.hogarTafi.stock.entidad.EListStock;
 import com.hogarTafi.hogarTafi.stock.servicio.implement.SIStock;
 
 import java.util.ArrayList;

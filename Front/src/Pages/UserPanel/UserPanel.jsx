@@ -6,6 +6,7 @@ import ListadoPacientes from "../../componentes/ListadoPacientes";
 import "../../App.css";
 import Perfil from "../../componentes/perfil.jsx";
 import ListadoUsuarios from "../../componentes/ListadoUsuarios.jsx";
+import MedicacionesDiarias from "../../componentes/MedicacionesDiarias.jsx";
 
 
 async function botonClick() {
@@ -33,6 +34,7 @@ function UserPanel() {
             <Route path="todosLospacientes" element={<ListadoPacientes />} />
             <Route path="paciente/registrar" element={<RegistrarPacientes />} />
             <Route path="paciente/modificar" element={<FormPacientes />} />
+            <Route path="paciente/medicacionesDiarias" element={<MedicacionesDiarias/>} />
             <Route path="stockDelHogar" />
             <Route path="pedidos" />
             <Route path="listaDeUsuarios" element={<ListadoUsuarios></ListadoUsuarios>}/>

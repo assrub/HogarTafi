@@ -2,7 +2,7 @@ package com.hogarTafi.hogarTafi.stock.repositorio;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.hogarTafi.hogarTafi.stock.Entidad.EStock;
+import com.hogarTafi.hogarTafi.stock.entidad.EStock;
 
 import java.util.List;
 import java.util.Optional;

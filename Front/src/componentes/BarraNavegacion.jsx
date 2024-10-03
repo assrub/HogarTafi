@@ -10,6 +10,7 @@ import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import AssistWalkerIcon from "@mui/icons-material/AssistWalker";
 import { useSesionUsuario } from "../contexto/sesionUsuario";
 import { contextoSesionUsuario } from '../contexto/sesionUsuario';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
 export function BarraNavegacion() {
   const { usuario } = useContext(contextoSesionUsuario);
@@ -43,8 +44,8 @@ export function BarraNavegacion() {
               className="w-1/5 rounded-full"
               alt="foto de perfil"
             />
-            <span className="mt-4">Nombre de usuario</span>
-            <span className="opacity-70">Admin</span>
+            <span className="mt-4">{usuario.nombre + " " + usuario.apellido}</span>
+            <span className="opacity-70">{usuario.tipo}</span>
 
             <Link to="perfil" className="block underline">
               Ver perfil
@@ -90,6 +91,15 @@ export function BarraNavegacion() {
                       Modificar
                     </Link>
                   </div>
+                  <div className="medicaciones-diarias p-3">
+                <Link
+                  to="paciente/medicacionesDiarias"
+                  className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
+                >
+                  <LocalHospitalIcon className="text-[#017a98]" />
+                  Medicaciones diarias
+                </Link>
+              </div>
                 </div>
               )}
             </div>
@@ -164,8 +174,8 @@ export function BarraNavegacion() {
               className="w-20 rounded-full"
               alt="foto de perfil"
             />
-            <span className="mt-4">Nombre de usuario</span>
-            <span className="opacity-70">Admin</span>
+            <span className="mt-4">{usuario.nombre + " " + usuario.apellido}</span>
+            <span className="opacity-70">{usuario.tipo}</span>
             <Link
               to="perfil"
               onClick={cerrarMenuHamburguesa}
@@ -187,31 +197,43 @@ export function BarraNavegacion() {
               </Link>
               {menuPaciente && (
                 <div className="flex flex-col items-start mt-4 ml-6 w-full">
-                  <Link
-                  onClick={cerrarMenuHamburguesa}
-                    to="todosLospacientes"
-                    className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
-                  >
-                    <AssistWalkerIcon className="text-[#017a98]" /> Listar
-                    pacientes
-                  </Link>
+                  <div className="mostrarPacientes p-3">
+                    <Link
+                      to="todosLospacientes"
+                      className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
+                    >
+                      <AssistWalkerIcon className="text-[#017a98]" /> Listar
+                      pacientes
+                    </Link>
+                  </div>
+                  <div className="registrar p-3">
+                    <Link
+                      to="paciente/registrar"
+                      className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
+                    >
+                      <AutoStoriesIcon className="text-[#017a98]" />
+                      Registrar
+                    </Link>
+                  </div>
+                  <div className="modificar p-3">
+                    <Link
+                      to="paciente/modificar"
+                      className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
+                    >
+                      <CreateIcon className="text-[#017a98]" />
+                      Modificar
+                    </Link>
+                  </div>
 
-                  <Link
-                    onClick={cerrarMenuHamburguesa}
-                    to="paciente/registrar"
-                    className="mb-2 relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
-                  >
-                    <AutoStoriesIcon className="text-[#017a98]" />
-                    Registrar
-                  </Link>
-                  <Link
-                    onClick={cerrarMenuHamburguesa}
-                    to="paciente/modificar"
-                    className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
-                  >
-                    <CreateIcon className="text-[#017a98] " />
-                    Modificar
-                  </Link>
+                  <div className="medicaciones-diarias p-3">
+                <Link
+                  to="paciente/medicacionesDiarias"
+                  className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
+                >
+                  <LocalHospitalIcon className="text-[#017a98]" />
+                  Medicaciones diarias
+                </Link>
+              </div>
                 </div>
               )}
             </div>
