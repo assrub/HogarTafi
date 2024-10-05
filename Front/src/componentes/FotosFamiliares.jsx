@@ -2,6 +2,7 @@ import React, {useContext, useState, useEffect} from "react";
 import {contextoSesionUsuario} from "../contexto/SesionUsuario.jsx"
 import Chip from '@mui/material/Chip';
 import { todosLosPacientes } from "../api.js";
+import Boton from "./Boton.jsx";
 
 export default function FotosFamiliares(){
 
@@ -39,6 +40,9 @@ export default function FotosFamiliares(){
       
       }
 
+      function volver(){
+        setMenuCargarFotos(false)
+      }
 
     const handleFotoChange = (e) => {
         const file = e.target.files[0];
@@ -164,7 +168,10 @@ export default function FotosFamiliares(){
 </div>
 
 
-                <div className="botones"></div>
+                <div className="botones">
+                <Boton textoBoton="Volver"  onClick={volver}/>
+                <Boton textoBoton="Cargar foto" /> 
+                </div>
             </div>
         )}
 

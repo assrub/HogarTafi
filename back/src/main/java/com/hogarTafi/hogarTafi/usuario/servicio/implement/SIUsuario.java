@@ -62,7 +62,7 @@ public class SIUsuario implements SUsuario{
             try {
                 int dni = Integer.parseInt(nombreDeUsuario);
                 usuario = buscarUsuarioPorDni(dni);
-                if (usuario != null && BCrypt.checkpw(password, usuario.getPassword())) {
+                if (usuario != null && BCrypt.checkpw(password, usuario.getPassword()) && usuario.getActivo()) {
                     return usuario; // La contraseña es correcta
                 }
             } catch (NumberFormatException e) {
@@ -74,11 +74,11 @@ public class SIUsuario implements SUsuario{
 
         // Intentar iniciar sesión con email si no es un DNI
         usuario = buscarPorEmail(nombreDeUsuario);
-        if (usuario != null && BCrypt.checkpw(password, usuario.getPassword())) {
+        if (usuario != null && BCrypt.checkpw(password, usuario.getPassword()) && usuario.getActivo()) {
             return usuario; // La contraseña es correcta
         }
 
-        // Si ninguna de las dos formas funciona, retorna null
+        // Si ninguna de las dos formas anda, devuelve null
         return null;
     }
 
