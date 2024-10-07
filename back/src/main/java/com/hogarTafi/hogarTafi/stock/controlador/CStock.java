@@ -82,13 +82,12 @@ public class CStock {
     }
 
 
-    @GetMapping("/")
-    public ResponseEntity<?> getMethodName() {
+    @GetMapping("/todosLosStocks")
+    public ResponseEntity<?> tododsLosStocks() {
         List<EStock> listaDeStocks = stockService.buscarStock();
-
         return ResponseEntity.ok(listaDeStocks);
     }
 
 
- 
+
 }

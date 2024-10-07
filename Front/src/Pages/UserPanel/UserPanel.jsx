@@ -8,13 +8,14 @@ import Perfil from "../../componentes/perfil.jsx";
 import ListadoUsuarios from "../../componentes/ListadoUsuarios.jsx";
 import MedicacionesDiarias from "../../componentes/MedicacionesDiarias.jsx";
 import FotosFamiliares from "../../componentes/FotosFamiliares.jsx";
-
+import Pedidos from "../../componentes/Pedidos.jsx";
+import { traerTodosLosSotcksApi } from "../../api.js";
 
 async function botonClick() {
 
  
 
-  const datos = await traerMedicamentos(1111111111
+  const datos = await traerTodosLosSotcksApi(
   );
   console.log(datos);
 }
@@ -37,7 +38,7 @@ function UserPanel() {
             <Route path="paciente/modificar" element={<FormPacientes />} />
             <Route path="paciente/medicacionesDiarias" element={<MedicacionesDiarias/>} />
             <Route path="stockDelHogar" />
-            <Route path="pedidos" />
+            <Route path="pedidos" element={<Pedidos/>}/>
             <Route path="fotos" element={<FotosFamiliares/>}/>
             <Route path="listaDeUsuarios" element={<ListadoUsuarios></ListadoUsuarios>}/>
             <Route path="perfil" element={<Perfil/>}/>
@@ -45,7 +46,7 @@ function UserPanel() {
         </div>
       </div>
 
-      <div className="botonDePrueba hidden">
+      <div className="botonDePrueba">
         <button
           onClick={botonClick}
           className="p-8 text-xl bg-red-500 text-white rounded-lg"

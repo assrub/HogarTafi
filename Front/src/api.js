@@ -161,3 +161,10 @@ export async function restarMedicaionApi(arregloMedicamento,dni){
       return error;
     }
   }
+
+  export async function traerTodosLosSotcksApi(){
+    const response = await fetch("http://localhost:8080/stock/todosLosStocks");
+    console.log(response)
+  const data = await response.json();
+  return data;
+  }

@@ -122,7 +122,7 @@ export default function MedicacionesDiarias(){
             <h2 className="font-bold">Medicaiones diarias</h2>
         </div>
 
-        <div>
+        <div className="bg-gray-100 p-2">
         <div className="elegir-paciente flex  justify-center ">
           <select name="paciente" id="select-paciente" className="bg-gray-200 rounded-lg w-2/5">
           <option selected disabled value="null">Selecciona un paciente</option>
@@ -136,12 +136,12 @@ export default function MedicacionesDiarias(){
         </div>
 
           {paciente.dni && (
-            <div>
-            <div className="tabla-medicamentos mx-4 my-6">
+            <div className="grid place-content-center">
+            <div className="tabla-medicamentos mx-4 my-6 ">
             <TablaMedicamentos dni={paciente.dni} ref={medicamentosRef} menuMedicaionpaciente={true}/>
             </div>
 
-            <div className="restar-medicacion">
+            <div className="restar-medicacion mx-4 my-6 ">
                 <Boton textoBoton="Restar medicaion" onClick={restarMedicacion}/>
             </div>
             </div>

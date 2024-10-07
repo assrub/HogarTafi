@@ -96,17 +96,20 @@ export default function ListadoUsuarios() {
       ),[])
 
       async function registrarUsuario(e){
+        let pacienteAsociado = null;
+        const tipoSeleccionado = Object.keys(tipoUsuario).find(key => tipoUsuario[key] === true);
 
         e.preventDefault();
-        const tipoSeleccionado = Object.keys(tipoUsuario).find(key => tipoUsuario[key] === true);
+        
         if(tipoSeleccionado == undefined){
           alert("Selecciona el tipo de usuario");
-          return
+          return;
         }
-        let pacienteAsociado = null;
+        
         if(tipoSeleccionado == "familiar"){
           pacienteAsociado = document.getElementById("select-paciente").value; ;
         }
+        
         
         
         const formData = new FormData();
@@ -190,6 +193,8 @@ export default function ListadoUsuarios() {
        <form action="">
   <CampoTexto
     textoEtiqueta="Nombre"
+    error={campoIncompleto}
+                obligatorio={true}
     propsLabel={{ labelFor: "nombre" }}
     propsInput={{
       type: "text",
@@ -202,6 +207,8 @@ export default function ListadoUsuarios() {
 
   <CampoTexto
     textoEtiqueta="Apellido"
+    error={campoIncompleto}
+                obligatorio={true}
     propsLabel={{ labelFor: "apellido" }}
     propsInput={{
       type: "text",
@@ -213,6 +220,8 @@ export default function ListadoUsuarios() {
   />
   <CampoTexto
     textoEtiqueta="Correo electronico"
+    error={campoIncompleto}
+                obligatorio={true}
     propsLabel={{ labelFor: "email" }}
     propsInput={{
       type: "email",
@@ -224,6 +233,8 @@ export default function ListadoUsuarios() {
   />
   <CampoTexto
     textoEtiqueta="Contraseña temporal"
+    error={campoIncompleto}
+                obligatorio={true}
     propsLabel={{ labelFor: "contra" }}
     propsInput={{
       type: "text",
@@ -236,10 +247,14 @@ export default function ListadoUsuarios() {
 
   <CampoTexto
     textoEtiqueta="DNI"
+    error={campoIncompleto}
+                obligatorio={true}
     propsLabel={{ labelFor: "dni" }}
     propsInput={{
       type: "number",
       name: "dni",
+      min: 0,
+      max:999999999,
       id: "inputDni",
       value: usuario.dni,  
       onChange: handleInputChange
@@ -247,6 +262,8 @@ export default function ListadoUsuarios() {
   />
   <CampoTexto
     textoEtiqueta="Telefono"
+    error={campoIncompleto}
+                obligatorio={true}
     propsLabel={{ labelFor: "telefono" }}
     propsInput={{
       type: "number",
@@ -259,6 +276,8 @@ export default function ListadoUsuarios() {
 
   <CampoTexto
     textoEtiqueta="Direccion"
+    error={campoIncompleto}
+                obligatorio={true}
     propsLabel={{ labelFor: "direccion" }}
     propsInput={{
       type: "text",
