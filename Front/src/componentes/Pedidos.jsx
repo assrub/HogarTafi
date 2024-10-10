@@ -66,7 +66,7 @@ export default function Pedidos(){
         <h2 className="font-bold">Pedidos de stock</h2>
       </div>
 
-      <div className="pedidos grid grid-cols-3 justify-center mx-4 gap-4">
+      <div className="pedidos grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center mx-4 gap-4">
       {stockFaltante.map((paciente, index) => (
       <div className="stockIndividual border border-[#017a98] ring-2 bg-gray-100 p-4 rounded-xl " key={index}>
         <h2 className="font-bold text-xl">{paciente.nombre}</h2>
@@ -75,7 +75,7 @@ export default function Pedidos(){
         <ul>
           {paciente.medicamentosFaltantes.map((medicamento, i) => (
             <li key={i}>
-              *{medicamento.medicacion} faltan: {Math.abs(parseInt(medicamento.cantidad)- parseInt(medicamento.cant_minima))}
+              💊{medicamento.medicacion} faltan: {Math.abs(parseInt(medicamento.cantidad)- parseInt(medicamento.cant_minima))}
             </li>
           ))}
         </ul>

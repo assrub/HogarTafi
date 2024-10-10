@@ -80,12 +80,12 @@ const handleInputChange = (e) => {
     }));
   };
     return(
-        <div className="grid h-screen place-items-center" style={{ backgroundImage: 'url("src/Assets/Images/Main/actividades-bg.jpg")' }}>
+        <div className="lg:grid h-screen mx-auto lg:place-items-center">
 
 
-    <div className="login grid place-content-center border border-black h-1/2 p-56 bg-white rounded-xl" >
-        <div className="titulo text-3xl mb-4 font-bold">
-            <h2>Inicio de sesion</h2>
+    <div className="login h-full grid place-items-center lg:border  lg:border-black lg:h-1/2 lg:p-56 bg-white lg:rounded-xl" >
+        <div className="titulo text-3xl mb-4 font-bold ">
+            <h2 >Inicio de sesion</h2>
         </div>
         <div className="formulario">
             <div className="email">

@@ -1,41 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Carousel from './Carousel';
 
 function Navigation() {
+  const images = [
+    'src/Assets/Images/Main/tarjeta-servicios.jpg',
+    'src/Assets/Images/Main/tarjeta-servicios.jpg',
+    'src/Assets/Images/Main/tarjeta-servicios.jpg',
+  ];
+  
+
   return (
     <>
       {/* Sección "Actividades" */}
-      <section id="actividades" className="bg-cover bg-center py-16" style={{ backgroundImage: 'url("src/Assets/Images/Main/actividades-bg.jpg")' }}>
-        <div className="container mx-auto">
-          <h2 className="text-center text-3xl font-bold text-gray-900">Actividades</h2>
-          <div id="carouselExampleAutoplaying" className="relative">
-            <div className="flex overflow-hidden">
-              <div className="carousel-item active">
-                <img src="src/Assets/Images/Main/actividades.jpg" className="w-full h-auto" alt="..." />
-                <p className="text-center text-gray-900 font-bold mt-4">Título</p>
-                <p className="text-center text-gray-900">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis laudantium quas illo recusandae libero. Fugit, exercitationem accusantium. Tempore, totam sint.</p>
-              </div>
-              <div className="carousel-item">
-                <img src="src/Assets/Images/Main/actividades.jpg" className="w-full h-auto" alt="..." />
-                <p className="text-center text-gray-900 font-bold mt-4">Título</p>
-                <p className="text-center text-gray-900">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis laudantium quas illo recusandae libero. Fugit, exercitationem accusantium. Tempore, totam sint.</p>
-              </div>
-              <div className="carousel-item">
-                <img src="src/Assets/Images/Main/actividades.jpg" className="w-full h-auto" alt="..." />
-                <p className="text-center text-gray-900 font-bold mt-4">Título</p>
-                <p className="text-center text-gray-900">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis laudantium quas illo recusandae libero. Fugit, exercitationem accusantium. Tempore, totam sint.</p>
-              </div>
-            </div>
-            <button className="absolute top-0 left-0 h-full px-4 text-white bg-black bg-opacity-50 hover:bg-opacity-75" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span className="sr-only">Previous</span>
-            </button>
-            <button className="absolute top-0 right-0 h-full px-4 text-white bg-black bg-opacity-50 hover:bg-opacity-75" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-              <span className="carousel-control-next-icon" aria-hidden="true"></span>
-              <span className="sr-only">Next</span>
-            </button>
-          </div>
-        </div>
+      <section id="actividades" className="bg-cover bg-center py-6">
+      <div className="container mx-auto">
+    <h2 className="text-center text-3xl font-bold text-gray-900">Actividades</h2>
+
+    {/* Carousel de Material Tailwind */}
+   <Carousel images={images} />
+  </div>
       </section>
 
       {/* Sección "Servicios" */}
