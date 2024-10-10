@@ -166,7 +166,7 @@ export function BarraNavegacion() {
 
       {menuHamburguesa && (
         <div
-          className={`fixed inset-0 bg-white flex flex-col items-start p-8 transform transition-transform duration-700 z-10 ease-in-out`}
+          className={`fixed inset-0 w-96 bg-white flex flex-col overflow-y-auto items-start p-8 transform transition-transform duration-700 z-10 ease-in-out`}
           style={{
             transform: menuHamburguesa ? "translateX(0)" : "translateX(-100%)",
           }}

@@ -85,11 +85,11 @@ function ListadoPacientes() {
         <table className="min-w-full mb-10">
           <thead>
             <tr>
-              <th className="px-4 py-2 border border-[#181818]">Nombre</th>
-              <th className="px-4 py-2 border border-[#181818]">Apellido</th>
-              <th className="px-4 py-2 border border-[#181818]">DNI</th>
-              <th className="px-4 py-2 border border-[#181818]">Obra social</th>
-              <th className="px-4 py-2 border border-[#181818]">Acciones</th>
+              <th className="lg:px-4 lg:py-2 border border-[#181818]">Nombre</th>
+              <th className="lg:px-4 lg:py-2 border border-[#181818]">Apellido</th>
+              <th className="lg:px-4 lg:py-2 border border-[#181818]">DNI</th>
+              <th className="lg:px-4 lg:py-2 border border-[#181818]">Obra social</th>
+              <th className="lg:px-4 lg:py-2 border border-[#181818]">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -100,37 +100,37 @@ function ListadoPacientes() {
                   index % 2 == 0 ? "bg-gray-100" : "bg-gray-300"
                 }`}
               >
-                <td className="px-4 py-2 border border-[#181818] items-center">
+                <td className="px-2 lg:px-4 lg:py-2 border border-[#181818] items-center">
                   {paciente.nombre}
                 </td>
-                <td className="px-4 py-2 border border-[#181818]">
+                <td className="px-2 lg:px-4 lg:py-2 border border-[#181818]">
                   {paciente.apellido}
                 </td>
-                <td className="px-4 py-2 border border-[#181818]">
+                <td className="px-2 lg:px-4 lg:py-2 border border-[#181818]">
                   {paciente.dni}
                 </td>
-                <td className="px-4 py-2 border border-[#181818]">
+                <td className="px-2 lg:px-4 lg:py-2 border border-[#181818]">
                   {paciente.obraSocial}
                 </td>
-                <td className="px-4 py-2 border border-[#181818]">
+                <td className="px-2 lg:px-4 lg:py-2 border border-[#181818]">
                   <div
-                    className="eliminar py-2 flex justify-center
+                    className="eliminar px-2 lg:py-2 flex justify-center
                      text-red-600 font-bold border-b rounded-lg hover:bg-red-200
                       border-black"
                   >
                     <button
-                      className="px-5"
+                      className="lg:px-5"
                       onClick={() => desactivar(paciente.dni)}
                     >
                       <DeleteForeverIcon /> Eliminar
                     </button>
                   </div>
                   <div
-                    className="modificar py-2 flex justify-center 
+                    className="modificar px-2 lg:py-2 flex justify-center 
                      text-blue-600 font-bold rounded-lg hover:bg-blue-200"
                   >
                     <Link
-                      className="px-5 "
+                      className="lg:px-5 "
                       to={"/UserPanel/paciente/modificar"}
                       state={{ paciente: paciente }}
                     >

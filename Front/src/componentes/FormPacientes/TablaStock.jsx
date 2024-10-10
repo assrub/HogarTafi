@@ -116,7 +116,7 @@ const TablaStock =forwardRef(({dni}, ref) => {
           .map((row, index) => (
             
             <tr key={index}>
-              <td className="px-4 py-2 border border-[#181818] ">
+              <td className="lg:px-4 lg:py-2 border border-[#181818] ">
                 <div className="flex place-content-center">
                   <input
                     className={`rounded-lg flex text-center w-32 ${row.added ? 'bg-neutral-300' : 'bg-white'} border `}
@@ -128,7 +128,7 @@ const TablaStock =forwardRef(({dni}, ref) => {
                   />
                 </div>
               </td>
-              <td className="px-4 py-2 border border-[#181818] ">
+              <td className="lg:px-4 lg:py-2 border border-[#181818] ">
                 <div className="flex place-content-center">
                   <input
                     className={`rounded-lg flex text-center w-32 ${row.added ? 'bg-neutral-300' : 'bg-white'} border`}
@@ -141,7 +141,7 @@ const TablaStock =forwardRef(({dni}, ref) => {
                 </div>
               </td>
 
-              <td className="px-4 py-2 border border-[#181818] ">
+              <td className="lg:px-4 lg:py-2 border border-[#181818] ">
                 <div className="flex place-content-center">
                   <input
                     className={`rounded-lg flex text-center w-32 ${row.added ? 'bg-neutral-300' : 'bg-white'} border`}
@@ -154,7 +154,7 @@ const TablaStock =forwardRef(({dni}, ref) => {
                 </div>
               </td>
 
-              <td className="px-4 py-2 border border-[#181818]">
+              <td className="lg:px-4 lg:py-2 border border-[#181818]">
                 <div className="gap-10 flex place-content-center">
                   {!row.added && (
                     <button
@@ -238,7 +238,7 @@ const TablaStock =forwardRef(({dni}, ref) => {
           ))}
 
 <tr>
-            <td className="px-4 py-2 border border-[#181818]">
+            <td className="lg:px-4 lg:py-2 border border-[#181818]">
               <div className="flex place-content-center">
                 <input
                   className="rounded-lg w-32 flex text-center bg-white border"
@@ -249,7 +249,7 @@ const TablaStock =forwardRef(({dni}, ref) => {
                 />
               </div>
             </td>
-            <td className="px-4 py-2 border border-[#181818]">
+            <td className="lg:px-4 lg:py-2 border border-[#181818]">
               <div className="flex place-content-center">
                 <input
                   className="rounded-lg w-32 flex text-center bg-white border"
@@ -261,7 +261,7 @@ const TablaStock =forwardRef(({dni}, ref) => {
                 />
               </div>
             </td>
-            <td className="px-4 py-2 border border-[#181818]">
+            <td className="lg:px-4 lg:py-2 border border-[#181818]">
               <div className="flex place-content-center">
                 <input
                   className="rounded-lg w-32 flex text-center bg-white border"
@@ -273,7 +273,7 @@ const TablaStock =forwardRef(({dni}, ref) => {
                 />
               </div>
             </td>
-            <td className="px-4 py-2 border border-[#181818]">
+            <td className="lg:px-4 lg:py-2 border border-[#181818]">
               <div className="gap-10 flex place-content-center">
                 <button className="text-green-600 flex" onClick={handleAddRow}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">

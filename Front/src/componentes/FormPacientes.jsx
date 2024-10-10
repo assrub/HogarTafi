@@ -455,12 +455,12 @@ function buscarClick(){
       />
     </div>
 <hr />
-        <div className="menuEscondido mx-6 my-2 ">
-          <div className="stock flex justify-center items-center">
+        <div className="menuEscondido my-2 lg:mx-6 ">
+          <div className="stock flex items-center bg-gray-100 p-2 rounded-lg overflow-x-auto">
           {mostrarStock && (
             <div className="">
               <TablaStock dni={paciente.dni} ref={stockRef}/>
-              <div className="boton m-4">
+              <div className="boton ">
               <Boton textoBoton="Guardar stock" onClick={() => guardarStock(stockRef)}></Boton>
               </div>
             </div>
@@ -478,11 +478,11 @@ function buscarClick(){
             </div>
           )}
         </div>
-        <div className="tablaMedicamentos flex justify-center items-center">
+        <div className="tablaMedicamentos flex  items-center bg-gray-100 p-2 rounded-lg overflow-x-auto">
           {mostrarMedicamentos && (
             <div className="">
               <TablaMedicamentos dni={paciente.dni} ref={medicamentosRef}/>
-              <div className="boton m-4">
+              <div className="boton ">
               <Boton textoBoton="Guardar medicamentos" onClick={() => guardarMedicamentos(medicamentosRef)}></Boton>
               </div>
             </div>

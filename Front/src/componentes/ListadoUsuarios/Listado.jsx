@@ -4,22 +4,6 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import traerUsuariosApi, {desactivarUsuarioApi, todosLosPacientes} from "../../api";
 
 export default function Listado(){
-
-   /*
-    const [usuario, setUsuario] = useState({
-      nombre: "",
-      apellido: "",
-      email: "",
-      dni: "",
-      telefono: "",
-      direccion: "",
-      contra: "",
-      tipo: "",
-      asociado: "",
-      nombreAsociado: ""
-    }); */
-
-    
   const [pacientes, setPacientes] = useState([]);
 
     const [usuarios, setUsuarios] = useState([]);
@@ -75,19 +59,19 @@ export default function Listado(){
 
     return (
         <>
-        <div className="tabla">
+        <div className="tabla text-lg">
           <table className="min-w-full mb-10">
             <thead>
               <tr>
-                <th className="px-4 py-2 border border-[#181818]">Nombre</th>
-                <th className="px-4 py-2 border border-[#181818]">Apellido</th>
-                <th className="px-4 py-2 border border-[#181818]">Email</th>
-                <th className="px-4 py-2 border border-[#181818]">Dni</th>
-                <th className="px-4 py-2 border border-[#181818]">Telefono</th>
-                <th className="px-4 py-2 border border-[#181818]">Direccion</th>
-                <th className="px-4 py-2 border border-[#181818]">Paciente asociado</th>
-                <th className="px-4 py-2 border border-[#181818]">Tipo</th>
-                <th className="px-4 py-2 border border-[#181818]">Acciones</th>
+                <th className="lg:px-4 lg:py-2 border border-[#181818]">Nombre</th>
+                <th className="lg:px-4 lg:py-2 border border-[#181818]">Apellido</th>
+                <th className="lg:px-4 lg:py-2 border border-[#181818]">Email</th>
+                <th className="lg:px-4 lg:py-2 border border-[#181818]">Dni</th>
+                <th className="lg:px-4 lg:py-2 border border-[#181818]">Telefono</th>
+                <th className="lg:px-4 lg:py-2 border border-[#181818]">Direccion</th>
+                <th className="lg:px-4 lg:py-2 border border-[#181818]">Paciente asociado</th>
+                <th className="lg:px-4 lg:py-2 border border-[#181818]">Tipo</th>
+                <th className="lg:px-4 lg:py-2 border border-[#181818]">Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -98,38 +82,38 @@ export default function Listado(){
                    index % 2 == 0 ? "bg-gray-100" : "bg-gray-300"
                  }`}
                >
-                <td className="px-4 py-2 border border-[#181818] items-center">
+                <td className="lg:px-4 lg:py-2 border border-[#181818] items-center">
                   {usuario.nombre}
                 </td>
-                <td className="px-4 py-2 border border-[#181818] items-center">
+                <td className="lg:px-4 lg:py-2 border border-[#181818] items-center">
                   {usuario.apellido}
                 </td>
-                <td className="px-4 py-2 border border-[#181818] items-center">
+                <td className="lg:px-4 lg:py-2 border border-[#181818] items-center">
                   {usuario.email}
                 </td>
-                <td className="px-4 py-2 border border-[#181818] items-center">
+                <td className="lg:px-4 lg:py-2 border border-[#181818] items-center">
                   {usuario.dni}
                 </td>
-                <td className="px-4 py-2 border border-[#181818] items-center">
+                <td className="lg:px-4 lg:py-2 border border-[#181818] items-center">
                   {usuario.telefono}
                 </td>
-                <td className="px-4 py-2 border border-[#181818] items-center">
+                <td className="lg:px-4 lg:py-2 border border-[#181818] items-center">
                   {usuario.direccion}
                 </td>
-                <td className="px-4 py-2 border border-[#181818] items-center">
+                <td className="lg:px-4 lg:py-2 border border-[#181818] items-center">
                   {usuario.tipo == "familiar" ? usuario.nombreAsociado : ""}
                 </td>
-                <td className="px-4 py-2 border border-[#181818] items-center">
+                <td className="lg:px-4 lg:py-2 border border-[#181818] items-center">
                   {usuario.tipo}
                 </td>
                 {usuario.activo && (
                   <div
-                  className="eliminar py-2 flex justify-center
+                  className="eliminar lg:py-2 flex justify-center
                    text-red-600 font-bold border-r border-b border-[#181818] hover:bg-red-200
                    "
                 >
                   <button
-                    className="px-5"
+                    className="lg:px-5"
                     onClick={() => desactivar(usuario.dni)}
                   >
                     <DeleteForeverIcon /> Desactivar usuario
@@ -138,7 +122,7 @@ export default function Listado(){
                 )}
                 {!usuario.activo && (
                    <div
-                   className="activar-usuario py-2 flex justify-center
+                   className="activar-usuario lg:py-2 flex justify-center
                     text-green-600 font-bold border-r border-b border-[#181818] hover:bg-green-200
                     "
                  >

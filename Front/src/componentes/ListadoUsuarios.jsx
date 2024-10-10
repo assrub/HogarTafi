@@ -292,7 +292,7 @@ export default function ListadoUsuarios() {
   <div className="tipo-usuario mt-2">
   <select name="paciente" 
   id="select-usuario" 
-  className="bg-gray-200 rounded-lg w-2/5 p-2" 
+  className="bg-gray-200 rounded-lg w-full lg:w-2/5 p-2" 
   onChange={handleSelectChange}
   >
   <option selected disabled value="seleccionar-un-tipo-usuario">Selecciona el tipo de usuario</option>
@@ -305,7 +305,8 @@ export default function ListadoUsuarios() {
 {tipoUsuario.familiar && (
   <div className="select-pacientes mt-4">
     <h3>Selecciona el paciente asociado al familiar</h3>
-  <select name="paciente" id="select-paciente" className="bg-gray-200 rounded-lg w-2/5 p-2" >
+  <select name="paciente" id="select-paciente" 
+  className="bg-gray-200 rounded-lg w-full lg:w-2/5 p-2" >
             <option selected disabled value="null">Selecciona un paciente</option>
             {pacientes.map((paciente,index) =>(
               <option key={index} value={paciente.dni}>{paciente.nombre + ' ' + paciente.apellido}</option>
@@ -316,9 +317,12 @@ export default function ListadoUsuarios() {
 
 
 
-  <div className="botones mt-4">
+  <div className="botones ">
+    <div className="volver my-2">
     <Boton textoBoton="Volver" onClick={volver} />
-    <Boton textoBoton="Registrar" onClick={registrarUsuario} />     
+    </div>
+    <div className="registrar my-2">
+    <Boton textoBoton="Registrar" onClick={registrarUsuario} />   </div>  
   </div>
 </form>
 

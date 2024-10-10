@@ -184,21 +184,21 @@ function transformarStock(stockBackend) {
       <table className=" table-auto mb-10" ref={ref}>
         <thead>
           <tr>
-            <th className="px-2 py-1 border border-[#181818] text-sm md:text-base">
+            <th className="lg:px-2 lg:py-1 border border-[#181818] text-sm md:text-base">
               Medicamento
             </th>
             {horasDelDia.map((hora, index) => (
               <th
                 key={index}
-                className="px-2 py-1 border border-[#181818] text-sm md:text-base"
+                className="lg:px-2 lg:py-1 border border-[#181818] text-sm md:text-base"
               >
                 {hora}
               </th>
             ))}
-            <th className="px-2 py-1 border border-[#181818] text-sm md:text-base">
+            <th className="lg:px-2 lg:py-1 border border-[#181818] text-sm md:text-base">
               Observaciones
             </th>
-            <th className="px-2 py-1 border border-[#181818] text-sm md:text-base">
+            <th className="lg:px-2 lg:py-1 border border-[#181818] text-sm md:text-base">
               Acciones
             </th>
           </tr>
@@ -208,16 +208,16 @@ function transformarStock(stockBackend) {
             (medicamento, index) =>
               medicamento.medicamento && (
                 <tr key={index} className="text-sm md:text-base">
-                  <td className="px-2 py-1 border border-[#181818] break-words truncate">
+                  <td className="lg:px-2 lg:py-1 border border-[#181818] break-words truncate ">
                     {medicamento.medicamento}
                   </td>
                   {horasDelDia.map((hora, idx) => (
                     <td
                       key={idx}
-                      className="px-2 py-1 border border-[#181818] break-words"
+                      className="lg:px-2 lg:py-1 border border-[#181818] break-words"
                     >
                       <input
-                        className={`rounded-lg sm:w-12 xl:w-20 ${
+                        className={`rounded-lg  sm:w-12 xl:w-20 ${
                           medicamento.editable ? "bg-white" : "bg-neutral-300"
                         } border`}
                         type="number"
@@ -227,7 +227,7 @@ function transformarStock(stockBackend) {
                       />
                     </td>
                   ))}
-                  <td className="px-2 py-1 border border-[#181818] break-all">
+                  <td className="lg:px-2 lg:py-1 border border-[#181818] break-all">
                     <input
                       className={`rounded-lg md:w-full ${
                         medicamento.editable ? "bg-white" : "bg-neutral-300"
@@ -237,7 +237,7 @@ function transformarStock(stockBackend) {
                       disabled={!medicamento.editable}
                     />
                   </td>
-                  <td className="px-2 py-1 border border-[#181818] text-center">
+                  <td className="lg:px-2 lg:py-1 border border-[#181818] text-center">
                     <button
                       className="m-2 flex text-gray-600 rounded-md border border-gray-600 p-2 mx-4 hover:bg-gray-600 hover:text-white text-xs md:text-sm"
                       onClick={() => handleEditRow(index)}
@@ -292,7 +292,7 @@ function transformarStock(stockBackend) {
             <tr>
             <td className="px-2 py-1 border border-[#181818]">
             <select
-  className="p-2 w-full md:w-auto"
+  className="lg:p-2 w-full md:w-auto"
   name="medicamento"
   value={nuevoMedicamento.medicamento}
   onChange={manejarCambioSelect}
@@ -306,7 +306,7 @@ function transformarStock(stockBackend) {
 </select>
             </td>
             {horasDelDia.map((hora, idx) => (
-              <td key={idx} className="px-2 py-1 border border-[#181818]">
+              <td key={idx} className="lg:px-2 lg:py-1 border border-[#181818]">
                 <input
                   type="number"
                   name={hora}
@@ -318,7 +318,7 @@ function transformarStock(stockBackend) {
                 />
               </td>
             ))}
-            <td className="px-2 py-1 border border-[#181818]">
+            <td className="lg:px-2 lg:py-1 border border-[#181818]">
               <input
                 type="text"
                 name="observaciones"
@@ -333,7 +333,7 @@ function transformarStock(stockBackend) {
                 placeholder="Observaciones"
               />
             </td>
-            <td className="px-2 py-1 border border-[#181818]">
+            <td className="lg:px-2 lg:py-1 border border-[#181818]">
               <button
                 className="text-green-600 border border-green-600 m-2 p-2 rounded-md flex hover:bg-green-600 hover:text-white text-xs md:text-sm"
                 onClick={handleAddRow}
