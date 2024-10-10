@@ -136,12 +136,12 @@ export default function MedicacionesDiarias(){
         </div>
 
           {paciente.dni && (
-            <div className="grid place-content-center">
-            <div className="tabla-medicamentos mx-4 my-6 ">
+            <div className="lg:grid lg:place-content-center">
+            <div className="tabla-medicamentos lg:mx-4 my-6 ">
             <TablaMedicamentos dni={paciente.dni} ref={medicamentosRef} menuMedicaionpaciente={true}/>
             </div>
 
-            <div className="restar-medicacion mx-4 my-6 ">
+            <div className="restar-medicacion lg:mx-4 lg:my-6 ">
                 <Boton textoBoton="Restar medicaion" onClick={restarMedicacion}/>
             </div>
             </div>

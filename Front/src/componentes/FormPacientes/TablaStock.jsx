@@ -7,14 +7,24 @@ const TablaStock =forwardRef(({dni}, ref) => {
 
 
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
+  const handleInputChange = (index, event) => {
+    const { target } = event;
   
-    // Actualiza el valor del stock nuevo (la última fila para agregar)
-    setNuevoStock({
-      ...nuevoStock,
-      [name]: value,
-    });
+    if (target && target.name) {
+      const { name, value } = target;
+  
+      // Actualiza la fila correspondiente con el valor nuevo
+      setRows((prevRows) => {
+        const updatedRows = [...prevRows];
+        updatedRows[index] = {
+          ...updatedRows[index],
+          [name]: value,  // Usar el 'name' dinámico para actualizar el valor
+        };
+        return updatedRows;
+      });
+    } else {
+      console.error("El target o name no existen.");
+    }
   };
 
   const handleAddRow = () => {
@@ -42,6 +52,24 @@ const TablaStock =forwardRef(({dni}, ref) => {
       
       alert('Llena todos los campos');
     }
+  };
+
+
+  const handleEditRow = (index) => {
+    setRows(prevRows => 
+      prevRows.map((row, i) => 
+        i === index ? { ...row, isEditing: true } : row
+      )
+    );
+  };
+
+ 
+  const handleSaveEdit = (index) => {
+    setRows(prevRows => 
+      prevRows.map((row, i) => 
+        i === index ? { ...row, isEditing: false, added: true } : row
+      )
+    );
   };
 
   const handleRemoveRow = (index) => {
@@ -111,181 +139,50 @@ const TablaStock =forwardRef(({dni}, ref) => {
           </tr>
         </thead>
         <tbody>
-          {rows
-          .filter((row) => row.medicacion !== "")
-          .map((row, index) => (
-            
+          {rows.map((row, index) => (
             <tr key={index}>
               <td className="lg:px-4 lg:py-2 border border-[#181818] ">
-                <div className="flex place-content-center">
-                  <input
-                    className={`rounded-lg flex text-center w-32 ${row.added ? 'bg-neutral-300' : 'bg-white'} border `}
-                    type="text"
-                    name="medicacion"
-                    value={row.medicacion}
-                    onChange={(event) => handleInputChange(index, event)}
-                    disabled={row.added}
-                  />
-                </div>
+                <input
+                  className={`rounded-lg text-center w-32 ${row.isEditing ? 'bg-white' : 'bg-neutral-300'}`}
+                  type="text"
+                  name="medicacion"
+                  value={row.medicacion}
+                  onChange={(event) => handleInputChange(index, event)}
+                  disabled={!row.isEditing}
+                />
               </td>
               <td className="lg:px-4 lg:py-2 border border-[#181818] ">
-                <div className="flex place-content-center">
-                  <input
-                    className={`rounded-lg flex text-center w-32 ${row.added ? 'bg-neutral-300' : 'bg-white'} border`}
-                    type="number"
-                    name="cantidad"
-                    value={row.cantidad}
-                    onChange={(event) => handleInputChange(index, event)}
-                    disabled={row.added}
-                  />
-                </div>
+                <input
+                  className={`rounded-lg text-center w-32 ${row.isEditing ? 'bg-white' : 'bg-neutral-300'}`}
+                  type="number"
+                  name="cantidad"
+                  value={row.cantidad}
+                  onChange={(event) => handleInputChange(index, event)}
+                  disabled={!row.isEditing}
+                />
               </td>
-
               <td className="lg:px-4 lg:py-2 border border-[#181818] ">
-                <div className="flex place-content-center">
-                  <input
-                    className={`rounded-lg flex text-center w-32 ${row.added ? 'bg-neutral-300' : 'bg-white'} border`}
-                    type="number"
-                    name="cantidadMinima"
-                    value={row.cantidadMinima}
-                    onChange={(event) => handleInputChange(index, event)}
-                    disabled={row.added}
-                  />
-                </div>
+                <input
+                  className={`rounded-lg text-center w-32 ${row.isEditing ? 'bg-white' : 'bg-neutral-300'}`}
+                  type="number"
+                  name="cantidadMinima"
+                  value={row.cantidadMinima}
+                  onChange={(event) => handleInputChange(index, event)}
+                  disabled={!row.isEditing}
+                />
               </td>
-
               <td className="lg:px-4 lg:py-2 border border-[#181818]">
-                <div className="gap-10 flex place-content-center">
-                  {!row.added && (
-                    <button
-                      className="text-green-600 flex"
-                      onClick={() => handleAddRow(index)}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="size-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 4.5v15m7.5-7.5h-15"
-                        />
-                      </svg>
-                      Agregar
-                    </button>
+                <div className="flex place-content-center gap-4">
+                  {row.isEditing ? (
+                    <button className="text-blue-600" onClick={() => handleSaveEdit(index)}>Guardar</button>
+                  ) : (
+                    <button className="text-gray-600" onClick={() => handleEditRow(index)}>Modificar</button>
                   )}
-
-                  {row.added && (
-                    <button
-                      className="text-red-600 flex"
-                      onClick={() => handleRemoveRow(index)}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="size-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6 18 18 6M6 6l12 12"
-                        />
-                      </svg>
-                      Eliminar
-                    </button>)}
-                    
-                    {row.added && (
-                  <button 
-                  onClick={handleInputChange}
-                  className="flex text- text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-                    </svg>
-
-                    Modificar
-                  </button>
-                    )}
-                    {row.added && (
-                  <button className="flex text- text-gray-600">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="size-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-                      />
-                    </svg>
-                    Agregar receta.
-                  </button>
-                    )}
+                  <button className="text-red-600" onClick={() => handleRemoveRow(index)}>Eliminar</button>
                 </div>
-                    
               </td>
             </tr>
           ))}
-
-<tr>
-            <td className="lg:px-4 lg:py-2 border border-[#181818]">
-              <div className="flex place-content-center">
-                <input
-                  className="rounded-lg w-32 flex text-center bg-white border"
-                  type="text"
-                  name="medicacion"
-                  value={nuevoStock.medicacion}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </td>
-            <td className="lg:px-4 lg:py-2 border border-[#181818]">
-              <div className="flex place-content-center">
-                <input
-                  className="rounded-lg w-32 flex text-center bg-white border"
-                  type="number"
-                  name="cantidad"
-                  min={0}
-                  value={nuevoStock.cantidad}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </td>
-            <td className="lg:px-4 lg:py-2 border border-[#181818]">
-              <div className="flex place-content-center">
-                <input
-                  className="rounded-lg w-32 flex text-center bg-white border"
-                  type="number"
-                  name="cantidadMinima"
-                  min={0}
-                  value={nuevoStock.cantidadMinima}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </td>
-            <td className="lg:px-4 lg:py-2 border border-[#181818]">
-              <div className="gap-10 flex place-content-center">
-                <button className="text-green-600 flex" onClick={handleAddRow}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                  </svg>
-                  Agregar
-                </button>
-              </div>
-            </td>
-          </tr>
-
-
         </tbody>
       </table>
     </div>

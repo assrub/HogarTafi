@@ -173,7 +173,7 @@ export function BarraNavegacion() {
         >
           <button
             onClick={cerrarMenuHamburguesa}
-            className="self-end text-xl font-bold mb-8 text-[#017a98]"
+            className="self-end text-xl font-bold mb-8 text-[#017a98] sticky top-0"
           >
             X
           </button>
