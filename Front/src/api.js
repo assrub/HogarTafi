@@ -203,3 +203,18 @@ export async function nuevosDatosApi(formData){
         return error;
     }
 }
+
+export async function guardarFotoDamiliarApi(formData){
+    try {
+               
+        const response = await fetch("http://localhost:8080/api/fotos", {
+            method: "POST",
+            body: formData,
+        });
+
+        return response;
+    } catch (error) {
+        console.error('Error al guardar la foto:', error);
+        return error;
+    }
+}

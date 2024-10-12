@@ -3,6 +3,7 @@ import {contextoSesionUsuario} from "../contexto/sesionUsuario.jsx"
 import Chip from '@mui/material/Chip';
 import { todosLosPacientes } from "../api.js";
 import Boton from "./Boton.jsx";
+import { guardarFotoDamiliarApi } from "../api.js";
 
 export default function FotosFamiliares(){
 
@@ -19,14 +20,46 @@ export default function FotosFamiliares(){
         fotoFrenteCarnet: "",
         fotoAtrasCarnet: ""
       });
+
       const [pacientesSeleccionados, setPacientesSeleccionados] = useState([]);
     const [menuCargarFotos, setMenuCargarFotos] = useState(false);
-
+      const [descripcion,setDescripcion] = useState("");
     const [foto, setFoto] = useState(null);
 
     function abrirMenuCargarFotos(){
         setMenuCargarFotos(true);
     }
+
+    function vaciarCampos(){
+        setFoto(null);
+        setDescripcion(null);
+        setPacientesSeleccionados([]);
+    }
+
+    async function cargarFoto(){
+
+        
+        const arregloDni = [];
+        pacientesSeleccionados.forEach((paciente) =>{
+            arregloDni.push(paciente.dni)
+        })
+        console.log(arregloDni);
+        const formData = new FormData();
+        formData.append("dni", arregloDni);
+        formData.append("descripcion",descripcion);
+        formData.append("foto", foto);
+        const response = await guardarFotoDamiliarApi(formData);
+        if(response.status == 200 ){
+            alert("Fotos guardadas correctamente");
+            vaciarCampos();
+        }
+        
+    }
+
+
+    const handleTextAreaChange = (e) => {
+        setDescripcion(e.target.value); 
+    };
 
     useEffect(() => { 
         traerPacientes();
@@ -129,7 +162,10 @@ export default function FotosFamiliares(){
        
         <div className="mb-4">
             <label htmlFor="descripcion" className="block mb-2 text-sm font-medium text-gray-700">Descripción de la Foto</label>
-            <textarea id="descripcion" rows="3" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Descripción de la foto..."></textarea>
+            <textarea id="descripcion" rows="3" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border
+             border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Descripción de la foto..."
+             value={descripcion}
+             onChange={handleTextAreaChange}></textarea>
         </div>
 
                 <div className="pacientes ">
@@ -170,7 +206,7 @@ export default function FotosFamiliares(){
 
                 <div className="botones">
                 <Boton textoBoton="Volver"  onClick={volver}/>
-                <Boton textoBoton="Cargar foto" /> 
+                <Boton textoBoton="Cargar foto" onClick={cargarFoto} /> 
                 </div>
             </div>
         )}
