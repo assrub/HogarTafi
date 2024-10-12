@@ -3,15 +3,27 @@ import CampoTexto from "../../componentes/FormPacientes/CampoTexto";
 import Boton from "../../componentes/Boton";
 import { useNavigate } from 'react-router-dom';
 import { Link, Routes, Route  } from "react-router-dom";
+import { recuperarContraApi } from "../../api";
 
 
 export default function RecuperarContraseña(){
 
     const [campoIncompleto, setCampoIncompleto] = useState(false);
+    const [email, setEmail] = useState("");
     const navigate = useNavigate();
     function cancelar(){
           navigate('/login')
 }
+
+const handleInputChange = (e) => {
+    setEmail(e.target.value); 
+};
+
+async function recuperarContra(){
+    const response = await recuperarContraApi(email);
+    console.log(response);
+}
+
 
     return (
         <div className="grid h-screen place-items-center" style={{ backgroundImage: 'url("src/Assets/Images/Main/actividades-bg.jpg")' }}>
@@ -32,7 +44,9 @@ export default function RecuperarContraseña(){
                             type: "text",
                             name: "email",
                             id: "inputEmail",
-                            placeholder: "Correo electronico"
+                            placeholder: "Correo electronico",
+                            value: email,
+                            onChange: handleInputChange
                         }}
                     />
                 </div>
@@ -41,7 +55,7 @@ export default function RecuperarContraseña(){
            
                 <div className="iniciar-sesion mt-6">
                 <Boton textoBoton="Cancelar" onClick={cancelar}/>
-                    <Boton textoBoton="Enviar"/>
+                    <Boton textoBoton="Enviar" onClick={recuperarContra}/>
                 </div>
             </div>
            
