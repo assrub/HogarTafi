@@ -161,4 +161,5 @@ public class SIUsuario implements SUsuario{
             return usuarioMap;
         }).collect(Collectors.toList());
     }
+    
 }
