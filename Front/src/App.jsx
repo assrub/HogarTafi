@@ -6,6 +6,7 @@ import UserPanel from "./Pages/UserPanel/UserPanel";
 import Login from "./Pages/Login/Login";
 import RecuperarContraseña from "./Pages/Recuperar contraseña/RecuperarContraseña";
 import RutaPrivada from "./rutaPrivada";
+import Recupera from "./Pages/Recuperar contraseña/Recupera";
 
  async function botonClick(){
   
@@ -21,6 +22,7 @@ function App() {
             <Route path="/" element={<PaginaPrincipal/>} />
             <Route path="/login" element={<Login/>}/>
             <Route path="/recuperarContra" element={<RecuperarContraseña/>}/>
+            <Route path="/recupera/*" element={<Recupera/>}/>
             <Route path="/userPanel/*" element={<RutaPrivada><UserPanel/></RutaPrivada>} />
           </Routes>
     </BrowserRouter>
