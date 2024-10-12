@@ -1,4 +1,4 @@
-package com.hogarTafi.hogarTafi.token.paciente.entidad;
+package com.hogarTafi.hogarTafi.paciente.entidad;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

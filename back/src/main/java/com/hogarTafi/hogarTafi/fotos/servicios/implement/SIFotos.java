@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import com.hogarTafi.hogarTafi.fotos.entidad.EFotos;
 import com.hogarTafi.hogarTafi.fotos.repositorio.RFotos;
 import com.hogarTafi.hogarTafi.fotos.servicios.SFotos;
-import com.hogarTafi.hogarTafi.token.paciente.entidad.EPaciente;
-import com.hogarTafi.hogarTafi.token.paciente.repositorio.RPaciente;
+import com.hogarTafi.hogarTafi.paciente.entidad.EPaciente;
+import com.hogarTafi.hogarTafi.paciente.repositorio.RPaciente;
 
 @Service
 public class SIFotos implements SFotos {

@@ -1,9 +1,9 @@
-package com.hogarTafi.hogarTafi.token.paciente.repositorio;
+package com.hogarTafi.hogarTafi.paciente.repositorio;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import com.hogarTafi.hogarTafi.token.paciente.entidad.EPaciente;
+import com.hogarTafi.hogarTafi.paciente.entidad.EPaciente;
 
 import java.util.List;
 import java.util.Optional;

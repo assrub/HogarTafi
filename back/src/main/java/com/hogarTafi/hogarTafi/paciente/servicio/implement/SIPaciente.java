@@ -1,4 +1,4 @@
-package com.hogarTafi.hogarTafi.token.paciente.servicio.implement;
+package com.hogarTafi.hogarTafi.paciente.servicio.implement;
 
 import java.util.Base64;
 import java.util.HashMap;
@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hogarTafi.hogarTafi.token.paciente.entidad.EPaciente;
-import com.hogarTafi.hogarTafi.token.paciente.repositorio.RPaciente;
-import com.hogarTafi.hogarTafi.token.paciente.servicio.SPaciente;
+import com.hogarTafi.hogarTafi.paciente.entidad.EPaciente;
+import com.hogarTafi.hogarTafi.paciente.repositorio.RPaciente;
+import com.hogarTafi.hogarTafi.paciente.servicio.SPaciente;
 
 @Service
 public class SIPaciente implements SPaciente {
