@@ -24,7 +24,7 @@ public class RecuperarContraseñaServicioImpl implements RecuperarContraseñaSer
     @Override
     public boolean recuperarContraseña(String email) {
         EUsuario usuario = recuperarContraseñaRepositorio.findByEmail(email);
-
+        
         if (usuario != null) {
             // Generar un nuevo token para el usuario
             String token = tokenServicio.generarToken(usuario.getDni().intValue()); // Usar intValue()

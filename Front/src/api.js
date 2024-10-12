@@ -170,13 +170,32 @@ export async function restarMedicaionApi(arregloMedicamento,dni){
   }
 
   
-  export async function recuperarContraApi(email){
+  export async function recuperarContraApi(formData){
     try {
                
-        const response = await fetch(`http://localhost:8080/send-password/${email}`, {
-            method: 'POST',
+        const response = await fetch("http://localhost:8080/send-mail", {
+            method: "POST",
+            body: formData,
         });
-       
+
+
+
+        return response;
+
+    } catch (error) {
+        console.error('Error al recuperar contraseña: ', error);
+        return error;
+    }
+}
+
+export async function nuevosDatosApi(formData){
+    try {
+               
+        const response = await fetch("http://localhost:8080/api/token", {
+            method: "POST",
+            body: formData,
+        });
+
         return response;
 
     } catch (error) {

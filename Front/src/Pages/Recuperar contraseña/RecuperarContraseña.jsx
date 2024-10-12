@@ -20,13 +20,20 @@ const handleInputChange = (e) => {
 };
 
 async function recuperarContra(){
-    const response = await recuperarContraApi(email);
+    const formData = new FormData();
+    formData.append("email", email);
+    const response = await recuperarContraApi(formData);
     console.log(response);
+    if(response.status  == 200){
+        alert("Correo de recuperacion de contraseña enviado-")
+    }else{
+        alert("Error al intentar recuperar la contraseña.")
+    }
 }
 
 
     return (
-        <div className="grid h-screen place-items-center" style={{ backgroundImage: 'url("src/Assets/Images/Main/actividades-bg.jpg")' }}>
+        <div className="grid h-screen place-items-center">
 
 
         <div className="login grid place-content-center border border-black h-1/2 p-56 bg-white rounded-xl" >

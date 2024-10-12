@@ -14,10 +14,13 @@ public class TokenController {
     private TokenServicio tokenServicio;
 
     @PostMapping
-    public ResponseEntity<?> cambiarContrasena(@RequestParam String token, 
-                                                @RequestParam String nuevaContrasena,
-                                                @RequestParam String email) { // Se agrega el parámetro email
+    public ResponseEntity<?> cambiarContrasena(@RequestParam("token") String token,
+                                                @RequestParam("password") String nuevaContrasena,
+                                                @RequestParam ("email")String email) { // Se agrega el parámetro email
         try {
+            System.out.print("Token " + token);
+            System.out.print("Contraseña " + nuevaContrasena);
+            System.out.print("Email  " + email);
             boolean esExitoso = tokenServicio.actualizarContrasena(token, nuevaContrasena, email); // Se pasa el correo al servicio
             if (esExitoso) {
                 return ResponseEntity.ok("Contraseña actualizada correctamente.");

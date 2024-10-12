@@ -13,9 +13,10 @@ public class RecuperarContraseñaController {
     private RecuperarContraseñaServicio recuperarContraseñaServicio;
 
     @PostMapping
-    public ResponseEntity<String> recuperarContraseña(@RequestParam String email) {
+    public ResponseEntity<String> recuperarContraseña(@RequestParam ("email") String email) {
         System.out.println("El mail para recuperar es: " + email);
         boolean enviado = recuperarContraseñaServicio.recuperarContraseña(email);
+
         if (enviado) {
             return ResponseEntity.ok("Se ha enviado un token de recuperación al correo proporcionado.");
         } else {
