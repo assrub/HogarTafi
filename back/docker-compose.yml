@@ -7,7 +7,7 @@ services:
     volumes:
       - ./volumenes/mongodb_data:/data/db
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
-      - ./fotos:/fotos  # Montar la carpeta de fotos dentro del contenedor
+      - ./imagenes:/imagenes  # Montar la carpeta de fotos dentro del contenedor
 
   maven:
     build:

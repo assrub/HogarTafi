@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "Usuario")
+@Document(collection = "Usuarios")
 public class EUsuario {
     @Id
     private Integer dni;
