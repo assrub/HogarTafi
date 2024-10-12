@@ -1,4 +1,4 @@
-package com.hogarTafi.hogarTafi.paciente.controlador;
+package com.hogarTafi.hogarTafi.token.paciente.controlador;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,12 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.hogarTafi.hogarTafi.paciente.entidad.EPaciente;
-import com.hogarTafi.hogarTafi.paciente.servicio.SPaciente;
+import com.hogarTafi.hogarTafi.token.paciente.entidad.EPaciente;
+import com.hogarTafi.hogarTafi.token.paciente.servicio.SPaciente;
 
 @RestController
 @RequestMapping("/pacientes")
 public class CPaciente {
+    
 
     @Autowired
     private SPaciente servicioPacientes;

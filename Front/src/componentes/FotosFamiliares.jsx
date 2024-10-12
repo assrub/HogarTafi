@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from "react";
-import {contextoSesionUsuario} from "../contexto/SesionUsuario.jsx"
+import {contextoSesionUsuario} from "../contexto/sesionUsuario.jsx"
 import Chip from '@mui/material/Chip';
 import { todosLosPacientes } from "../api.js";
 import Boton from "./Boton.jsx";

@@ -1,9 +1,9 @@
-package com.hogarTafi.hogarTafi.paciente.servicio;
+package com.hogarTafi.hogarTafi.token.paciente.servicio;
 
 import java.util.List;
 import java.util.Map;
 
-import com.hogarTafi.hogarTafi.paciente.entidad.EPaciente;
+import com.hogarTafi.hogarTafi.token.paciente.entidad.EPaciente;
 
 public interface SPaciente {
     List<EPaciente> todosLosPacientes();

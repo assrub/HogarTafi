@@ -6,11 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hogarTafi.hogarTafi.paciente.repositorio.RPaciente;
 import com.hogarTafi.hogarTafi.stock.entidad.EStock;
 import com.hogarTafi.hogarTafi.stock.entidad.EListStock;
 import com.hogarTafi.hogarTafi.stock.repositorio.RStock;
 import com.hogarTafi.hogarTafi.stock.servicio.SStock;
+import com.hogarTafi.hogarTafi.token.paciente.repositorio.RPaciente;
 
 @Service
 public class SIStock implements SStock {
