@@ -23,7 +23,6 @@ public class SIUsuario implements SUsuario{
     @Autowired
     private RUsuario repositorioUsuario;
 
-    @Autowired
     public List<EUsuario> todosLosUsuarios(){
         return repositorioUsuario.findUsuariosConCampos();
 

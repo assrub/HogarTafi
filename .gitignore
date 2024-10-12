@@ -33,3 +33,7 @@ build/
 ### NODE ####
 
 /Front/node_modules
+
+# BACK
+/back/volumenes
+/back/target

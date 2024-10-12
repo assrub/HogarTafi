@@ -25,6 +25,7 @@ import com.hogarTafi.hogarTafi.paciente.servicio.SPaciente;
 @RestController
 @RequestMapping("/pacientes")
 public class CPaciente {
+    
 
     @Autowired
     private SPaciente servicioPacientes;

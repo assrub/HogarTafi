@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.hogarTafi.hogarTafi.medicamento.entidad.EMedicamento;
 import com.hogarTafi.hogarTafi.medicamento.entidad.EListMedicamento;
 import com.hogarTafi.hogarTafi.medicamento.repositorio.RMedicamento;
-import com.hogarTafi.hogarTafi.paciente.repositorio.RPaciente;
 import com.hogarTafi.hogarTafi.medicamento.servicio.SMedicamento;
+import com.hogarTafi.hogarTafi.paciente.repositorio.RPaciente;
 
 import java.util.List;
 import java.util.Optional;
