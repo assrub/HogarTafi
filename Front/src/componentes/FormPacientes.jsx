@@ -456,7 +456,7 @@ function buscarClick(){
     </div>
 <hr />
         <div className="menuEscondido my-2 lg:mx-6 ">
-          <div className="stock flex items-center bg-gray-100 p-2 rounded-lg overflow-x-auto">
+          <div className="stock flex justify-center items-center">
           {mostrarStock && (
             <div className="">
               <TablaStock dni={paciente.dni} ref={stockRef}/>
