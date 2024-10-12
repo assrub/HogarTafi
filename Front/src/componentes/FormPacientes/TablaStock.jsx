@@ -183,6 +183,56 @@ const TablaStock =forwardRef(({dni}, ref) => {
               </td>
             </tr>
           ))}
+
+<tr>
+            <td className="lg:px-4 lg:py-2 border border-[#181818]">
+              <div className="flex place-content-center">
+                <input
+                  className="rounded-lg w-32 flex text-center bg-white border"
+                  type="text"
+                  name="medicacion"
+                  value={nuevoStock.medicacion}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </td>
+            <td className="lg:px-4 lg:py-2 border border-[#181818]">
+              <div className="flex place-content-center">
+                <input
+                  className="rounded-lg w-32 flex text-center bg-white border"
+                  type="number"
+                  name="cantidad"
+                  min={0}
+                  value={nuevoStock.cantidad}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </td>
+            <td className="lg:px-4 lg:py-2 border border-[#181818]">
+              <div className="flex place-content-center">
+                <input
+                  className="rounded-lg w-32 flex text-center bg-white border"
+                  type="number"
+                  name="cantidadMinima"
+                  min={0}
+                  value={nuevoStock.cantidadMinima}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </td>
+            <td className="lg:px-4 lg:py-2 border border-[#181818]">
+              <div className="gap-10 flex place-content-center">
+                <button className="text-green-600 flex" onClick={handleAddRow}>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>
+                  Agregar
+                </button>
+              </div>
+            </td>
+          </tr>
+
+
         </tbody>
       </table>
     </div>

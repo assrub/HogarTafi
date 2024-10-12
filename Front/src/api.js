@@ -168,3 +168,19 @@ export async function restarMedicaionApi(arregloMedicamento,dni){
   const data = await response.json();
   return data;
   }
+
+  
+  export async function recuperarContraApi(email){
+    try {
+               
+        const response = await fetch(`http://localhost:8080/send-password/${email}`, {
+            method: 'POST',
+        });
+       
+        return response;
+
+    } catch (error) {
+        console.error('Error al recuperar contraseña: ', error);
+        return error;
+    }
+}
