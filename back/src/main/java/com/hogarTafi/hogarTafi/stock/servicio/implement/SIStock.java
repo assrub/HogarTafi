@@ -1,12 +1,14 @@
 package com.hogarTafi.hogarTafi.stock.servicio.implement;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hogarTafi.hogarTafi.stock.entidad.EStock;
+import com.hogarTafi.hogarTafi.paciente.entidad.EPaciente;
 import com.hogarTafi.hogarTafi.paciente.repositorio.RPaciente;
 import com.hogarTafi.hogarTafi.stock.entidad.EListStock;
 import com.hogarTafi.hogarTafi.stock.repositorio.RStock;
@@ -73,5 +75,57 @@ public class SIStock implements SStock {
     public List<EStock> buscarStock(){
         return repositorioStock.findAll(); // Devuelve la primera medicación registrada en la base de datos
     }
+
+    public boolean actualizarCantidadMedicamentos(Integer dni, Integer restar, Integer sumar, String medicamento) {
+        // Buscar el stock del paciente por DNI
+        Optional<EStock> stockOpt = repositorioStock.findByDni(dni);
+        
+        if (!stockOpt.isPresent()) {
+            return false; // No se encontró stock para el DNI
+        }
+    
+        EStock stock = stockOpt.get();
+        boolean medicamentoEncontrado = false;
+    
+        // Recorrer la lista de medicamentos para encontrar el correspondiente
+        for (EListStock item : stock.getMedicamentos()) {
+            if (item.getMedicacion().equalsIgnoreCase(medicamento)) {
+                // Obtener la cantidad actual del medicamento
+                int cantidadActual = Integer.parseInt(item.getCantidad());
+    
+                // Restar cant_minima (si es mayor a 0)
+                if (restar > 0) {
+                    cantidadActual -= restar;
+                }
+    
+                // Sumar cant_maxima (si es mayor a 0)
+                if (sumar > 0) {
+                    cantidadActual += sumar;
+                }
+    
+                // Verificar que la cantidad no sea negativa
+                if (cantidadActual < 0) {
+                    return false; // No se puede tener una cantidad negativa
+                }
+    
+                // Actualizar la cantidad total del medicamento
+                item.setCantidad(String.valueOf(cantidadActual));
+    
+                medicamentoEncontrado = true;
+                break;
+            }
+        }
+    
+        if (!medicamentoEncontrado) {
+            return false; // No se encontró el medicamento en el stock
+        }
+    
+        // Guardar el stock actualizado en MongoDB
+        repositorioStock.save(stock);
+    
+        return true; // Stock actualizado exitosamente
+    }
+    
+    
 
 }

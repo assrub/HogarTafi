@@ -80,7 +80,34 @@ public class CStock {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno del servidor.");
         }
     }
-
+ 
+    @PatchMapping("/{dni}")
+    public ResponseEntity<?> actualizarCantidadMedicamentosDni(
+        @PathVariable Integer dni,
+        @RequestParam("restar") Integer restar,
+        @RequestParam("sumar") Integer sumar,
+        @RequestParam("medicamento") String medicamento) {
+    
+        try {
+            // Validar que las cantidades sean >= 0
+            if (restar < 0 || sumar < 0) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Las cantidades mínima y máxima deben ser >= 0.");
+            }
+    
+            // Llamar al servicio para actualizar el stock
+            boolean actualizado = stockService.actualizarCantidadMedicamentos(dni, restar, sumar, medicamento);
+    
+            if (!actualizado) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró stock para el DNI o el medicamento no está registrado.");
+            }
+    
+            return ResponseEntity.ok("Stock actualizado correctamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error al actualizar el stock.");
+        }
+    }
+    
+    
 
     @GetMapping("/todosLosStocks")
     public ResponseEntity<?> tododsLosStocks() {
