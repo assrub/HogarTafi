@@ -88,15 +88,17 @@ public class SIPaciente implements SPaciente {
     @Override
     public List<Map<String, Object>> obtenerPacientesConFotos() {
         List<EPaciente> pacientes = repositorioPacientes.findAll();
-        return pacientes.stream().map(paciente -> {
-            Map<String, Object> pacienteMap = new HashMap<>();
-            if (paciente.getActivo()) {
+        
+        return pacientes.stream()
+            .filter(EPaciente::getActivo) // Filtra solo los pacientes activos
+            .map(paciente -> {
+                Map<String, Object> pacienteMap = new HashMap<>();
                 pacienteMap.put("dni", paciente.getDni());
                 pacienteMap.put("nombre", paciente.getNombre());
                 pacienteMap.put("apellido", paciente.getApellido());
                 pacienteMap.put("obraSocial", paciente.getObraSocial());
                 pacienteMap.put("observaciones", paciente.getObservaciones());
-
+    
                 // Convertir fotos de binario a base64
                 if (paciente.getFotoFrenteCarnet() != null) {
                     pacienteMap.put("fotoFrenteCarnet", convertirABase64(paciente.getFotoFrenteCarnet()));
@@ -110,9 +112,10 @@ public class SIPaciente implements SPaciente {
                 if (paciente.getFotoFrenteDni() != null) {
                     pacienteMap.put("fotoFrenteDni", convertirABase64(paciente.getFotoFrenteDni()));
                 }
-
-            }
-            return pacienteMap;
-        }).collect(Collectors.toList());
+    
+                return pacienteMap;
+            })
+            .collect(Collectors.toList());
     }
+    
 }

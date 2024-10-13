@@ -116,38 +116,50 @@ export default function MedicacionesDiarias(){
             }
         }
 
-    return (
-        <>
-          <div className="titulo flex justify-center text-xl lg:text-3xl lg:mt-5 mb-10 ">
-            <h2 className="font-bold">Medicaiones diarias</h2>
+    return (<>
+      <div className="registrar-pacientes w-full">
+        <div className="titulo flex justify-center text-xl lg:text-3xl lg:mt-5 mb-10">
+          <h2 className="font-bold">Medicaiones diarias</h2>
         </div>
-
+    
         <div className="bg-gray-100 p-2">
-        <div className="elegir-paciente flex  justify-center ">
-          <select name="paciente" id="select-paciente" className="bg-gray-200 rounded-lg w-2/5">
-          <option selected disabled value="null">Selecciona un paciente</option>
-          {pacientes.map((paciente,index) =>(
-            <option key={index} value={paciente.dni}>{paciente.nombre + ' ' + paciente.apellido}</option>
-          ))}  
-          </select>
-          <div className="Boton mx-4">
-              <Boton textoBoton="Buscar" onClick={buscarClick}></Boton>
+          <div className="elegir-paciente flex justify-center">
+            <select
+              name="paciente"
+              id="select-paciente"
+              className="bg-gray-200 rounded-lg w-2/5"
+            >
+              <option selected disabled value="null">
+                Selecciona un paciente
+              </option>
+              {pacientes.map((paciente, index) => (
+                <option key={index} value={paciente.dni}>
+                  {paciente.nombre + " " + paciente.apellido}
+                </option>
+              ))}
+            </select>
+            <div className="Boton mx-4">
+              <Boton textoBoton="Buscar" onClick={buscarClick} />
+            </div>
           </div>
-        </div>
-
+    
           {paciente.dni && (
             <div className="lg:grid lg:place-content-center">
-            <div className="tabla-medicamentos lg:mx-4 my-6 ">
-            <TablaMedicamentos dni={paciente.dni} ref={medicamentosRef} menuMedicaionpaciente={true}/>
-            </div>
-
-            <div className="restar-medicacion lg:mx-4 lg:my-6 ">
-                <Boton textoBoton="Restar medicaion" onClick={restarMedicacion}/>
-            </div>
+              <div className="tabla-medicamentos lg:mx-4 my-6">
+                <TablaMedicamentos
+                  dni={paciente.dni}
+                  ref={medicamentosRef}
+                  menuMedicaionpaciente={true}
+                />
+              </div>
+    
+              <div className="restar-medicacion lg:mx-4 lg:my-6">
+                <Boton textoBoton="Restar medicaion" onClick={restarMedicacion} />
+              </div>
             </div>
           )}
-        
         </div>
-        </>
+      </div>
+    </>
     )
 }

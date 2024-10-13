@@ -338,170 +338,206 @@ function buscarClick(){
     });
   };
 
-  return (
-    <>
+  return (<>
+    <div className="registrar-pacientes w-full">
       <div className="datos-pacientes">
         <div className="titulo flex justify-center text-xl lg:text-3xl lg:mt-5 mb-10">
           <h2 className="text-bold">
-            <strong>Datos del pacientes</strong>
+            <strong>Datos del paciente</strong>
           </h2>
         </div>
-
-        <div className="elegir-paciente flex  justify-center ">
-          <select name="paciente" id="select-paciente" className="bg-gray-200 rounded-lg w-2/5">
-          <option selected disabled value="null">Selecciona un paciente</option>
-          {pacientes.map((paciente,index) =>(
-            <option key={index} value={paciente.dni}>{paciente.nombre + ' ' + paciente.apellido}</option>
-          ))}  
+  
+        <div className="elegir-paciente flex justify-center">
+          <select
+            name="paciente"
+            id="select-paciente"
+            className="bg-gray-200 rounded-lg w-2/5"
+          >
+            <option selected disabled value="null">
+              Selecciona un paciente
+            </option>
+            {pacientes.map((paciente, index) => (
+              <option key={index} value={paciente.dni}>
+                {paciente.nombre + ' ' + paciente.apellido}
+              </option>
+            ))}
           </select>
           <div className="Boton mx-4">
-              <Boton textoBoton="Buscar" onClick={buscarClick}></Boton>
+            <Boton textoBoton="Buscar" onClick={buscarClick}></Boton>
           </div>
         </div>
-
-        <div className="formulario  grid grid-cols-1 mx-2 justify-items-center ">
-          <div className="datos w-full mb-6 ">
-          <form>
-      <CampoTexto
-        textoEtiqueta="Nombre"
-        error={campoIncompleto}
-                obligatorio={true}
-        propsLabel={{ labelFor: "name" }}
-        propsInput={{
-          type: "text",
-          name: "nombre",
-          id: "inputNombre",
-          value: paciente.nombre,
-          onChange: handleInputChange
-        }}
-      />
-
-      <CampoTexto
-        textoEtiqueta="Apellido"
-        error={campoIncompleto}
-                obligatorio={true}
-        propsLabel={{ labelFor: "lastName" }}
-        propsInput={{
-          type: "text",
-          name: "apellido",
-          id: "inputApellido",
-          value: paciente.apellido,
-          onChange: handleInputChange
-        }}
-      />
-
-      <CampoTexto
-        textoEtiqueta="DNI"
-        error={campoIncompleto}
-                obligatorio={true}
-        propsLabel={{ labelFor: "dni" }}
-        propsInput={{
-          type: "number",
-          name: "dni",
-          id: "inputDni",
-          value: paciente.dni,
-          readOnly: true,
-          onChange: handleInputChange
-        }}
-      />
-
-      <CampoTexto
-        textoEtiqueta="Obra social"
-        propsLabel={{ labelFor: "obraSocial" }}
-        propsInput={{
-          type: "text",
-          name: "obraSocial",
-          id: "inputObraSocial",
-          value: paciente.obraSocial,
-          onChange: handleInputChange
-        }}
-      />
-
-
-<div className="observaciones mt-4">
-                <label htmlFor="observaciones" className="text-xl font-medium ">Observaciones</label>
-                <textarea id="observaciones" name="observaciones" className=" w-full rounded-lg h-56 bg-transparent
-                 border-neutral-300 border-2 
-                 p-2 resize-none focus:outline-none  
-                 disabled:bg-gray-300
-                enabled:bg-transparent" value={paciente.observaciones}
-                onChange={handleInputChange}></textarea>
-              </div>
   
-    </form>
+        <div className="formulario grid grid-cols-1 mx-2 justify-items-center">
+          <div className="datos w-full mb-6">
+            <form>
+              <CampoTexto
+                textoEtiqueta="Nombre"
+                error={campoIncompleto}
+                obligatorio={true}
+                propsLabel={{ labelFor: "name" }}
+                propsInput={{
+                  type: "text",
+                  name: "nombre",
+                  id: "inputNombre",
+                  value: paciente.nombre,
+                  onChange: handleInputChange,
+                }}
+              />
+  
+              <CampoTexto
+                textoEtiqueta="Apellido"
+                error={campoIncompleto}
+                obligatorio={true}
+                propsLabel={{ labelFor: "lastName" }}
+                propsInput={{
+                  type: "text",
+                  name: "apellido",
+                  id: "inputApellido",
+                  value: paciente.apellido,
+                  onChange: handleInputChange,
+                }}
+              />
+  
+              <CampoTexto
+                textoEtiqueta="DNI"
+                error={campoIncompleto}
+                obligatorio={true}
+                propsLabel={{ labelFor: "dni" }}
+                propsInput={{
+                  type: "number",
+                  name: "dni",
+                  id: "inputDni",
+                  value: paciente.dni,
+                  readOnly: true,
+                  onChange: handleInputChange,
+                }}
+              />
+  
+              <CampoTexto
+                textoEtiqueta="Obra social"
+                propsLabel={{ labelFor: "obraSocial" }}
+                propsInput={{
+                  type: "text",
+                  name: "obraSocial",
+                  id: "inputObraSocial",
+                  value: paciente.obraSocial,
+                  onChange: handleInputChange,
+                }}
+              />
+  
+              <div className="observaciones mt-4">
+                <label htmlFor="observaciones" className="text-xl font-medium">
+                  Observaciones
+                </label>
+                <textarea
+                  id="observaciones"
+                  name="observaciones"
+                  className="w-full rounded-lg h-56 bg-transparent border-neutral-300 border-2 p-2 resize-none focus:outline-none disabled:bg-gray-300 enabled:bg-transparent"
+                  value={paciente.observaciones}
+                  onChange={handleInputChange}
+                ></textarea>
+              </div>
+            </form>
           </div>
-
-          
         </div>
-
+  
         <div className="botones flex justify-center my-6 mx-2 gap-4">
-      <Boton 
-        textoBoton="Stock" 
-        onClick={() => funcionMostrarTablaStock('stock')} 
-        propsBoton={{ disabled: camposDeshabilitados }} 
-        apretado={botonApretado.stock} 
-      />
-      <Boton 
-        textoBoton="Tabla de medicamentos" 
-        onClick={ () => funcionMostrarTablaMedicamentos('medicamentos')} 
-        propsBoton={{ disabled: camposDeshabilitados }} 
-        apretado={botonApretado.medicamentos} 
-      />
-      <Boton 
-        textoBoton="Fotos" 
-        onClick={() => funcionMostrarFotos('fotos')} 
-        propsBoton={{ disabled: camposDeshabilitados }} 
-        apretado={botonApretado.fotos} 
-      />
-    </div>
-<hr />
-        <div className="menuEscondido my-2 lg:mx-6 ">
+          <Boton
+            textoBoton="Stock"
+            onClick={() => funcionMostrarTablaStock('stock')}
+            propsBoton={{ disabled: camposDeshabilitados }}
+            apretado={botonApretado.stock}
+          />
+          <Boton
+            textoBoton="Tabla de medicamentos"
+            onClick={() => funcionMostrarTablaMedicamentos('medicamentos')}
+            propsBoton={{ disabled: camposDeshabilitados }}
+            apretado={botonApretado.medicamentos}
+          />
+          <Boton
+            textoBoton="Fotos"
+            onClick={() => funcionMostrarFotos('fotos')}
+            propsBoton={{ disabled: camposDeshabilitados }}
+            apretado={botonApretado.fotos}
+          />
+        </div>
+  
+        <hr />
+  
+        <div className="menuEscondido my-2 lg:mx-6">
           <div className="stock flex justify-center items-center">
-          {mostrarStock && (
-            <div className="">
-              <TablaStock dni={paciente.dni} ref={stockRef}/>
-              <div className="boton ">
-              <Boton textoBoton="Guardar stock" onClick={() => guardarStock(stockRef)}></Boton>
+            {mostrarStock && (
+              <div>
+                <TablaStock dni={paciente.dni} ref={stockRef} />
+                <div className="boton">
+                  <Boton
+                    textoBoton="Guardar stock"
+                    onClick={() => guardarStock(stockRef)}
+                  ></Boton>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
-        <div className="fotos ">
-          {mostrarFotos && (
-            <div>
-              <div className="fotos grid grid-cols-1 md:grid-cols-2  justify-items-center gap-x-3 xl:mr-10 ">
-            <Foto textoFoto={"Frente del DNI"} src={paciente.fotoFrenteDni} ref={fotoFrenteDniRef}/>
-            <Foto textoFoto={"Dorso del DNI"} src={paciente.fotoAtrasDni} ref={fotoDorsoDniRef}/>
-            <Foto textoFoto={"Frente del carnet"} src={paciente.fotoFrenteCarnet} ref={fotoFrenteCarnetRef}/>
-            <Foto textoFoto={"Dorso del carnet"} src={paciente.fotoAtrasCarnet} ref={fotoDorsoCarnetRef}/>
+            )}
           </div>
-            </div>
-          )}
-        </div>
-        <div className="tablaMedicamentos flex  items-center bg-gray-100 p-2 rounded-lg overflow-x-auto">
-          {mostrarMedicamentos && (
-            <div className="">
-              <TablaMedicamentos dni={paciente.dni} ref={medicamentosRef}/>
-              <div className="boton ">
-              <Boton textoBoton="Guardar medicamentos" onClick={() => guardarMedicamentos(medicamentosRef)}></Boton>
+          <div className="fotos">
+            {mostrarFotos && (
+              <div>
+                <div className="fotos grid grid-cols-1 md:grid-cols-2 justify-items-center gap-x-3 xl:mr-10">
+                  <Foto
+                    textoFoto={"Frente del DNI"}
+                    src={paciente.fotoFrenteDni}
+                    ref={fotoFrenteDniRef}
+                  />
+                  <Foto
+                    textoFoto={"Dorso del DNI"}
+                    src={paciente.fotoAtrasDni}
+                    ref={fotoDorsoDniRef}
+                  />
+                  <Foto
+                    textoFoto={"Frente del carnet"}
+                    src={paciente.fotoFrenteCarnet}
+                    ref={fotoFrenteCarnetRef}
+                  />
+                  <Foto
+                    textoFoto={"Dorso del carnet"}
+                    src={paciente.fotoAtrasCarnet}
+                    ref={fotoDorsoCarnetRef}
+                  />
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
+          <div className="tablaMedicamentos flex items-center bg-gray-100 p-2 rounded-lg overflow-x-auto">
+            {mostrarMedicamentos && (
+              <div>
+                <TablaMedicamentos dni={paciente.dni} ref={medicamentosRef} />
+                <div className="boton">
+                  <Boton
+                    textoBoton="Guardar medicamentos"
+                    onClick={() => guardarMedicamentos(medicamentosRef)}
+                  ></Boton>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-        </div>
-
+  
         <div className="grid justify-items-center m-4">
-          <Boton textoBoton="Modificar datos del paciente" onClick={()=> modificar(paciente)} ></Boton>
+          <Boton
+            textoBoton="Modificar datos del paciente"
+            onClick={() => modificar(paciente)}
+          ></Boton>
         </div>
-          <div className="modal">
+  
+        <div className="modal">
           <CartelAviso
-        abrirModal={mostrarCartel}
-        cerrarModal={toggleModal}
-        mensaje={modificado ? 'Paciente modificado correctamente' : 'Error al modificar el paciente'}
-      />
-          </div>
+            abrirModal={mostrarCartel}
+            cerrarModal={toggleModal}
+            mensaje={modificado ? 'Paciente modificado correctamente' : 'Error al modificar el paciente'}
+          />
+        </div>
       </div>
-    </>
+    </div>
+  </>
   );
 }
 export default FormPacientes;

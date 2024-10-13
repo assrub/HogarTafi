@@ -26,36 +26,39 @@ const Foto = forwardRef(({ textoFoto, propsBoton, src = "" }, ref) => {
   };
 
   return (
-    <div ref={ref} className="mb-6 tarjeta flex flex-col items-center border rounded-lg md:w-full">
-      <img 
-        src={imagenSrc}
-        id={`imagen-${textoFoto}`} 
-        alt="" 
-        className="rounded-lg w-full lg:max-w-72 lg:max-h-72 lg:min-w-40 lg:min-h-40" 
-      />
-      <h3 className="text-xl m-4">
-        <strong>{textoFoto}</strong>
-      </h3>
-      <Boton onClick={cargarImagen} textoBoton={"Cargar imagen"} propsBoton={propsBoton} />
-      <input
-        type="file"
-        ref={fileInputRef}
-        style={{ display: "none" }}
-        id={`input-${textoFoto}`}
-        accept="image/*"
-        onChange={(e) => {
-          const file = e.target.files[0];
-          if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-              const base64String = reader.result.replace(/^data:image\/(png|jpeg);base64,/, '');
-              setImagenSrc(`data:image/jpeg;base64,${base64String}`);
-            };
-            reader.readAsDataURL(file);
-          }
-        }}
-      />
-    </div>
+<div ref={ref} className="tarjeta flex flex-col items-center w-full max-w-xs mx-auto">
+  <img
+    src={imagenSrc}
+    id={`imagen-${textoFoto}`}
+    alt=""
+    className="max-h-[400px] h-40 object-cover" // Altura fija para evitar desplazamiento
+  />
+  <h3 className="text-sm md:text-lg text-center">
+    <strong>{textoFoto}</strong>
+  </h3>
+  <div className="mb-3"> {/* Contenedor para el botón para mantener el espaciado */}
+    <Boton onClick={cargarImagen} textoBoton={"Cargar imagen"} propsBoton={propsBoton} />
+  </div>
+  <input
+    type="file"
+    ref={fileInputRef}
+    style={{ display: "none" }}
+    id={`input-${textoFoto}`}
+    accept="image/*"
+    onChange={(e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64String = reader.result.replace(/^data:image\/(png|jpeg);base64,/, '');
+          setImagenSrc(`data:image/jpeg;base64,${base64String}`);
+        };
+        reader.readAsDataURL(file);
+      }
+    }}
+  />
+</div>
+
   );
 });
 

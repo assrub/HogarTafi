@@ -6,145 +6,121 @@ import { todosLosPacientes, desactivarPAcientes } from "../api";
 
 function ListadoPacientes() {
   const [pacientes, setPacientes] = useState([]);
-  //datos para probar cuando no hay api
-  const datosEjemplo = [
-    {
-      nombre: "Lucía",
-      apellido: "Pérez",
-      dni: "37654821",
-      obraSocial: "OSDE",
-    },
-    {
-      nombre: "Martín",
-      apellido: "Gómez",
-      dni: "39561234",
-      obraSocial: "Swiss Medical",
-    },
-    {
-      nombre: "Mariana",
-      apellido: "Fernández",
-      dni: "41234567",
-      obraSocial: "Galeno",
-    },
-    {
-      nombre: "Carlos",
-      apellido: "Ramírez",
-      dni: "40231678",
-      obraSocial: "Medifé",
-    },
-    {
-      nombre: "Sofía",
-      apellido: "López",
-      dni: "38456789",
-      obraSocial: "OSDE",
-    },
-    {
-      nombre: "Javier",
-      apellido: "Sánchez",
-      dni: "42123456",
-      obraSocial: "OMINT",
-    },
-    {
-      nombre: "Valeria",
-      apellido: "Gutiérrez",
-      dni: "39874561",
-      obraSocial: "Osecac",
-    },
-  ];
+  const [modalVisible, setModalVisible] = useState(false);
+  const [pacienteAEliminar, setPacienteAEliminar] = useState(null);
 
   async function traerPacientes() {
-    const datos = await todosLosPacientes();
-    const datosFiltrados = datos.filter((paciente) => paciente !== null);
-    setPacientes(datosFiltrados);
-
-  
+    try {
+      const datos = await todosLosPacientes();
+      const datosFiltrados = datos.filter((paciente) => paciente !== null);
+      setPacientes(datosFiltrados);
+    } catch (error) {
+      console.error("Error al obtener pacientes:", error);
+    }
   }
-  //Cada vez que se cargue la pagina trae los pacientes guardados
+
   useEffect(() => {
     traerPacientes();
-    
   }, []);
 
   async function desactivar(dni) {
     try {
-      const datos = await desactivarPAcientes(parseInt(dni));
-      //Actualiza el estado de pacientes, asi desaparece de la lista.
-      setPacientes(pacientes.filter(paciente => paciente.dni !== dni));
-    } catch (error){
+      await desactivarPAcientes(parseInt(dni));
+      setPacientes(pacientes.filter((paciente) => paciente.dni !== dni));
+    } catch (error) {
       console.error(error);
     }
   }
 
+  const handleEliminar = (paciente) => {
+    setPacienteAEliminar(paciente);
+    setModalVisible(true);
+  };
+
+  const confirmarEliminacion = () => {
+    if (pacienteAEliminar) {
+      desactivar(pacienteAEliminar.dni);
+      setModalVisible(false);
+    }
+  };
+
   return (
-    <>
-      <div className="titulo flex justify-center text-xl lg:text-3xl lg:mt-5 mb-10 ">
-        <h2 className="font-bold">Listado de pacientes</h2>
+    <div className="registrar-pacientes w-full px-4">
+      <div className="titulo flex justify-center text-lg lg:text-2xl lg:mt-5 mb-5">
+        <h2 className="font-bold text-gray-800">
+          <strong>Registrar pacientes</strong>
+        </h2>
       </div>
 
-      <div className="tabla mx-2">
-        <table className="min-w-full mb-10">
-          <thead>
+      <div className="tabla overflow-x-auto">
+        <table className="min-w-full mb-10 border border-gray-300">
+          <thead className="bg-gray-200">
             <tr>
-              <th className="lg:px-4 lg:py-2 border border-[#181818]">Nombre</th>
-              <th className="lg:px-4 lg:py-2 border border-[#181818]">Apellido</th>
-              <th className="lg:px-4 lg:py-2 border border-[#181818]">DNI</th>
-              <th className="lg:px-4 lg:py-2 border border-[#181818]">Obra social</th>
-              <th className="lg:px-4 lg:py-2 border border-[#181818]">Acciones</th>
+              <th className="px-4 py-2 border-b text-left text-gray-600">Nombre</th>
+              <th className="px-4 py-2 border-b text-left text-gray-600">Apellido</th>
+              <th className="px-4 py-2 border-b text-left text-gray-600">DNI</th>
+              <th className="px-4 py-2 border-b text-left text-gray-600">Obra social</th>
+              <th className="px-4 py-2 border-b text-left text-gray-600">Acciones</th>
             </tr>
           </thead>
           <tbody>
             {pacientes.map((paciente, index) => (
               <tr
                 key={index}
-                className={`hover:bg-[#017a98]/50 text-lg ${
-                  index % 2 == 0 ? "bg-gray-100" : "bg-gray-300"
-                }`}
+                className={`hover:bg-gray-200 transition duration-300 ease-in-out text-lg ${index % 2 === 0 ? "bg-gray-50" : "bg-white"}`}
               >
-                <td className="px-2 lg:px-4 lg:py-2 border border-[#181818] items-center">
-                  {paciente.nombre}
-                </td>
-                <td className="px-2 lg:px-4 lg:py-2 border border-[#181818]">
-                  {paciente.apellido}
-                </td>
-                <td className="px-2 lg:px-4 lg:py-2 border border-[#181818]">
-                  {paciente.dni}
-                </td>
-                <td className="px-2 lg:px-4 lg:py-2 border border-[#181818]">
-                  {paciente.obraSocial}
-                </td>
-                <td className="px-2 lg:px-4 lg:py-2 border border-[#181818]">
-                  <div
-                    className="eliminar px-2 lg:py-2 flex justify-center
-                     text-red-600 font-bold border-b rounded-lg hover:bg-red-200
-                      border-black"
+                <td className="px-4 py-3 ">{paciente.nombre}</td>
+                <td className="px-4 py-3 ">{paciente.apellido}</td>
+                <td className="px-4 py-3 ">{paciente.dni}</td>
+                <td className="px-4 py-3 ">{paciente.obraSocial}</td>
+                <td className="px-4 py-3 flex space-x-2">
+                  <button
+                    className="flex items-center px-2 py-0.5 bg-red-500 text-white rounded hover:bg-red-600 transition"
+                    onClick={() => handleEliminar(paciente)}
                   >
-                    <button
-                      className="lg:px-5"
-                      onClick={() => desactivar(paciente.dni)}
-                    >
-                      <DeleteForeverIcon /> Eliminar
-                    </button>
-                  </div>
-                  <div
-                    className="modificar px-2 lg:py-2 flex justify-center 
-                     text-blue-600 font-bold rounded-lg hover:bg-blue-200"
+                    <DeleteForeverIcon fontSize="small" />
+                    <span className="ml-1 text-sm">Eliminar</span>
+                  </button>
+                  <Link
+                    className="flex items-center px-2 py-0.5 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                    to={"/UserPanel/paciente/modificar"}
+                    state={{ paciente: paciente }}
                   >
-                    <Link
-                      className="lg:px-5 "
-                      to={"/UserPanel/paciente/modificar"}
-                      state={{ paciente: paciente }}
-                    >
-                      <EditIcon />
-                      Modificar
-                    </Link>
-                  </div>
+                    <EditIcon fontSize="small" />
+                    <span className="ml-1 text-sm">Modificar</span>
+                  </Link>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-    </>
+
+      {modalVisible && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 mx-4">
+            <h3 className="text-lg font-bold text-center">Confirmar Eliminación</h3>
+            <p className="text-center mt-2">
+              ¿Está seguro de que desea eliminar al paciente {pacienteAEliminar?.nombre} {pacienteAEliminar?.apellido}?
+            </p>
+            <div className="flex justify-center mt-4 space-x-2">
+              <button
+                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                onClick={confirmarEliminacion}
+              >
+                Eliminar
+              </button>
+              <button
+                className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
+                onClick={() => setModalVisible(false)}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
