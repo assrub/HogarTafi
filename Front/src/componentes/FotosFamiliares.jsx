@@ -140,7 +140,7 @@ export default function FotosFamiliares() {
 
   return (
     <>
-      <div className="registrar-pacientes w-full">
+      <div className="registrar-pacientes w-full bg-white">
         <div className="titulo flex justify-center text-xl lg:text-3xl lg:mt-5 mb-10">
           <h2 className="font-bold">Fotos</h2>
         </div>

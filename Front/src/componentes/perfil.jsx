@@ -88,15 +88,6 @@ export default function Perfil() {
             <span className="text-gray-400">{usuario.tipo}</span>
           </div>
 
-          <div className="idioma my-4 p-4 border" >
-            <span><strong>Idioma preferido</strong></span>
-            <br />
-          <select name="paciente" id="select-paciente" className="bg-gray-200 rounded-lg my-2 py-2 w-2/5">
-          <option value={"es"}>Español</option>
-          <option value={"en"}>English</option>
-          </select>
-          </div>
-
           
           </div>
         </div>
