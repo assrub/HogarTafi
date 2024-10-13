@@ -1,24 +1,24 @@
-import React, { useEffect,useState, forwardRef } from "react";
+import React, { useEffect, useState, forwardRef } from "react";
 import { traerStockApi } from "../../api";
 
-const TablaStock =forwardRef(({dni}, ref) => {
-  const [rows, setRows] = useState([{ medicacion: '', cantidad: '', cantidadMinima: '', added: false }]);
-  const [nuevoStock, setNuevoStock] = useState({ medicacion: '', cantidad: '', cantidadMinima: '', added: false });
-
-
+const TablaStock = forwardRef(({ dni }, ref) => {
+  const [rows, setRows] = useState([{ medicacion: '', cantidad: '', cantidadMinima: '', added: false, isEditing: true }]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [currentAction, setCurrentAction] = useState(null); // 'add' o 'delete'
+  const [rowToDelete, setRowToDelete] = useState(null); // Índice de la fila a eliminar
 
   const handleInputChange = (index, event) => {
     const { target } = event;
-  
+
     if (target && target.name) {
       const { name, value } = target;
-  
-      // Actualiza la fila correspondiente con el valor nuevo
+
       setRows((prevRows) => {
         const updatedRows = [...prevRows];
         updatedRows[index] = {
           ...updatedRows[index],
-          [name]: value,  // Usar el 'name' dinámico para actualizar el valor
+          [name]: value,
         };
         return updatedRows;
       });
@@ -27,33 +27,43 @@ const TablaStock =forwardRef(({dni}, ref) => {
     }
   };
 
-  const handleAddRow = () => {
-    
-    if (nuevoStock.medicacion && nuevoStock.cantidad && nuevoStock.cantidadMinima) {
-     
+  const handleAddRow = (index) => {
+    const currentRow = rows[index];
+    // Verifica si todos los campos de la fila actual están completos
+    if (currentRow.medicacion && currentRow.cantidad && currentRow.cantidadMinima) {
       setRows((prevRows) => [
         ...prevRows,
-        { 
-          medicacion: nuevoStock.medicacion, 
-          cantidad: nuevoStock.cantidad, 
-          cantidadMinima: nuevoStock.cantidadMinima, 
-          added: true 
-        }
+        { medicacion: '', cantidad: '', cantidadMinima: '', added: false, isEditing: true },
       ]);
-  
-      
-      setNuevoStock({
-        medicacion: '',
-        cantidad: '',
-        cantidadMinima: '',
-        added: false
-      });
     } else {
-      
-      alert('Llena todos los campos');
+      setModalMessage('Por favor, completa todos los campos antes de agregar una nueva fila.');
+      setCurrentAction('add');
+      setIsModalOpen(true);
     }
   };
 
+  const handleRemoveRow = (index) => {
+    setRowToDelete(index);
+    setModalMessage('¿Estás seguro de que deseas eliminar esta fila?');
+    setCurrentAction('delete');
+    setIsModalOpen(true);
+  };
+
+  const confirmDeleteRow = () => {
+    setRows((prevRows) => {
+      const newRows = prevRows.filter((_, i) => i !== rowToDelete);
+      if (newRows.length === 0) {
+        newRows.push({ medicacion: '', cantidad: '', cantidadMinima: '', added: false, isEditing: true });
+      }
+      return newRows;
+    });
+    closeModal();
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setRowToDelete(null);
+  };
 
   const handleEditRow = (index) => {
     setRows(prevRows => 
@@ -63,7 +73,6 @@ const TablaStock =forwardRef(({dni}, ref) => {
     );
   };
 
- 
   const handleSaveEdit = (index) => {
     setRows(prevRows => 
       prevRows.map((row, i) => 
@@ -72,170 +81,132 @@ const TablaStock =forwardRef(({dni}, ref) => {
     );
   };
 
-  const handleRemoveRow = (index) => {
-    if (rows.length > 1) {
-      const newRows = [...rows];
-      newRows.splice(index, 1);
-      setRows(newRows);
-    } else {
-      handleClearContent(index);
-    }
-  };
-
-  async function traerStock(dni){
-    try{
-      const response  = await traerStockApi(dni);
-      if(response){
-        setRows(transformarStock(response.medicamentos));
-      }else{
-        setRows([
-          {
-            medicacion : "",
-            cantidad : "",
-            cantidadMinima: "",
-            added: false
-          }
-        ])
+  async function traerStock(dni) {
+    try {
+      const response = await traerStockApi(dni);
+      if (response) {
+        const transformedRows = transformarStock(response.medicamentos);
+        setRows([...transformedRows, { medicacion: "", cantidad: "", cantidadMinima: "", added: false, isEditing: true }]);
+      } else {
+        setRows([{ medicacion: "", cantidad: "", cantidadMinima: "", added: false, isEditing: true }]);
       }
-      
-    
-    }catch(error){
+    } catch (error) {
       console.error(error);
     }
   }
-
+  
   useEffect(() => {
     traerStock(dni);
-  }, []);
+  }, [dni]);
 
-  
   function transformarStock(stockBackend) {
     return stockBackend.map(stock => ({
       medicacion: stock.medicacion,
-      cantidad : stock.cantidad,
-      cantidadMinima : stock.cant_minima,
-      added: true  
+      cantidad: stock.cantidad,
+      cantidadMinima: stock.cant_minima,
+      added: true,
+      isEditing: false
     }));
   }
 
-
-  
-
   const handleClearContent = (index) => {
     const newRows = [...rows];
-    newRows[index] = { medicacion: '', cantidad: '', cantidadMinima: '', added: false };
+    newRows[index] = { medicacion: '', cantidad: '', cantidadMinima: '', added: false, isEditing: true };
     setRows(newRows);
   };
 
   return (
-    <div className="overflow-x-auto rounded-xl">
-      <table className=" w-full bg-transparent mb-10" ref={ref}>
-        <thead>
-          <tr>
-            <th className="px-4 py-2 border border-[#181818]">Medicacion</th>
-            <th className="px-4 py-2 border border-[#181818]">Cantidad</th>
-            <th className="px-4 py-2 border border-[#181818]">Cantidad minima</th>
-            <th className="px-4 py-2 border border-[#181818]">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, index) => (
-            <tr key={index}>
-              <td className="lg:px-4 lg:py-2 border border-[#181818] ">
-                <input
-                  className={`rounded-lg text-center w-32 ${row.isEditing ? 'bg-white' : 'bg-neutral-300'}`}
-                  type="text"
-                  name="medicacion"
-                  value={row.medicacion}
-                  onChange={(event) => handleInputChange(index, event)}
-                  disabled={!row.isEditing}
-                />
-              </td>
-              <td className="lg:px-4 lg:py-2 border border-[#181818] ">
-                <input
-                  className={`rounded-lg text-center w-32 ${row.isEditing ? 'bg-white' : 'bg-neutral-300'}`}
-                  type="number"
-                  name="cantidad"
-                  value={row.cantidad}
-                  onChange={(event) => handleInputChange(index, event)}
-                  disabled={!row.isEditing}
-                />
-              </td>
-              <td className="lg:px-4 lg:py-2 border border-[#181818] ">
-                <input
-                  className={`rounded-lg text-center w-32 ${row.isEditing ? 'bg-white' : 'bg-neutral-300'}`}
-                  type="number"
-                  name="cantidadMinima"
-                  value={row.cantidadMinima}
-                  onChange={(event) => handleInputChange(index, event)}
-                  disabled={!row.isEditing}
-                />
-              </td>
-              <td className="lg:px-4 lg:py-2 border border-[#181818]">
-                <div className="flex place-content-center gap-4">
-                  {row.isEditing ? (
-                    <button className="text-blue-600" onClick={() => handleSaveEdit(index)}>Guardar</button>
-                  ) : (
-                    <button className="text-gray-600" onClick={() => handleEditRow(index)}>Modificar</button>
-                  )}
-                  <button className="text-red-600" onClick={() => handleRemoveRow(index)}>Eliminar</button>
-                </div>
-              </td>
+    <>
+      <div className="max-w-[400px] mx-auto p-2 bg-transparent rounded-lg">
+        <table className="table-auto w-full" ref={ref}>
+          <thead>
+            <tr>
+              <th className="px-4 py-2 border border-[#181818]">Medicacion</th>
+              <th className="px-4 py-2 border border-[#181818]">Cantidad</th>
+              <th className="px-4 py-2 border border-[#181818]">Cantidad minima</th>
+              <th className="px-4 py-2 border border-[#181818]">Acciones</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {rows.map((row, index) => (
+              <tr key={index} className={`border border-[#181818] ${row.isEditing ? 'bg-white' : 'bg-gray-300'} ${row.added ? 'bg-gray-200' : ''}`}>
+                <td className="border border-[#181818]">
+                  <input
+                    className={`w-full h-full text-center ${row.isEditing ? 'bg-white' : 'bg-gray-300'} border-none rounded-none`}
+                    type="text"
+                    name="medicacion"
+                    value={row.medicacion}
+                    onChange={(event) => handleInputChange(index, event)}
+                    disabled={!row.isEditing}
+                    style={{ boxSizing: 'border-box', margin: '0', padding: '0' }} 
+                  />
+                </td>
+                <td className="border border-[#181818]">
+                  <input
+                    className={`w-full h-full text-center ${row.isEditing ? 'bg-white' : 'bg-gray-300'} border-none rounded-none`}
+                    type="number"
+                    name="cantidad"
+                    value={row.cantidad}
+                    onChange={(event) => handleInputChange(index, event)}
+                    disabled={!row.isEditing}
+                    style={{ boxSizing: 'border-box', margin: '0', padding: '0' }} 
+                  />
+                </td>
+                <td className="border border-[#181818]">
+                  <input
+                    className={`w-full h-full text-center ${row.isEditing ? 'bg-white' : 'bg-gray-300'} border-none rounded-none`}
+                    type="number"
+                    name="cantidadMinima"
+                    value={row.cantidadMinima}
+                    onChange={(event) => handleInputChange(index, event)}
+                    disabled={!row.isEditing}
+                    style={{ boxSizing: 'border-box', margin: '0', padding: '0' }} 
+                  />
+                </td>
+                <td className="border border-[#181818]">
+                  <div className="flex justify-center gap-2">
+                    {index === rows.length - 1 ? (
+                      <button 
+                        className="text-green-500"
+                        onClick={() => handleAddRow(index)} // Cambia aquí para pasar el índice actual
+                      >
+                        Agregar
+                      </button>
+                    ) : row.isEditing ? (
+                      <button className="text-blue-600" onClick={() => { handleSaveEdit(index); }}>Guardar</button>
+                    ) : (
+                      <button className="text-gray-600" onClick={() => handleEditRow(index)}>Modificar</button>
+                    )}
+                    {index < rows.length - 1 && (
+                      <button className="text-red-600" onClick={() => handleRemoveRow(index)}>Eliminar</button>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-<tr>
-            <td className="lg:px-4 lg:py-2 border border-[#181818]">
-              <div className="flex place-content-center">
-                <input
-                  className="rounded-lg w-32 flex text-center bg-white border"
-                  type="text"
-                  name="medicacion"
-                  value={nuevoStock.medicacion}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </td>
-            <td className="lg:px-4 lg:py-2 border border-[#181818]">
-              <div className="flex place-content-center">
-                <input
-                  className="rounded-lg w-32 flex text-center bg-white border"
-                  type="number"
-                  name="cantidad"
-                  min={0}
-                  value={nuevoStock.cantidad}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </td>
-            <td className="lg:px-4 lg:py-2 border border-[#181818]">
-              <div className="flex place-content-center">
-                <input
-                  className="rounded-lg w-32 flex text-center bg-white border"
-                  type="number"
-                  name="cantidadMinima"
-                  min={0}
-                  value={nuevoStock.cantidadMinima}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </td>
-            <td className="lg:px-4 lg:py-2 border border-[#181818]">
-              <div className="gap-10 flex place-content-center">
-                <button className="text-green-600 flex" onClick={handleAddRow}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                  </svg>
-                  Agregar
-                </button>
-              </div>
-            </td>
-          </tr>
+      {/* Modal de Advertencia */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 className="text-xl font-semibold mb-4">{currentAction === 'delete' ? 'Confirmar eliminación' : 'Atención'}</h2>
+            <p>{modalMessage}</p>
+            <div className="flex justify-end mt-4">
+              <button className="bg-gray-300 text-black px-4 py-2 rounded mr-2" onClick={closeModal}>Cancelar</button>
+              {currentAction === 'delete' ? (
+                <button className="bg-red-600 text-white px-4 py-2 rounded" onClick={confirmDeleteRow}>Confirmar</button>
+              ) : (
+                <button className="bg-blue-600 text-white px-4 py-2 rounded" onClick={closeModal}>Aceptar</button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
-
-        </tbody>
-      </table>
-    </div>
+    </>
   );
 });
 
