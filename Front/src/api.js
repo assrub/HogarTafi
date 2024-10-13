@@ -210,7 +210,6 @@ export async function guardarFotoDamiliarApi(formData){
             method: "POST",
             body: formData,
         });
-       imprimirFormData(formData)
         return response;
     } catch (error) {
         console.error('Error al guardar la foto:', error);
@@ -220,6 +219,12 @@ export async function guardarFotoDamiliarApi(formData){
 
 export async function traerTodasLasFotosApi(){
     const response = await fetch("http://localhost:8080/api/fotos");
+  const data = await response.json();
+  return data;
+}
+
+export async function traerTodasLasFotosDniApi(dniAsociado){
+    const response = await fetch(`http://localhost:8080/api/fotos/${dniAsociado}`);
   const data = await response.json();
   return data;
 }

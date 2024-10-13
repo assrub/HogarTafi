@@ -54,6 +54,7 @@ export function BarraNavegacion() {
           </div>
           <hr />
           <div className="navegacion mt-6 ml-6 flex flex-col items-start h-full">
+          {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
             <div className="pacientes p-3 flex flex-col items-baseline w-full">
               <Link
                 to="#"
@@ -103,8 +104,9 @@ export function BarraNavegacion() {
               </div>
                 </div>
               )}
-            </div>
+            </div>)}
 
+            {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
             <div className="stock-del-hogar p-3">
               <Link
                 to="stockDelHogar"
@@ -113,17 +115,20 @@ export function BarraNavegacion() {
                 <MedicationIcon className="text-[#017a98]" />
                 Stock del hogar
               </Link>
-            </div>
+            </div>)}
 
-            <div className="pedidos p-3">
-              <Link
-                to="pedidos"
-                className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
-              >
-                <ShoppingCartIcon className="text-[#017a98]" />
-                Pedidos
-              </Link>
-            </div>
+              {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
+                <div className="pedidos p-3">
+                <Link
+                  to="pedidos"
+                  className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
+                >
+                  <ShoppingCartIcon className="text-[#017a98]" />
+                  Pedidos
+                </Link>
+              </div>
+              )}
+            
 
             {usuario.tipo == "admin" && (
                 <div className="lista-de-usuarios p-3">
@@ -195,6 +200,7 @@ export function BarraNavegacion() {
           </div>
           <hr className="w-full my-4" />
           <div className="navegacion flex flex-col items-start w-full">
+          {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
             <div className="pacientes p-3">
               <Link
                 to="#"
@@ -206,70 +212,88 @@ export function BarraNavegacion() {
               </Link>
               {menuPaciente && (
                 <div className="flex flex-col items-start mt-4 ml-6 w-full">
+
+        {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
                   <div className="mostrarPacientes p-3">
                     <Link
                       to="todosLospacientes"
+                      onClick={cerrarMenuHamburguesa}
                       className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
                     >
                       <AssistWalkerIcon className="text-[#017a98]" /> Listar
                       pacientes
                     </Link>
-                  </div>
+                  </div>)}
+
+                  {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
                   <div className="registrar p-3">
                     <Link
                       to="paciente/registrar"
+                      onClick={cerrarMenuHamburguesa}
                       className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
                     >
                       <AutoStoriesIcon className="text-[#017a98]" />
                       Registrar
                     </Link>
-                  </div>
+                  </div>)}
+
+                  {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
                   <div className="modificar p-3">
                     <Link
                       to="paciente/modificar"
+                      onClick={cerrarMenuHamburguesa}
                       className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
                     >
                       <CreateIcon className="text-[#017a98]" />
                       Modificar
                     </Link>
-                  </div>
+                  </div>)}
 
+                  {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
                   <div className="medicaciones-diarias p-3">
                 <Link
                   to="paciente/medicacionesDiarias"
+                  onClick={cerrarMenuHamburguesa}
                   className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
                 >
                   <LocalHospitalIcon className="text-[#017a98]" />
                   Medicaciones diarias
                 </Link>
-              </div>
+              </div>)}
                 </div>
               )}
             </div>
+          )}
+            {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
             <div className="stock-del-hogar p-3">
               <Link
                 to="stockDelHogar"
+                onClick={cerrarMenuHamburguesa}
                 className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
               >
                 <MedicationIcon className="text-[#017a98]" />
                 Stock del hogar
               </Link>
-            </div>
+            </div>)}
 
+
+            {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
             <div className="pedidos p-3">
               <Link
                 to="pedidos"
+                onClick={cerrarMenuHamburguesa}
                 className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
               >
                 <ShoppingCartIcon className="text-[#017a98]" />
                 Pedidos
               </Link>
-            </div>
+            </div>)}
 
             {usuario.tipo == "admin" && (
                 <div className="lista-de-usuarios p-3">
                 <Link
                   to="listaDeUsuarios"
+                  onClick={cerrarMenuHamburguesa}
                   className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
                 >
                   <FormatListBulletedIcon className="text-[#017a98]" />
@@ -280,6 +304,7 @@ export function BarraNavegacion() {
             <div className="fotos p-3">
                 <Link
                   to="fotos"
+                  onClick={cerrarMenuHamburguesa}
                   className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-[#017a98] after:transition-all after:duration-300 hover:after:w-full"
                 >
                   <InsertPhotoIcon className="text-[#017a98]" />
