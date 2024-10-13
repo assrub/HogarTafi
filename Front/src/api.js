@@ -164,7 +164,6 @@ export async function restarMedicaionApi(arregloMedicamento,dni){
 
   export async function traerTodosLosSotcksApi(){
     const response = await fetch("http://localhost:8080/stock/todosLosStocks");
-    console.log(response)
   const data = await response.json();
   return data;
   }
@@ -211,10 +210,16 @@ export async function guardarFotoDamiliarApi(formData){
             method: "POST",
             body: formData,
         });
-
+       imprimirFormData(formData)
         return response;
     } catch (error) {
         console.error('Error al guardar la foto:', error);
         return error;
     }
+}
+
+export async function traerTodasLasFotosApi(){
+    const response = await fetch("http://localhost:8080/api/fotos");
+  const data = await response.json();
+  return data;
 }

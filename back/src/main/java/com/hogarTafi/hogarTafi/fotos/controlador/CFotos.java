@@ -26,11 +26,11 @@ public class CFotos {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Map<String, String>> guardarPaciente(@RequestParam("dni") List<Integer> dni,
                                                                @RequestParam("descripcion") String descripcion,
-                                                               @RequestParam(value = "foto", required = false) MultipartFile foto) {
+                                                               @RequestParam(value = "foto", required = true) MultipartFile foto) {
         Map<String, String> response = new HashMap<>();
         try {
             byte[] fotoBytes = foto != null ? foto.getBytes() : null;
-
+            System.out.print(dni);
             // Crea una nueva instancia de EFotos con los datos recibidos
             EFotos fotos = new EFotos();
             fotos.setDni(dni);

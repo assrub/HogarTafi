@@ -26,11 +26,6 @@ export default function Pedidos(){
         buscarStockFaltante();
     },[stocks])
 
-    useEffect(() =>{
-        console.log(stockFaltante);
-
-    },[stockFaltante])
-
     function buscarStockFaltante() {
         const nuevoStockFaltante = [];
     
@@ -51,7 +46,7 @@ export default function Pedidos(){
                             dni: paciente.dni,
                             medicamentosFaltantes: medicamentosFaltantes
                         });
-                        console.log(nuevoStockFaltante)
+                       
                     }
                 }
             });

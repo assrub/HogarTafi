@@ -3,7 +3,7 @@ import {contextoSesionUsuario} from "../contexto/sesionUsuario.jsx"
 import Chip from '@mui/material/Chip';
 import { todosLosPacientes } from "../api.js";
 import Boton from "./Boton.jsx";
-import { guardarFotoDamiliarApi } from "../api.js";
+import { guardarFotoDamiliarApi, traerTodasLasFotosApi } from "../api.js";
 
 export default function FotosFamiliares(){
 
@@ -21,10 +21,11 @@ export default function FotosFamiliares(){
         fotoAtrasCarnet: ""
       });
 
-      const [pacientesSeleccionados, setPacientesSeleccionados] = useState([]);
+    const [pacientesSeleccionados, setPacientesSeleccionados] = useState([]);
     const [menuCargarFotos, setMenuCargarFotos] = useState(false);
-      const [descripcion,setDescripcion] = useState("");
+    const [descripcion,setDescripcion] = useState("");
     const [foto, setFoto] = useState(null);
+    const [fotoSinConvertir, setFotoSinConvertir] = useState(null);
 
     function abrirMenuCargarFotos(){
         setMenuCargarFotos(true);
@@ -36,26 +37,40 @@ export default function FotosFamiliares(){
         setPacientesSeleccionados([]);
     }
 
-    async function cargarFoto(){
 
-        
-        const arregloDni = [];
-        pacientesSeleccionados.forEach((paciente) =>{
-            arregloDni.push(paciente.dni)
-        })
-        console.log(arregloDni);
-        const formData = new FormData();
-        formData.append("dni", arregloDni);
-        formData.append("descripcion",descripcion);
-        formData.append("foto", foto);
-        const response = await guardarFotoDamiliarApi(formData);
-        if(response.status == 200 ){
-            alert("Fotos guardadas correctamente");
-            vaciarCampos();
-        }
-        
+
+    const cargarFoto = async () => {
+      const arregloDni = [];
+      pacientesSeleccionados.forEach((paciente) => {
+          arregloDni.push(paciente.dni);
+      });
+  
+      const formData = new FormData();
+      arregloDni.forEach((dni) => {
+          formData.append("dni", dni);  
+      });
+  
+      formData.append("descripcion", descripcion);
+      formData.append("foto", fotoSinConvertir);  
+  
+      try {
+          const response = await guardarFotoDamiliarApi(formData);
+          if (response.status === 200) {
+              alert("Fotos guardadas correctamente");
+              vaciarCampos();
+          } else {
+              alert("Error al guardar las fotos");
+          }
+      } catch (error) {
+          console.error("Error al guardar la foto:", error);
+      }
+  };
+
+
+    async function traerTodasLasFotos(){
+      const response = await traerTodasLasFotosApi();
+      console.log(response)
     }
-
 
     const handleTextAreaChange = (e) => {
         setDescripcion(e.target.value); 
@@ -83,6 +98,7 @@ export default function FotosFamiliares(){
             const reader = new FileReader();
             reader.onload = () => {
                 setFoto(reader.result); 
+                setFotoSinConvertir(file)
             };
             reader.readAsDataURL(file); 
         }
@@ -214,7 +230,7 @@ export default function FotosFamiliares(){
       
           {!menuCargarFotos && (
             <div className="fotos grid grid-cols-3">
-              {/* Aquí podrías agregar la lógica para mostrar las fotos */}
+              <button onClick={traerTodasLasFotos}>asdasd</button>
             </div>
           )}
         </div>
