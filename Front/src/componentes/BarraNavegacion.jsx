@@ -54,7 +54,7 @@ export function BarraNavegacion() {
           </div>
           <hr />
           <div className="navegacion mt-6 ml-6 flex flex-col items-start h-full">
-          {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
+          {(usuario.tipo=="admin" || usuario.tipo ==="empleado") && (
             <div className="pacientes p-3 flex flex-col items-baseline w-full">
               <Link
                 to="#"
@@ -106,7 +106,7 @@ export function BarraNavegacion() {
               )}
             </div>)}
 
-            {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
+            {(usuario.tipo==="admin" || usuario.tipo ==="empleado") && (
             <div className="stock-del-hogar p-3">
               <Link
                 to="stockDelHogar"
@@ -117,7 +117,7 @@ export function BarraNavegacion() {
               </Link>
             </div>)}
 
-              {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
+              {(usuario.tipo==="admin" || usuario.tipo ==="empleado") && (
                 <div className="pedidos p-3">
                 <Link
                   to="pedidos"
@@ -129,7 +129,7 @@ export function BarraNavegacion() {
               </div>
               )}
             
-
+              {console.log(usuario.tipo=="admin")}
             {usuario.tipo == "admin" && (
                 <div className="lista-de-usuarios p-3">
                 <Link
@@ -200,7 +200,7 @@ export function BarraNavegacion() {
           </div>
           <hr className="w-full my-4" />
           <div className="navegacion flex flex-col items-start w-full">
-          {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
+          {(usuario.tipo==="admin" || usuario.tipo ==="empleado") && (
             <div className="pacientes p-3">
               <Link
                 to="#"
@@ -213,7 +213,7 @@ export function BarraNavegacion() {
               {menuPaciente && (
                 <div className="flex flex-col items-start mt-4 ml-6 w-full">
 
-        {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
+        {(usuario.tipo=="admin" || usuario.tipo ==="empleado") && (
                   <div className="mostrarPacientes p-3">
                     <Link
                       to="todosLospacientes"
@@ -225,7 +225,7 @@ export function BarraNavegacion() {
                     </Link>
                   </div>)}
 
-                  {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
+                  {(usuario.tipo==="admin" || usuario.tipo ==="empleado") && (
                   <div className="registrar p-3">
                     <Link
                       to="paciente/registrar"
@@ -237,7 +237,7 @@ export function BarraNavegacion() {
                     </Link>
                   </div>)}
 
-                  {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
+                  {(usuario.tipo==="admin" || usuario.tipo ==="empleado") && (
                   <div className="modificar p-3">
                     <Link
                       to="paciente/modificar"
@@ -249,7 +249,7 @@ export function BarraNavegacion() {
                     </Link>
                   </div>)}
 
-                  {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
+                  {(usuario.tipo==="admin" || usuario.tipo ==="empleado") && (
                   <div className="medicaciones-diarias p-3">
                 <Link
                   to="paciente/medicacionesDiarias"
@@ -264,7 +264,7 @@ export function BarraNavegacion() {
               )}
             </div>
           )}
-            {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
+            {(usuario.tipo==="admin" || usuario.tipo ==="empleado") && (
             <div className="stock-del-hogar p-3">
               <Link
                 to="stockDelHogar"
@@ -277,7 +277,7 @@ export function BarraNavegacion() {
             </div>)}
 
 
-            {usuario.tipo==="admin" || usuario.tipo ==="empleado" && (
+            {(usuario.tipo==="admin" || usuario.tipo ==="empleado") && (
             <div className="pedidos p-3">
               <Link
                 to="pedidos"

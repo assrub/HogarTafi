@@ -23,7 +23,7 @@ export default function Perfil() {
 
         <div className="datos grid grid-cols-1 mx-2 justify-items-center">
         <div className="datos w-1/2 mb-6">
-        <form className="border p-4">
+        <form className="border p-4 min-w-64">
           <CampoTexto
             textoEtiqueta="Nombre"
             propsLabel={{ labelFor: "name" }}
