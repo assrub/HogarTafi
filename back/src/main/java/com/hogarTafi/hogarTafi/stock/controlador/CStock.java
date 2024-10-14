@@ -89,7 +89,7 @@ public class CStock {
         @RequestParam("medicamento") String medicamento) {
     
         try {
-           
+
             // Validar que las cantidades sean >= 0
             if (restar < 0 || sumar < 0) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Las cantidades mínima y máxima deben ser >= 0.");

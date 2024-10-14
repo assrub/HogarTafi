@@ -164,7 +164,7 @@ export default function MedicacionesDiarias(){
                     parseInt(element.Almuerzo) + parseInt(element.Merienda) +
                     parseInt(element.Cena) +parseInt(element["22:30"]);
 
-
+            console.log(suma)
           }
         });
  

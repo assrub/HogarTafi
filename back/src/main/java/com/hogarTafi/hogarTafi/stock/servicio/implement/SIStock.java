@@ -96,6 +96,7 @@ public class SIStock implements SStock {
                 // Restar cant_minima (si es mayor a 0)
                 if (restar > 0) {
                     cantidadActual -= restar;
+
                 }
     
                 // Sumar cant_maxima (si es mayor a 0)
