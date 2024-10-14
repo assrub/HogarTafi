@@ -228,3 +228,18 @@ export async function traerTodasLasFotosDniApi(dniAsociado){
   const data = await response.json();
   return data;
 }
+
+export async function actualizarStockApi(dni,formData){
+    try {
+               
+        const response = await fetch(`http://localhost:8080/stock/${dni}`, {
+            method: "PATCH",
+            body: formData,
+        });
+        return response;
+    } catch (error) {
+        console.error('Error al actualizar el stock:', error);
+        return error;
+    }
+
+}

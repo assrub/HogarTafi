@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from "react";
 import Boton from "./Boton";
-import { todosLosPacientes } from "../api";
+import { todosLosPacientes, actualizarStockApi } from "../api";
 import TablaMedicamentos from "./FormPacientes/TablaMedicamentos";
 
 export default function MedicacionesDiarias(){
@@ -19,8 +19,7 @@ export default function MedicacionesDiarias(){
 
       const medicamentosRef = useRef(null);
 
-
-
+      
 
       function convertirTablaAJson(refTabla) {
         if (!refTabla.current) {
@@ -87,34 +86,101 @@ export default function MedicacionesDiarias(){
           }
         });}
 
-        async function restarMedicacion(){
+        async function restarMedicacion(medicacionParam){
             try{
                 let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
-        
+                let suma = 0;
+                console.log(medicacionParam)
             let arregloMedicacion = [];
+            //saca los nulos
             tablaMedicamentos.forEach((item, index) => {
             if (item.Medicamento != null) {
                 const objetoMedicamento = {
                 Medicamento: item.Medicamento,
-                "6:00": item["6:00"],
-                Desayuno: item.Desayuno,
-                Almuerzo: item.Almuerzo,
-                Merienda: item.Merienda,
-                Cena: item.Cena,
-                "22:30": item["22:30"],
+                "6:00": item["6:00"] ? item["6:00"]: "0" ,
+                Desayuno: item.Desayuno ?  item.Desayuno : "0",
+                Almuerzo: item.Almuerzo ?  item.Almuerzo : "0",
+                Merienda: item.Merienda ?  item.Merienda : "0",
+                Cena: item.Cena ?  item.Cena : "0",
+                "22:30": item["22:30"] ? item["22:30"] :"0",
                 Observaciones: item.Observaciones
                 };
                 arregloMedicacion.push(objetoMedicamento);
             }
             });
-      
-        const response = restarMedicaionApi(arregloMedicacion, parseInt(paciente.dni));
+          
+          arregloMedicacion.forEach(element => {
+
+            if (element.Medicamento == medicacionParam){
+              suma += parseInt(element["6:00"]) + parseInt(element.Desayuno) + 
+                      parseInt(element.Almuerzo) + parseInt(element.Merienda) +
+                      parseInt(element.Cena) +parseInt(element["22:30"]);
+
+
+            }
+          });
+   
+            const formData = new FormData();
+            formData.append("restar",suma);
+            formData.append("sumar",parseInt(0));
+            formData.append("medicamento",medicacionParam);
+            const response = await actualizarStockApi(paciente.dni,formData);
+            console.log(await response)
 
             }catch(error)
             {console.error(error)
 
             }
         }
+
+
+        async function sumarMedicacion(medicacionParam){
+          try{
+              let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
+              let suma = 0;
+              console.log(medicacionParam)
+          let arregloMedicacion = [];
+          //saca los nulos
+          tablaMedicamentos.forEach((item, index) => {
+          if (item.Medicamento != null) {
+              const objetoMedicamento = {
+              Medicamento: item.Medicamento,
+              "6:00": item["6:00"] ? item["6:00"]: "0" ,
+              Desayuno: item.Desayuno ?  item.Desayuno : "0",
+              Almuerzo: item.Almuerzo ?  item.Almuerzo : "0",
+              Merienda: item.Merienda ?  item.Merienda : "0",
+              Cena: item.Cena ?  item.Cena : "0",
+              "22:30": item["22:30"] ? item["22:30"] :"0",
+              Observaciones: item.Observaciones
+              };
+              arregloMedicacion.push(objetoMedicamento);
+          }
+          });
+        
+        arregloMedicacion.forEach(element => {
+
+          if (element.Medicamento == medicacionParam){
+            suma += parseInt(element["6:00"]) + parseInt(element.Desayuno) + 
+                    parseInt(element.Almuerzo) + parseInt(element.Merienda) +
+                    parseInt(element.Cena) +parseInt(element["22:30"]);
+
+
+          }
+        });
+ 
+          const formData = new FormData();
+          formData.append("restar",parseInt(0));
+          formData.append("sumar",suma);
+          formData.append("medicamento",medicacionParam);
+          const response = await actualizarStockApi(paciente.dni,formData);
+          console.log(await response)
+
+          }catch(error)
+          {console.error(error)
+
+          }
+      }
+
 
     return (<>
       <div className="registrar-pacientes w-full">
@@ -150,10 +216,13 @@ export default function MedicacionesDiarias(){
                   dni={paciente.dni}
                   ref={medicamentosRef}
                   menuMedicaionpaciente={true}
+                  medicacionDiaria={true}
+                  onClickRestaMedicacionDiaria={restarMedicacion}
+                  onclicksumarMedicacionDiaria={sumarMedicacion}
                 />
               </div>
     
-              <div className="restar-medicacion lg:mx-4 lg:my-6">
+              <div className="restar-medicacion lg:mx-4 lg:my-6 hidden">
                 <Boton textoBoton="Restar medicaion" onClick={restarMedicacion} />
               </div>
             </div>
