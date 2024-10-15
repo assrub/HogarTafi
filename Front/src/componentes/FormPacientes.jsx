@@ -12,7 +12,7 @@ import CartelAviso from "./CartelAviso";
 function FormPacientes() {
 
 
-
+  const [mensaje, setMensaje] = useState("");
   const [modificado,setModificado] = useState(false);
   const [mostrarCartel, setMostrarCartel] = useState(false)
   const [campoIncompleto, setCampoIncompleto] = useState(false);
@@ -39,7 +39,7 @@ function FormPacientes() {
   const fotoDorsoDniRef = useRef(null);
   const fotoFrenteCarnetRef = useRef(null);
   const fotoDorsoCarnetRef = useRef(null);
-  
+
   const [pacientes, setPacientes] = useState([]);//array de todos los pacientes
   const location = useLocation();
   const [botonApretado, setBotonApretado] = useState({
@@ -146,7 +146,7 @@ useEffect(() => {
   
 }, [paciente]);
 
-function guardarStock(stockRef){
+async function guardarStock(stockRef){
   let tablaStock = convertirTablaAJson(stockRef);
 
   const arregloStock = [];
@@ -161,7 +161,14 @@ function guardarStock(stockRef){
     }
   });
 
-  guardarStockApi(arregloStock,parseInt(paciente.dni));
+  const response  = await guardarStockApi(arregloStock,parseInt(paciente.dni));
+
+  if (response == true){
+    setMensaje("Medicamentos guardados correctamente");
+   }else{
+    setMensaje("Error al guardar los medicamentos");
+   }
+   toggleModal();
 }
 
 async function guardarMedicamentos(medicamentosRef) {
@@ -185,6 +192,15 @@ async function guardarMedicamentos(medicamentosRef) {
   });
 
   const response = guardarMedicamentosApi(arregloMedicacion, parseInt(paciente.dni));
+  console.log( await response)
+ if (response == true){
+  setMensaje("Medicamentos guardados correctamente");
+ }else{
+  setMensaje("Error al guardar los medicamentos");
+ }
+ toggleModal();
+  
+
 }
 
 
@@ -320,6 +336,7 @@ function buscarClick(){
 
 
     setModificado(response);
+    setMensaje(await modificado ? 'Paciente modificado correctamente' : 'Error al modificar el paciente');
     toggleModal();
   }
 
@@ -348,7 +365,7 @@ function buscarClick(){
           <select
             name="paciente"
             id="select-paciente"
-            className="bg-gray-200 rounded-lg w-2/5"
+            className="bg-gray-200 rounded-lg md:w-2/5 "
           >
             <option selected disabled value="null">
               Selecciona un paciente
@@ -359,7 +376,7 @@ function buscarClick(){
               </option>
             ))}
           </select>
-          <div className="Boton mx-4">
+          <div className="Boton ">
             <Boton textoBoton="Buscar" onClick={buscarClick}></Boton>
           </div>
         </div>
@@ -529,7 +546,7 @@ function buscarClick(){
           <CartelAviso
             abrirModal={mostrarCartel}
             cerrarModal={toggleModal}
-            mensaje={modificado ? 'Paciente modificado correctamente' : 'Error al modificar el paciente'}
+            mensaje={mensaje}
           />
         </div>
       </div>

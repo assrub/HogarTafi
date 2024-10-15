@@ -28,6 +28,8 @@ export default function StockDelHogar(){
         filtrarStocksInactivos();
     },[pacientes]);
 
+    useEffect(() => {},[stocksInactivos])
+
     function filtrarStocksInactivos(){
         const dniPacientesInactivos = pacientes.map(paciente => paciente.dni);
         const stocksFiltrados  = stock
