@@ -243,3 +243,19 @@ export async function actualizarStockApi(dni,formData){
     }
 
 }
+
+export async function eliminarFotoApi(dni,id){
+    try {
+               const formData = new FormData()
+               formData.append("dni",dni);
+               formData.append("fotoId",id)
+        const response = await fetch(`http://localhost:8080/api/fotos`, {
+            method: "DELETE",
+            body: formData,
+        });
+        return response;
+    } catch (error) {
+        console.error('Error al actualizar el stock:', error);
+        return error;
+    }
+}

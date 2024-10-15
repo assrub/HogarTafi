@@ -3,7 +3,7 @@ import { contextoSesionUsuario } from "../contexto/sesionUsuario.jsx";
 import Chip from "@mui/material/Chip";
 import { todosLosPacientes } from "../api.js";
 import Boton from "./Boton.jsx";
-import { guardarFotoDamiliarApi, traerTodasLasFotosDniApi ,traerTodasLasFotosApi } from "../api.js";
+import {eliminarFotoApi ,guardarFotoDamiliarApi, traerTodasLasFotosDniApi ,traerTodasLasFotosApi } from "../api.js";
 import FotoFamiliar from "./FotosFamiliares/FotoFamiliar.jsx";
 
 export default function FotosFamiliares() {
@@ -80,10 +80,18 @@ export default function FotosFamiliares() {
     
   }
 
+
+    async function eliminarFoto(foto){
+      const arregloDni = foto.dni;
+      let response = null;
+      arregloDni.forEach(dni => {
+        response =  eliminarFotoApi(dni,foto.id);
+      });
+    }
   useEffect(() => {
     traerTodasLasFotos();
   
-  }, [,menuCargarFotos]);
+  }, [,menuCargarFotos, fotosBackend]);
 
   const handleTextAreaChange = (e) => {
     setDescripcion(e.target.value);
@@ -270,7 +278,9 @@ export default function FotosFamiliares() {
             {
               fotosBackend.map((elemento, index) => (
                 <div key={index}>
-                  <FotoFamiliar objFoto={elemento} tipoUsuario={usuario.tipo}></FotoFamiliar>
+                  <FotoFamiliar objFoto={elemento} onClickEliminar={eliminarFoto} tipoUsuario={usuario.tipo}></FotoFamiliar>
+                  
+                
                 </div>
               ))}
          

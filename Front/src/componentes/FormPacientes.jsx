@@ -148,8 +148,6 @@ useEffect(() => {
 
 function guardarStock(stockRef){
   let tablaStock = convertirTablaAJson(stockRef);
-  console.log(tablaStock);
-
 
   const arregloStock = [];
   tablaStock.forEach((item,index) =>{
@@ -162,7 +160,6 @@ function guardarStock(stockRef){
       arregloStock.push(objetoStock)
     }
   });
-
 
   guardarStockApi(arregloStock,parseInt(paciente.dni));
 }

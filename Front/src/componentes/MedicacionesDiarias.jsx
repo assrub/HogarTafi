@@ -90,7 +90,7 @@ export default function MedicacionesDiarias(){
             try{
                 let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
                 let suma = 0;
-                console.log(medicacionParam)
+    
             let arregloMedicacion = [];
             //saca los nulos
             tablaMedicamentos.forEach((item, index) => {
@@ -126,7 +126,9 @@ export default function MedicacionesDiarias(){
             formData.append("medicamento",medicacionParam);
             const response = await actualizarStockApi(paciente.dni,formData);
             console.log(await response)
-
+            if(response.status === 404){
+              alert("Estas restando mas cantidad de la que hay en stock")
+            }
             }catch(error)
             {console.error(error)
 
@@ -138,7 +140,7 @@ export default function MedicacionesDiarias(){
           try{
               let tablaMedicamentos = convertirTablaAJson(medicamentosRef);
               let suma = 0;
-              console.log(medicacionParam)
+       
           let arregloMedicacion = [];
           //saca los nulos
           tablaMedicamentos.forEach((item, index) => {
@@ -164,7 +166,6 @@ export default function MedicacionesDiarias(){
                     parseInt(element.Almuerzo) + parseInt(element.Merienda) +
                     parseInt(element.Cena) +parseInt(element["22:30"]);
 
-            console.log(suma)
           }
         });
  
@@ -174,7 +175,7 @@ export default function MedicacionesDiarias(){
           formData.append("medicamento",medicacionParam);
           const response = await actualizarStockApi(paciente.dni,formData);
           console.log(await response)
-
+         
           }catch(error)
           {console.error(error)
 
@@ -210,7 +211,7 @@ export default function MedicacionesDiarias(){
           </div>
     
           {paciente.dni && (
-            <div className="lg:grid lg:place-content-center">
+            <div className="lg:grid ">
               <div className="tabla-medicamentos lg:mx-4 my-6">
                 <TablaMedicamentos
                   dni={paciente.dni}

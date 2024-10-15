@@ -129,7 +129,7 @@ export function BarraNavegacion() {
               </div>
               )}
             
-              {console.log(usuario.tipo=="admin")}
+        
             {usuario.tipo == "admin" && (
                 <div className="lista-de-usuarios p-3">
                 <Link

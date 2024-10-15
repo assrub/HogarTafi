@@ -24,7 +24,7 @@ export default function Pedidos(){
 
     useEffect(()=>{
         buscarStockFaltante();
-    },[,stocks])
+    },[,stocks,stockFaltante])
 
     function buscarStockFaltante() {
         const nuevoStockFaltante = [];
