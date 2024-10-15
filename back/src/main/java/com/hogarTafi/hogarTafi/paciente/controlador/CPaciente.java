@@ -35,7 +35,14 @@ public class CPaciente {
         List<Map<String, Object>> pacientesConFotos = servicioPacientes.obtenerPacientesConFotos();
         return ResponseEntity.ok(pacientesConFotos);
     }
-    
+
+    @GetMapping("/inactivos")
+    public ResponseEntity<List<Map<String, Object>>> pacientesInactivos() {
+        List<Map<String, Object>> pacientesInactivos = servicioPacientes.pacientesInactivos();
+        return ResponseEntity.ok(pacientesInactivos);
+    }
+
+
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Map<String, String>> guardarPaciente(@RequestParam("dni") Integer dni,
                                                                @RequestParam("nombre") String nombre,

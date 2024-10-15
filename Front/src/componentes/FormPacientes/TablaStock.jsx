@@ -1,7 +1,7 @@
 import React, { useEffect, useState, forwardRef } from "react";
 import { traerStockApi } from "../../api";
 
-const TablaStock = forwardRef(({ dni }, ref) => {
+const TablaStock = forwardRef(({ dni, stockHogar = false }, ref) => {
   const [rows, setRows] = useState([{ medicacion: '', cantidad: '', cantidadMinima: '', added: false, isEditing: true }]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');

@@ -19,4 +19,6 @@ public interface SPaciente {
     String convertirABase64(byte[] bytes);
 
     List<Map<String, Object>> obtenerPacientesConFotos();
+
+    List<Map<String, Object>> pacientesInactivos();
 }

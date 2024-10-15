@@ -4,6 +4,13 @@ export async function todosLosPacientes() {
   return data;
 }
 
+export async function pacientesInactivos() {
+    const response = await fetch("http://localhost:8080/pacientes/inactivos");
+    const data = await response.json();
+    return data;
+  }
+
+
 export async function registrarPaciente(formData) {
     try {
                
@@ -259,3 +266,4 @@ export async function eliminarFotoApi(dni,id){
         return error;
     }
 }
+

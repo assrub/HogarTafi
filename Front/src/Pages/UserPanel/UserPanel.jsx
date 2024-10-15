@@ -12,6 +12,7 @@ import FotosFamiliares from "../../componentes/FotosFamiliares.jsx";
 import Pedidos from "../../componentes/Pedidos.jsx";
 import { traerTodosLosSotcksApi } from "../../api.js";
 import { contextoSesionUsuario } from "../../contexto/sesionUsuario.jsx";
+import StockDelHogar from "../../componentes/StockDelHogar.jsx";
 
 
 async function botonClick() {
@@ -46,7 +47,7 @@ function UserPanel() {
           <Route path="paciente/registrar" element={<RegistrarPacientes />} />
           <Route path="paciente/modificar" element={<FormPacientes />} />
           <Route path="paciente/medicacionesDiarias" element={<MedicacionesDiarias />} />
-          <Route path="stockDelHogar" />
+          <Route path="stockDelHogar" element={<StockDelHogar/>}/>
           <Route path="pedidos" element={<Pedidos />} />
           <Route path="fotos" element={<FotosFamiliares />} />
           <Route path="listaDeUsuarios" element={<ListadoUsuarios />} />

@@ -117,5 +117,27 @@ public class SIPaciente implements SPaciente {
             })
             .collect(Collectors.toList());
     }
+
+
+    @Override
+    public List<Map<String, Object>> pacientesInactivos() {
+        List<EPaciente> pacientes = repositorioPacientes.findAll();
+
+        return pacientes.stream()
+                .filter(paciente -> !paciente.getActivo()) // Filtra solo los pacientes activos
+                .map(paciente -> {
+                    Map<String, Object> pacienteMap = new HashMap<>();
+                    pacienteMap.put("dni", paciente.getDni());
+                    pacienteMap.put("nombre", paciente.getNombre());
+                    pacienteMap.put("apellido", paciente.getApellido());
+                    pacienteMap.put("obraSocial", paciente.getObraSocial());
+                    pacienteMap.put("observaciones", paciente.getObservaciones());
+
+
+
+                    return pacienteMap;
+                })
+                .collect(Collectors.toList());
+    }
     
 }
