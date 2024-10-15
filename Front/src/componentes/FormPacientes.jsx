@@ -12,12 +12,16 @@ import CartelAviso from "./CartelAviso";
 function FormPacientes() {
 
 
-  const [mensaje, setMensaje] = useState("");
+  
   const [modificado,setModificado] = useState(false);
-  const [mostrarCartel, setMostrarCartel] = useState(false)
+  const [mensaje, setMensaje] = useState("");
+  const [mostrarCartel, setMostrarCartel] = useState(false);
+  const toggleModal = () => setMostrarCartel(!mostrarCartel);
+
+  
   const [campoIncompleto, setCampoIncompleto] = useState(false);
 
-  const toggleModal = () => setMostrarCartel(!mostrarCartel);
+
 
   const [mostrarStock, setMostrarStock] = useState(false);
   const [mostrarMedicamentos, SetMostrarMedicamentos] = useState(false);

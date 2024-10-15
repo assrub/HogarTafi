@@ -2,8 +2,15 @@ import React, {useState, useEffect, useRef} from "react";
 import Boton from "./Boton";
 import { todosLosPacientes, actualizarStockApi } from "../api";
 import TablaMedicamentos from "./FormPacientes/TablaMedicamentos";
+import CartelAviso from "./CartelAviso";
 
 export default function MedicacionesDiarias(){
+
+  const [mensaje, setMensaje] = useState("");
+  const [mostrarCartel, setMostrarCartel] = useState(false);
+  const toggleModal = () => setMostrarCartel(!mostrarCartel);
+
+
     const [pacientes,setPacientes] = useState([])
     const [paciente, setPaciente] = useState({
         nombre: "",
@@ -127,12 +134,19 @@ export default function MedicacionesDiarias(){
             const response = await actualizarStockApi(paciente.dni,formData);
             console.log(await response)
             if(response.status === 404){
-              alert("Estas restando mas cantidad de la que hay en stock")
+              setMensaje("No hay suficiente stock de " + medicacionParam + " para restar.");
+              toggleModal();
+            }else if(response.status === 200){
+              setMensaje("Medicacion restada correctamente.");
+              toggleModal();
             }
             }catch(error)
             {console.error(error)
 
             }
+
+           
+             
         }
 
 
@@ -174,8 +188,18 @@ export default function MedicacionesDiarias(){
           formData.append("sumar",suma);
           formData.append("medicamento",medicacionParam);
           const response = await actualizarStockApi(paciente.dni,formData);
-          console.log(await response)
-         
+          console.log(await response.status)
+
+          if(response.status == 200){
+            setMensaje("Medicacion sumada correctamente.");
+            
+
+          }else if(response.status == 404 ) {
+            setMensaje("Error al sumar la medicacion al stock");
+           
+          }
+          toggleModal();
+
           }catch(error)
           {console.error(error)
 
@@ -228,6 +252,14 @@ export default function MedicacionesDiarias(){
               </div>
             </div>
           )}
+        </div>
+
+        <div className="modal">
+          <CartelAviso
+            abrirModal={mostrarCartel}
+            cerrarModal={toggleModal}
+            mensaje={mensaje}
+          />
         </div>
       </div>
     </>
