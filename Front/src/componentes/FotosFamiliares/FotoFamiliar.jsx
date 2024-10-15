@@ -19,7 +19,9 @@ export default function FotoFamiliar({ objFoto, tipoUsuario, onClickEliminar }) 
           <div className="eliminar flex justify-center">
             <button
             onClick={() => onClickEliminar(objFoto)}
-            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-300 ease-in-out transform hover:scale-105 flex align-end">
+            className="px-4 py-2 bg-red-500 text-white rounded 
+            hover:bg-red-600 transition duration-300 ease-in-out 
+            transform hover:scale-105 flex align-bottom">
               Eliminar
             </button>
           </div>

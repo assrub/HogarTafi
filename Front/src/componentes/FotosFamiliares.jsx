@@ -30,6 +30,7 @@ export default function FotosFamiliares() {
   const [fotoSinConvertir, setFotoSinConvertir] = useState(null);
   //Fotos que se trae del backend.
   const [fotosBackend, setFotosBackend] = useState([]);
+  const [fotoEliminada, setFotoEliminada] = useState(false);
 
   function abrirMenuCargarFotos() {
     setMenuCargarFotos(true);
@@ -87,11 +88,16 @@ export default function FotosFamiliares() {
       arregloDni.forEach(dni => {
         response =  eliminarFotoApi(dni,foto.id);
       });
+
+      if (response) {
+        setFotosBackend(prevFotos => prevFotos.filter(f => f.id !== foto.id));
+        setFotoEliminada(prev => !prev);
+      }
     }
   useEffect(() => {
     traerTodasLasFotos();
   
-  }, [,menuCargarFotos, fotosBackend]);
+  }, [,menuCargarFotos, fotoEliminada]);
 
   const handleTextAreaChange = (e) => {
     setDescripcion(e.target.value);
