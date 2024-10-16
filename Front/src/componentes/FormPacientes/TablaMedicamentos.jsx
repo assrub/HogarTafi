@@ -106,26 +106,31 @@ const TablaMedicamentos = forwardRef(({ dni, menuMedicaionpaciente = false, medi
 
 
   async function traerMedicamentos(dni) {
-    try {
-      const response = await traerMedicamentosApi(dni);
-      if (response.medicamentos) {
-        setMedicamentos(transformarMedicamentos(response.medicamentos));
-
-      } else {
-        setMedicamentos([
-          {
-            medicamento: "",
-            horario: horasDelDia.reduce((acc, hora) => ({ ...acc, [hora]: "" }), {}),
-            observaciones: "",
-            editable: false,
-          },
-        ])
-      }
-    } catch (error) {
-      console.error(error)
+  try {
+    const response = await traerMedicamentosApi(dni);
+    if (response.status == 404) {
+      setMedicamentos([
+        {
+          medicamento: "",
+          horario: horasDelDia.reduce((acc, hora) => ({ ...acc, [hora]: "" }), {}),
+          observaciones: "",
+          editable: false,
+        },
+      ]);
+      return;
     }
 
+  
+    if (response.status == 200) {
+      const data = await response.json();
+      setMedicamentos(transformarMedicamentos(data.medicamentos));
+    } else {
+      console.error(`Error: respuesta inesperada con código ${response.status}`);
+    }
+  } catch (error) {
+    console.error("Error al traer los medicamentos:", error);
   }
+}
 
   //esta funcion es porque el estado de medicamentos en este componente y los medicamentos que estan en la base de datos tienen diferente forma
   function transformarMedicamentos(medicamentosBackend) {
@@ -148,20 +153,28 @@ const TablaMedicamentos = forwardRef(({ dni, menuMedicaionpaciente = false, medi
   async function traerStock(dni) {
     try {
       const response = await traerStockApi(dni);
-      if (response) {
-        setStock(transformarStock(response.medicamentos));
-      } else {
+      // Verificamos si el estado es 404 antes de intentar parsear el JSON
+      if (response.status == 404) {
         setStock([
           {
             medicacion: "",
             cantidad: "",
             cantidadMinima: ""
           }
-        ])
+        ]);
+        return; // Salimos de la función porque ya manejamos el 404
       }
-
+  
+      // Si el estado es 200, procesamos la respuesta
+      if (response.status == 200) {
+        const data = await response.json();
+        setStock(transformarStock(data.medicamentos));
+      } else {
+        console.error(`Error: respuesta inesperada con código ${response.status}`);
+      }
+  
     } catch (error) {
-      console.error(error);
+      console.error("Error al traer el stock:", error);
     }
   }
 
@@ -175,8 +188,9 @@ const TablaMedicamentos = forwardRef(({ dni, menuMedicaionpaciente = false, medi
   }
 
   useEffect(() => {
-    traerMedicamentos(dni);
+    
     traerStock(dni);
+    traerMedicamentos(dni);
   }, [dni])
 
   return (

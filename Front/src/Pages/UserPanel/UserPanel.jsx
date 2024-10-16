@@ -13,6 +13,7 @@ import Pedidos from "../../componentes/Pedidos.jsx";
 import { traerTodosLosSotcksApi } from "../../api.js";
 import { contextoSesionUsuario } from "../../contexto/sesionUsuario.jsx";
 import StockDelHogar from "../../componentes/StockDelHogar.jsx";
+import FormPaciente2 from "../../componentes/FormPaciente2.jsx";
 
 
 async function botonClick() {
@@ -52,6 +53,7 @@ function UserPanel() {
           <Route path="fotos" element={<FotosFamiliares />} />
           <Route path="listaDeUsuarios" element={<ListadoUsuarios />} />
           <Route path="perfil" element={<Perfil />} />
+          <Route path="paciente/modifica" element={<FormPaciente2></FormPaciente2>}></Route>
         </Routes>
       </div>
     </div>

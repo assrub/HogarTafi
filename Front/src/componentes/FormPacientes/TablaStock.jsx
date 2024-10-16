@@ -84,14 +84,32 @@ const TablaStock = forwardRef(({ dni, stockHogar = false }, ref) => {
   async function traerStock(dni) {
     try {
       const response = await traerStockApi(dni);
-      if (response) {
-        const transformedRows = transformarStock(response.medicamentos);
-        setRows([...transformedRows, { medicacion: "", cantidad: "", cantidadMinima: "", added: false, isEditing: true }]);
-      } else {
-        setRows([{ medicacion: "", cantidad: "", cantidadMinima: "", added: false, isEditing: true }]);
+  
+      if (response.status == 404) {
+        setRows([
+          {
+            medicacion: "",
+            cantidad: "",
+            cantidadMinima: "",
+            added: false,
+            isEditing: true
+          }
+        ]);
+        return;
       }
+  
+      if (response.status == 200) {
+        const data = await response.json();
+        const stockCargado = transformarStock(data.medicamentos);
+  
+        // Agregar una fila vacía para permitir agregar nuevas filas
+        setRows([...stockCargado, { medicacion: "", cantidad: "", cantidadMinima: "", added: false, isEditing: true }]);
+      } else {
+        console.error(`Error: respuesta inesperada con código ${response.status}`);
+      }
+  
     } catch (error) {
-      console.error(error);
+      console.error("Error al traer el stock:", error);
     }
   }
   
@@ -128,62 +146,57 @@ const TablaStock = forwardRef(({ dni, stockHogar = false }, ref) => {
             </tr>
           </thead>
           <tbody>
-            {rows.map((row, index) => (
-              <tr key={index} className={`border border-[#181818] ${row.isEditing ? 'bg-white' : 'bg-gray-300'} ${row.added ? 'bg-gray-200' : ''}`}>
-                <td className="border border-[#181818]">
-                  <input
-                    className={`w-full h-full text-center ${row.isEditing ? 'bg-white' : 'bg-gray-300'} border-none rounded-none`}
-                    type="text"
-                    name="medicacion"
-                    value={row.medicacion}
-                    onChange={(event) => handleInputChange(index, event)}
-                    disabled={!row.isEditing}
-                    style={{ boxSizing: 'border-box', margin: '0', padding: '0' }} 
-                  />
-                </td>
-                <td className="border border-[#181818]">
-                  <input
-                    className={`w-full h-full text-center ${row.isEditing ? 'bg-white' : 'bg-gray-300'} border-none rounded-none`}
-                    type="number"
-                    name="cantidad"
-                    value={row.cantidad}
-                    onChange={(event) => handleInputChange(index, event)}
-                    disabled={!row.isEditing}
-                    style={{ boxSizing: 'border-box', margin: '0', padding: '0' }} 
-                  />
-                </td>
-                <td className="border border-[#181818]">
-                  <input
-                    className={`w-full h-full text-center ${row.isEditing ? 'bg-white' : 'bg-gray-300'} border-none rounded-none`}
-                    type="number"
-                    name="cantidadMinima"
-                    value={row.cantidadMinima}
-                    onChange={(event) => handleInputChange(index, event)}
-                    disabled={!row.isEditing}
-                    style={{ boxSizing: 'border-box', margin: '0', padding: '0' }} 
-                  />
-                </td>
-                <td className="border border-[#181818]">
-                  <div className="flex justify-center gap-2">
-                    {index === rows.length - 1 ? (
-                      <button 
-                        className="text-green-500"
-                        onClick={() => handleAddRow(index)} // Cambia aquí para pasar el índice actual
-                      >
-                        Agregar
-                      </button>
-                    ) : row.isEditing ? (
-                      <button className="text-blue-600" onClick={() => { handleSaveEdit(index); }}>Guardar</button>
-                    ) : (
-                      <button className="text-gray-600" onClick={() => handleEditRow(index)}>Modificar</button>
-                    )}
-                    {index < rows.length - 1 && (
-                      <button className="text-red-600" onClick={() => handleRemoveRow(index)}>Eliminar</button>
-                    )}
-                  </div>
-                </td>
-              </tr>
-            ))}
+          {rows.map((row, index) => (
+  <tr key={index} className={`border border-[#181818] ${row.isEditing ? 'bg-white' : 'bg-gray-300'} ${row.added ? 'bg-gray-200' : ''}`}>
+    <td className="border border-[#181818]">
+      <input
+        className={`w-full h-full text-center ${row.isEditing ? 'bg-white' : 'bg-gray-300'} border-none rounded-none`}
+        type="text"
+        name="medicacion"
+        value={row.medicacion}
+        onChange={(event) => handleInputChange(index, event)}
+        disabled={!row.isEditing}
+        style={{ boxSizing: 'border-box', margin: '0', padding: '0' }} 
+      />
+    </td>
+    <td className="border border-[#181818]">
+      <input
+        className={`w-full h-full text-center ${row.isEditing ? 'bg-white' : 'bg-gray-300'} border-none rounded-none`}
+        type="number"
+        name="cantidad"
+        value={row.cantidad}
+        onChange={(event) => handleInputChange(index, event)}
+        disabled={!row.isEditing}
+        style={{ boxSizing: 'border-box', margin: '0', padding: '0' }} 
+      />
+    </td>
+    <td className="border border-[#181818]">
+      <input
+        className={`w-full h-full text-center ${row.isEditing ? 'bg-white' : 'bg-gray-300'} border-none rounded-none`}
+        type="number"
+        name="cantidadMinima"
+        value={row.cantidadMinima}
+        onChange={(event) => handleInputChange(index, event)}
+        disabled={!row.isEditing}
+        style={{ boxSizing: 'border-box', margin: '0', padding: '0' }} 
+      />
+    </td>
+    <td className="border border-[#181818]">
+      <div className="flex justify-center gap-2">
+        {index === rows.length - 1 && !row.added ? (
+          <button className="text-green-500" onClick={() => handleAddRow(index)}>Agregar</button>
+        ) : row.isEditing ? (
+          <button className="text-blue-600" onClick={() => handleSaveEdit(index)}>Guardar</button>
+        ) : (
+          <>
+            <button className="text-gray-600" onClick={() => handleEditRow(index)}>Modificar</button>
+            <button className="text-red-600" onClick={() => handleRemoveRow(index)}>Eliminar</button>
+          </>
+        )}
+      </div>
+    </td>
+  </tr>
+))}
           </tbody>
         </table>
       </div>

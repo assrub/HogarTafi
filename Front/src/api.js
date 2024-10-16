@@ -63,7 +63,7 @@ export async function guardarStockApi(arregloStock, dni){
 
 export async function traerStockApi(dni){
     const response = await fetch(`http://localhost:8080/stock/${dni}`);
-  const data = await response.json();
+  const data = await response;
   return data;
 }
 
@@ -93,8 +93,8 @@ function imprimirFormData(formData){
 
 export async function traerMedicamentosApi(dni){
     const response = await fetch(`http://localhost:8080/medicamento/${dni}`);
-  const data = await response.json();
-  return data;
+  const data = await response;
+   return data;
 }
 
 export async function registrarUsuarioApi(formData) {
