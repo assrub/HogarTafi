@@ -127,6 +127,24 @@ public class SIUsuario implements SUsuario{
     }
 
     @Override
+    public boolean activarUsuario(Integer dni) {
+        // Obtener el usuario existente
+        EUsuario usuario = buscarUsuarioPorDni(dni);
+
+
+        if (usuario.getActivo()) {
+            throw new IllegalArgumentException("El usuario ya está activo.");
+        }else{
+            // Si el paciente está activo, se desactiva
+            usuario.setActivo(true);
+            repositorioUsuario.save(usuario);
+            return true; // Usuario desactivado con éxito
+        }
+    }
+
+
+
+    @Override
     public String convertirABase64(byte[] bytes) {
         return Base64.getEncoder().encodeToString(bytes);
     }

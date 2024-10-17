@@ -133,6 +133,17 @@ export  async function desactivarUsuarioApi(dni){
     
 }
 
+export async function activarUsuarioApi(dni){
+    try{
+        const response = await fetch(`http://localhost:8080/usuarios/activar/${dni}`, {
+            method: "PATCH",
+        });
+        return response
+    }catch(error){
+        console.error(error);
+    }
+}
+
 export async function iniciarSesionApi(datosUsuario){
     try {
                

@@ -187,5 +187,26 @@ public class CUsuario {
             response.put("message", "Error al desactivar el Usuario.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
-    }  
+    }
+
+    @PatchMapping("/activar/{dni}")
+    public ResponseEntity<Map<String, String>> activarUSuario(@PathVariable Integer dni) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            usuarioService.activarUsuario(dni);
+            response.put("message", "Usuario activado.");
+            return ResponseEntity.ok(response);
+        } catch (NoSuchElementException e) {
+            response.put("message", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        } catch (IllegalArgumentException e) {
+            response.put("message", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        } catch (Exception e) {
+            response.put("message", "Error al activar el Usuario.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, forwardRef } from "react";
 import { traerStockApi } from "../../api";
+import Boton from "../Boton";
 
 const TablaStock = forwardRef(({ dni, stockHogar = false }, ref) => {
   const [rows, setRows] = useState([{ medicacion: '', cantidad: '', cantidadMinima: '', added: false, isEditing: true }]);
@@ -107,6 +108,7 @@ const TablaStock = forwardRef(({ dni, stockHogar = false }, ref) => {
       } else {
         console.error(`Error: respuesta inesperada con código ${response.status}`);
       }
+      
   
     } catch (error) {
       console.error("Error al traer el stock:", error);
@@ -218,6 +220,13 @@ const TablaStock = forwardRef(({ dni, stockHogar = false }, ref) => {
           </div>
         </div>
       )}
+
+  <div className="boton grid justify-items-center">
+                  <Boton
+                    textoBoton="Guardar stock"
+                    onClick={() => guardarStock(stockRef)}
+                  ></Boton>
+                </div>
 
     </>
   );

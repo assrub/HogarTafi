@@ -15,4 +15,5 @@ public interface SUsuario {
     List<Map<String, Object>> obtenerUsuariosConFotos();
     EUsuario iniciarSesion(String nombreDeUsuario, String password);
     EUsuario buscarPorEmail(String email);
+    boolean activarUsuario(Integer dni);
 }
