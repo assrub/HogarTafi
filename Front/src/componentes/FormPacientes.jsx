@@ -203,8 +203,6 @@ async function guardarMedicamentos(medicamentosRef) {
   setMensaje("Error al guardar los medicamentos");
  }
  toggleModal();
-  
-
 }
 
 

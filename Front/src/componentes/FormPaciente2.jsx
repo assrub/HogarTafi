@@ -7,8 +7,8 @@ import {
 } from "../api";
 import Boton from "./Boton"; // Ajusta la ruta si es necesario
 import DatosPaciente from "./FormPacientes/DatosPaciente";
-import TablaStock from "./FormPacientes/TablaStock";
-import TablaMedicamentos from "./FormPacientes/TablaMedicamentos";
+import TablaStock from "./FormPacientes/TablaStock2";
+import TablaMedicamentos from "./FormPacientes/TablaMedicamentos2";
 import Foto from "./FormPacientes/Foto2";
 import CartelAviso from "./CartelAviso";
 
@@ -141,13 +141,9 @@ function FormPaciente2() {
 
           <div className="contenido-seccion w-full bg-gray-100 p-4 rounded-lg">
             {seccionActiva === "Datos" && <DatosPaciente paciente={paciente} />}
-            {seccionActiva === "Stock" && <TablaStock dni={paciente.dni} />}
-            {seccionActiva === "Medicamentos" && (
-              <TablaMedicamentos dni={paciente.dni} />
-            )}
-            {seccionActiva === "Fotos" && (
-              <Foto textoFoto="fotoFrenteDni" paciente={paciente} />
-            )}
+            {seccionActiva === "Stock" && <TablaStock paciente={paciente} />}
+            {seccionActiva === "Medicamentos" && (<TablaMedicamentos paciente={paciente} />)}
+            {seccionActiva === "Fotos" && (<Foto textoFoto="fotoFrenteDni" paciente={paciente} />)}
 
             <div className="modal">
               <CartelAviso
