@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
 import CampoTexto from "./CampoTexto";
-import { modificarPaciente } from "../../api"; // Asegúrate de que esto esté bien importado
+import { modificarPaciente } from "../../api"; 
+import CartelAviso from "../CartelAviso";
 
 function DatosPaciente({ paciente }) {
+
+    const [mensaje, setMensaje] = useState("");
+    const [mostrarCartel, setMostrarCartel] = useState(false);
+    const toggleModal = () => setMostrarCartel(!mostrarCartel);
+
     const [pacienteState, setPacienteState] = useState({
         nombre: "",
         apellido: "",
@@ -38,13 +44,23 @@ function DatosPaciente({ paciente }) {
         formData.append("obraSocial", pacienteState.obraSocial);
         formData.append("observaciones", pacienteState.observaciones);
 
-        // En este caso no enviamos las imagenes (Cuando el back recibe null no hace nada en las imagenes)
+
         formData.append("fotoFrenteDni", null);
         formData.append("fotoAtrasDni", null);
         formData.append("fotoFrenteCarnet", null);
         formData.append("fotoAtrasCarnet", null);
         const response = await modificarPaciente(parseInt(pacienteState.dni), formData);
-        // Maneja la respuesta según sea necesario
+
+        if(response.status == 200){
+            setMensaje("Paciente modificado correctamente.");
+            
+
+          }else if(response.status == 404 ) {
+            setMensaje("Error al modificar los datos del paciente.");
+           
+          }
+          toggleModal();
+
     }
 
     return (<div className="formulario grid grid-cols-1 mx-auto justify-items-center max-w-xl">
@@ -127,6 +143,13 @@ function DatosPaciente({ paciente }) {
                     </button>
                 </div>
             </form>
+        </div>
+        <div className="modal">
+          <CartelAviso
+            abrirModal={mostrarCartel}
+            cerrarModal={toggleModal}
+            mensaje={mensaje}
+          />
         </div>
     </div>
     );
