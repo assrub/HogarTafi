@@ -1,11 +1,13 @@
+const direccionIp = "192.168.100.103"
+
 export async function todosLosPacientes() {
-  const response = await fetch("http://localhost:8080/pacientes");
+  const response = await fetch(`http://${direccionIp}:8080/pacientes`);
   const data = await response.json();
   return data;
 }
 
 export async function pacientesInactivos() {
-    const response = await fetch("http://localhost:8080/pacientes/inactivos");
+    const response = await fetch(`http://${direccionIp}:8080/pacientes/inactivos`);
     const data = await response.json();
     return data;
   }
@@ -14,7 +16,7 @@ export async function pacientesInactivos() {
 export async function registrarPaciente(formData) {
     try {
                
-        const response = await fetch("http://localhost:8080/pacientes", {
+        const response = await fetch(`http://${direccionIp}:8080/pacientes`, {
             method: "POST",
             body: formData,
         });
@@ -28,7 +30,7 @@ export async function registrarPaciente(formData) {
 
 
 export async function desactivarPAcientes(dni){
-    const response = await fetch(`http://localhost:8080/pacientes/desactivar/${dni}`, {
+    const response = await fetch(`http://${direccionIp}:8080/pacientes/desactivar/${dni}`, {
         method: "PATCH",
     });
     return response
@@ -36,7 +38,7 @@ export async function desactivarPAcientes(dni){
 }
 
 export async function modificarPaciente(dni, formData){
-    const response = await fetch(`http://localhost:8080/pacientes/modificar/${dni}`, {
+    const response = await fetch(`http://${direccionIp}:8080/pacientes/modificar/${dni}`, {
         method: "PATCH",
         body: formData
     });
@@ -47,7 +49,7 @@ export async function modificarPaciente(dni, formData){
 export async function guardarStockApi(arregloStock, dni){
     try {
                
-        const response = await fetch(`http://localhost:8080/stock/${dni}`, {
+        const response = await fetch(`http://${direccionIp}:8080/stock/${dni}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",  
@@ -62,14 +64,14 @@ export async function guardarStockApi(arregloStock, dni){
 }
 
 export async function traerStockApi(dni){
-    const response = await fetch(`http://localhost:8080/stock/${dni}`);
+    const response = await fetch(`http://${direccionIp}:8080/stock/${dni}`);
   const data = await response;
   return data;
 }
 
 export async function guardarMedicamentosApi(arregloMedicamento, dni) {
     try {
-        const response = await fetch(`http://localhost:8080/medicamento/${dni}`, {
+        const response = await fetch(`http://${direccionIp}:8080/medicamento/${dni}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",  
@@ -92,7 +94,7 @@ function imprimirFormData(formData){
 }
 
 export async function traerMedicamentosApi(dni){
-    const response = await fetch(`http://localhost:8080/medicamento/${dni}`);
+    const response = await fetch(`http://${direccionIp}:8080/medicamento/${dni}`);
   const data = await response;
    return data;
 }
@@ -100,7 +102,7 @@ export async function traerMedicamentosApi(dni){
 export async function registrarUsuarioApi(formData) {
     try {
                
-        const response = await fetch("http://localhost:8080/usuarios", {
+        const response = await fetch(`http://${direccionIp}:8080/usuario`, {
             method: "POST",
             body: formData,
         });
@@ -114,7 +116,7 @@ export async function registrarUsuarioApi(formData) {
 }
 
 export default async function traerUsuariosApi(){
-    const response = await fetch("http://localhost:8080/usuarios");
+    const response = await fetch(`http://${direccionIp}:8080/usuarios`);
     const data = await response.json();
 
 
@@ -123,7 +125,7 @@ export default async function traerUsuariosApi(){
 
 export  async function desactivarUsuarioApi(dni){
     try{
-        const response = await fetch(`http://localhost:8080/usuarios/desactivar/${dni}`, {
+        const response = await fetch(`http://${direccionIp}:8080/usuarios/desactivar/${dni}`, {
             method: "PATCH",
         });
         return response
@@ -135,7 +137,7 @@ export  async function desactivarUsuarioApi(dni){
 
 export async function activarUsuarioApi(dni){
     try{
-        const response = await fetch(`http://localhost:8080/usuarios/activar/${dni}`, {
+        const response = await fetch(`http://${direccionIp}:8080/usuarios/activar/${dni}`, {
             method: "PATCH",
         });
         return response
@@ -146,8 +148,7 @@ export async function activarUsuarioApi(dni){
 
 export async function iniciarSesionApi(datosUsuario){
     try {
-               
-        const response = await fetch('http://localhost:8080/usuarios/inicioSesion', {
+        const response = await fetch(`http://${direccionIp}:8080/usuarios/inicioSesion`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -165,7 +166,7 @@ export async function iniciarSesionApi(datosUsuario){
 
 export async function restarMedicaionApi(arregloMedicamento,dni){
     try {
-        const response = await fetch(`http://localhost:8080/stock/${dni}`, {
+        const response = await fetch(`http://${direccionIp}:8080/stock/${dni}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",  
@@ -181,7 +182,7 @@ export async function restarMedicaionApi(arregloMedicamento,dni){
   }
 
   export async function traerTodosLosSotcksApi(){
-    const response = await fetch("http://localhost:8080/stock/todosLosStocks");
+    const response = await fetch(`http://${direccionIp}:8080/stock/todosLosStocks`);
   const data = await response.json();
   return data;
   }
@@ -190,7 +191,7 @@ export async function restarMedicaionApi(arregloMedicamento,dni){
   export async function recuperarContraApi(formData){
     try {
                
-        const response = await fetch("http://localhost:8080/send-mail", {
+        const response = await fetch(`http://${direccionIp}:8080/send-mail`, {
             method: "POST",
             body: formData,
         });
@@ -208,7 +209,7 @@ export async function restarMedicaionApi(arregloMedicamento,dni){
 export async function nuevosDatosApi(formData){
     try {
                
-        const response = await fetch("http://localhost:8080/api/token", {
+        const response = await fetch(`http://${direccionIp}:8080/api/token`, {
             method: "POST",
             body: formData,
         });
@@ -224,7 +225,7 @@ export async function nuevosDatosApi(formData){
 export async function guardarFotoDamiliarApi(formData){
     try {
                
-        const response = await fetch("http://localhost:8080/api/fotos", {
+        const response = await fetch(`http://${direccionIp}:8080/api/fotos`, {
             method: "POST",
             body: formData,
         });
@@ -236,21 +237,21 @@ export async function guardarFotoDamiliarApi(formData){
 }
 
 export async function traerTodasLasFotosApi(){
-    const response = await fetch("http://localhost:8080/api/fotos");
+    const response = await fetch(`http://${direccionIp}:8080/api/fotos`);
   const data = await response.json();
   return data;
 }
 
 export async function traerTodasLasFotosDniApi(dniAsociado){
-    const response = await fetch(`http://localhost:8080/api/fotos/${dniAsociado}`);
-  const data = await response.json();
-  return data;
+    const response = await fetch(`http://${direccionIp}:8080/api/fotos/${dniAsociado}`);
+    const data = await response.json();
+    return data;
 }
 
 export async function actualizarStockApi(dni,formData){
     try {
                
-        const response = await fetch(`http://localhost:8080/stock/${dni}`, {
+        const response = await fetch(`http://${direccionIp}:8080/stock/${dni}`, {
             method: "PATCH",
             body: formData,
         });
@@ -267,7 +268,7 @@ export async function eliminarFotoApi(dni,id){
                const formData = new FormData()
                formData.append("dni",dni);
                formData.append("fotoId",id)
-        const response = await fetch(`http://localhost:8080/api/fotos`, {
+        const response = await fetch(`http://${direccionIp}:8080/api/fotos`, {
             method: "DELETE",
             body: formData,
         });
