@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { contextoSesionUsuario } from "../contexto/sesionUsuario.jsx";
 import Chip from "@mui/material/Chip";
 import { todosLosPacientes } from "../api.js";
-import Boton from "./Boton.jsx";
+import Boton from "./Botones/Boton.jsx";
 import {eliminarFotoApi ,guardarFotoDamiliarApi, traerTodasLasFotosDniApi ,traerTodasLasFotosApi } from "../api.js";
 import FotoFamiliar from "./FotosFamiliares/FotoFamiliar.jsx";
 

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
-import Boton from "./Boton";
+import Boton from "./Botones/Boton";
 import { todosLosPacientes, actualizarStockApi } from "../api";
 import TablaMedicamentos from "./FormPacientes/TablaMedicamentos";
 import CartelAviso from "./CartelAviso";

@@ -1,5 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { traerStockApi, guardarStockApi} from "../../api";
+import React, {useEffect, useState} from "react";
+import {traerStockApi, guardarStockApi} from "../../api";
+import BotonEditar from '../Botones/BotonEditar';
+import BotonEliminar from '../Botones/BotonEliminar';
+import BotonEditarMovil from '../Botones/BotonEditarMovil';
+import BotonEliminarMovil from '../Botones/BotonEliminarMovil';
+import BotonActualizar from './../Botones/BotonActualizar';
+import BotonAgregar from './../Botones/BotonAgregar';
+import EliminacionModal from './../Modal/EliminacionModal';
 
 const TablaStock = ({ paciente }) => {
   const [rows, setRows] = useState([{ medicacion: '', cantidad: '', cantidadMinima: '', added: false, isEditing: true }]);
@@ -129,94 +136,134 @@ const TablaStock = ({ paciente }) => {
 
   return (
     <>
-      <div className="max-w-[400px] mx-auto bg-transparent rounded-lg">
-        <table className="lg:table min-w-full table-auto text-xs sm:text-xs bg-white">
-          <thead>
-            <tr className="bg-gray-400 text-white">
-              <th className="px-4 py-2 border border-gray-300">MEDICACION</th>
-              <th className="px-4 py-2 border border-gray-300">CANTIDAD</th>
-              <th className="px-4 py-2 border border-gray-300">CANTIDAD MINIMA</th>
-              <th className="px-4 py-2 border border-gray-300">ACCIONES</th>
+    <div className="border rounded-lg p-2 shadow-md overflow-x-auto">
+      <table className="hidden lg:table min-w-full table-auto text-xs sm:text-xs bg-white">
+        <thead>
+          <tr className="bg-gray-400 text-white">
+            <th className="px-4 py-2 border border-gray-300">MEDICACION</th>
+            <th className="px-4 py-2 border border-gray-300">CANTIDAD</th>
+            <th className="px-4 py-2 border border-gray-300">CANTIDAD MINIMA</th>
+            <th className="px-4 py-2 border border-gray-300">ACCIONES</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, index) => (
+            <tr key={index} className={`border border-gray-300 ${row.isEditing ? 'bg-white' : 'bg-gray-200'} ${row.added ? 'bg-gray-200' : ''}`}>
+              <td className="border border-gray-300">
+                <input
+                  className={`w-full py-3 text-center ${row.isEditing ? 'bg-white' : 'bg-gray-200'} rounded-none`}
+                  type="text"
+                  name="medicacion"
+                  value={row.medicacion}
+                  onChange={(event) => handleInputChange(index, event)}
+                  disabled={!row.isEditing}
+                />
+              </td>
+              <td className="border border-gray-300">
+                <input
+                  className={`w-full py-3 text-center ${row.isEditing ? 'bg-white' : 'bg-gray-200'} rounded-none`}
+                  type="number"
+                  name="cantidad"
+                  value={row.cantidad}
+                  onChange={(event) => handleInputChange(index, event)}
+                  disabled={!row.isEditing}
+                />
+              </td>
+              <td className="border border-gray-300">
+                <input
+                  className={`w-full py-3 text-center ${row.isEditing ? 'bg-white' : 'bg-gray-200'} rounded-none`}
+                  type="number"
+                  name="cantidadMinima"
+                  value={row.cantidadMinima}
+                  onChange={(event) => handleInputChange(index, event)}
+                  disabled={!row.isEditing}
+                />
+              </td>
+              <td className="border border-gray-300">
+                <div className="flex justify-center gap-2">
+                  {index === rows.length - 1 && !row.added ? (
+                      <BotonAgregar funcionUno={() => handleAddRow(index)} funcionDos={handleAddRow} /> 
+                  ) : (
+                    <>
+                      <BotonEditar editable={row.isEditing} onGuardar={() => handleSaveEdit(index)} onModificar={() => handleEditRow(index)}/>
+                      <BotonEliminar onClick={() => handleRemoveRow(index)} />
+                    </>
+                  )}
+                </div>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {rows.map((row, index) => (
-              <tr key={index} className={`border border-gray-300 ${row.isEditing ? 'bg-white' : 'bg-gray-200'} ${row.added ? 'bg-gray-200' : ''}`}>
-                <td className="border border-gray-300">
-                  <input
-                    className={`w-full py-3 text-center ${row.isEditing ? 'bg-white' : 'bg-gray-200'} border-none rounded-none`}
-                    type="text"
-                    name="medicacion"
-                    value={row.medicacion}
-                    onChange={(event) => handleInputChange(index, event)}
-                    disabled={!row.isEditing}
-                  />
-                </td>
-                <td className="border border-gray-300">
-                  <input
-                    className={`w-full py-3 text-center ${row.isEditing ? 'bg-white' : 'bg-gray-200'} border-none rounded-none`}
-                    type="number"
-                    name="cantidad"
-                    value={row.cantidad}
-                    onChange={(event) => handleInputChange(index, event)}
-                    disabled={!row.isEditing}
-                  />
-                </td>
-                <td className="border border-gray-300">
-                  <input
-                    className={`w-full py-3 text-center ${row.isEditing ? 'bg-white' : 'bg-gray-200'} border-none rounded-none`}
-                    type="number"
-                    name="cantidadMinima"
-                    value={row.cantidadMinima}
-                    onChange={(event) => handleInputChange(index, event)}
-                    disabled={!row.isEditing}
-                  />
-                </td>
-                <td className="border border-gray-300">
-                  <div className="flex justify-center gap-2">
-                    {index === rows.length - 1 && !row.added ? (
-                      <button className="text-white py-1 border bg-gray-400 w-full hover:bg-gray-300 hover:text-white text-xs md:text-sm" onClick={() => handleAddRow(index)}>Agregar</button>
-                    ) : row.isEditing ? (<>
-                      <button className="ml-2 px-3 py-1 text-black border border-gray-400 shadow-md  hover:bg-gray-400 hover:text-white transition duration-300 text-xs md:text-sm" onClick={() => handleSaveEdit(index)}>Guardar</button>
-                      <button className="ml-2 px-3 py-1 text-black border border-gray-400 shadow-md  hover:bg-gray-400 hover:text-white transition duration-300 text-xs md:text-sm" onClick={() => handleRemoveRow(index)}>Eliminar</button></>
-                    ) : (
-                      <>
-                        <button className="ml-2 px-3 py-1 text-black border border-gray-400 shadow-md  hover:bg-gray-400 hover:text-white transition duration-300 text-xs md:text-sm" onClick={() => handleEditRow(index)}>Modificar</button>
-                        <button className="ml-2 px-3 py-1 text-black border border-gray-400 shadow-md  hover:bg-gray-400 hover:text-white transition duration-300 text-xs md:text-sm" onClick={() => handleRemoveRow(index)}>Eliminar</button>
-                      </>
-                    )}
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="flex justify-end mt-2 p-0"> {/* Alineación a la derecha */}
-          <button
-            className="bg-blue-600 text-white px-4 py-2 rounded "
-            onClick={guardarStock}>
-            Guardar stock
-          </button>
+          ))}
+        </tbody>
+      </table>
+      
+      {/* Modal de confirmación */}
+      <EliminacionModal
+        isOpen={isModalOpen}
+        mensaje="¿Estás seguro de que deseas eliminar esta fila?"
+        onConfirm={confirmDeleteRow}
+        onClose={() => setIsModalOpen(false)}
+      />
+
+      {/* Estructura alternativa para móviles */}
+      <div className="lg:hidden">
+        {rows.map((row, index) => (
+        <div key={index} className={`border border-gray-300 rounded p-4 mb-4 ${row.isEditing ? 'bg-white' : 'bg-gray-100'}`}>
+          <div className="flex items-center mb-4">
+        <span className="font-bold w-1/2 text-center">MEDICACION</span>
+        <input
+          className={`w-1/2 m-1 py-2 text-center border border-gray-400 ${row.isEditing ? 'bg-white' : 'bg-gray-200'} rounded`}
+          type="text"
+          name="medicacion"
+          value={row.medicacion}
+          onChange={(event) => handleInputChange(index, event)}
+          disabled={!row.isEditing}/>
+        </div>
+
+        <div className="flex items-center mb-4">
+          <span className="font-bold w-1/2 text-center">CANTIDAD</span>
+          <input
+            className={`w-1/2 m-1 py-2 text-center border border-gray-400 ${row.isEditing ? 'bg-white' : 'bg-gray-200'} rounded`}
+            type="number"
+            name="cantidad"
+            value={row.cantidad}
+            onChange={(event) => handleInputChange(index, event)}
+            disabled={!row.isEditing}
+          />
+        </div>
+
+        <div className="flex items-center mb-4">
+          <span className="font-bold w-1/2 text-center">CANTIDAD MINIMA</span>
+          <input
+            className={`w-1/2 m-1 py-2 text-center border border-gray-400 ${row.isEditing ? 'bg-white' : 'bg-gray-200'} rounded`}
+            type="number"
+            name="cantidadMinima"
+            value={row.cantidadMinima}
+            onChange={(event) => handleInputChange(index, event)}
+            disabled={!row.isEditing}/>
+        </div>
+
+        <div className="flex justify-center gap-4 mt-4">
+          {index === rows.length - 1 && !row.added ? (
+            <BotonAgregar  funcionUno={() => handleAddRow(index)} funcionDos={handleAddRow} /> 
+          ) : (
+          <>
+            <BotonEditarMovil editable={row.isEditing} onGuardar={() => handleSaveEdit(index)} onModificar={() => handleEditRow(index)} />
+            <BotonEliminarMovil onClick={() => handleRemoveRow(index)} />
+          </>
+          )}
         </div>
       </div>
+    ))}
+  </div>
 
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 className="text-xl font-semibold mb-4">{currentAction === 'delete' ? 'Confirmar eliminación' : 'Atención'}</h2>
-            <p>{modalMessage}</p>
-            <div className="flex justify-end mt-4">
-              <button className="bg-gray-300 text-black px-4 py-2 rounded mr-2" onClick={closeModal}>Cancelar</button>
-              {currentAction === 'delete' ? (
-                <button className="bg-red-600 text-white px-4 py-2 rounded" onClick={confirmDeleteRow}>Confirmar</button>
-              ) : (
-                <button className="bg-blue-600 text-white px-4 py-2 rounded" onClick={closeModal}>Cerrar</button>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+  <div className="flex justify-end mt-4 p-0">
+    <BotonActualizar onClick={guardarStock} texto="Actualizar Stock" />
+  </div>
+          
+    </div>
+    
+  </>
+  
   );
 };
 

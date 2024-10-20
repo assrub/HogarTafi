@@ -1,6 +1,6 @@
 import React, { useEffect, useState, forwardRef } from "react";
 import { traerStockApi } from "../../api";
-import Boton from "../Boton";
+import Boton from "../Botones/Boton";
 
 const TablaStock = forwardRef(({ dni, stockHogar = false }, ref) => {
   const [rows, setRows] = useState([{ medicacion: '', cantidad: '', cantidadMinima: '', added: false, isEditing: true }]);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import CampoTexto from "./FormPacientes/CampoTexto";
 import Foto from "./FormPacientes/Foto";
-import Boton from "./Boton";
+import Boton from "./Botones/Boton";
 import { registrarPaciente } from "../api";
 import CartelAviso from "./CartelAviso";
 

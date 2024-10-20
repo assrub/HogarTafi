@@ -34,7 +34,7 @@ function UserPanel() {
     </div>
 
     {/* Contenedor Principal */}
-    <div className="bg-gray-100 shadow-lg min-h-screen lg:shadow-[#017a98]/50 md:col-span-4 lg:mx-12 lg:my-6 lg:rounded-lg">
+    <div className="bg-gray-100 shadow-lg min-h-screen max-w-screen-xl lg:shadow-[#017a98]/50 md:col-span-4 lg:mx-12 lg:my-6 lg:rounded-lg">
       {/* Titulo de Bienvenida */}
       <div className={`titulo flex flex-col justify-center items-center text-xl lg:text-3xl lg:mt-5 mb-10 ${location.pathname !== "/userPanel" ? "hidden" : ""}`}>
         <h2 className="font-bold mb-4">¡Bienvenido {usuario.nombre}!</h2>
@@ -46,7 +46,7 @@ function UserPanel() {
         <Routes>
           <Route path="todosLospacientes" element={<ListadoPacientes />} />
           <Route path="paciente/registrar" element={<RegistrarPacientes />} />
-          <Route path="paciente/modificar" element={<FormPacientes />} />
+          <Route path="paciente/modificar" element={<FormPaciente2 />} />
           <Route path="paciente/medicacionesDiarias" element={<MedicacionesDiarias />} />
           <Route path="stockDelHogar" element={<StockDelHogar/>}/>
           <Route path="pedidos" element={<Pedidos />} />

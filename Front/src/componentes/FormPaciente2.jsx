@@ -5,7 +5,7 @@ import {
   guardarStockApi,
   guardarMedicamentosApi,
 } from "../api";
-import Boton from "./Boton"; // Ajusta la ruta si es necesario
+import Boton from "./Botones/Boton"; // Ajusta la ruta si es necesario
 import DatosPaciente from "./FormPacientes/DatosPaciente";
 import TablaStock from "./FormPacientes/TablaStock2";
 import TablaMedicamentos from "./FormPacientes/TablaMedicamentos2";
@@ -83,7 +83,7 @@ function FormPaciente2() {
   const BotonNavegacion = ({ texto, seccion }) => (
     <button
       onClick={() => setSeccionActiva(seccion)}
-      className={`px-4 py-2 mx-2 rounded-md 
+      className={`flex-1 px-4 py-2
         ${
           seccionActiva === seccion
             ? "bg-blue-500 text-white"
@@ -104,7 +104,7 @@ function FormPaciente2() {
 
   return (
     <>
-      <div className="registrar-pacientes w-full">
+      <div className="registrar-pacientes w-full max-w-screen-xl">
         <div className="datos-pacientes">
           <div className="titulo flex justify-center text-xl lg:text-3xl lg:mt-5 mb-10">
             <h2 className="text-bold">
@@ -139,7 +139,7 @@ function FormPaciente2() {
             <BotonNavegacion texto="Fotos" seccion="Fotos" />
           </div>
 
-          <div className="contenido-seccion w-full bg-gray-100 p-4 rounded-lg">
+          <div className="contenido-seccion w-full bg-gray-100 rounded-lg">
             {seccionActiva === "Datos" && <DatosPaciente paciente={paciente} />}
             {seccionActiva === "Stock" && <TablaStock paciente={paciente} />}
             {seccionActiva === "Medicamentos" && (<TablaMedicamentos paciente={paciente} />)}

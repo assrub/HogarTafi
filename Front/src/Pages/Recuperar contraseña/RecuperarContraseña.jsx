@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import CampoTexto from "../../componentes/FormPacientes/CampoTexto";
-import Boton from "../../componentes/Boton";
+import Boton from "../../componentes/Botones/Boton";
 import { useNavigate } from 'react-router-dom';
 import { Link, Routes, Route  } from "react-router-dom";
 import { recuperarContraApi } from "../../api";

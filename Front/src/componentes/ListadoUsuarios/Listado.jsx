@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import traerUsuariosApi, { desactivarUsuarioApi, activarUsuarioApi, todosLosPacientes } from "../../api";
+import traerUsuariosApi, { desactivarUsuarioApi, todosLosPacientes } from "../../api";
 
 const Modal = ({ isOpen, onClose, onConfirm, dni, action }) => {
   if (!isOpen) return null;
@@ -30,8 +30,6 @@ export default function Listado() {
   const [modalOpen, setModalOpen] = useState(false);
   const [usuarioDni, setUsuarioDni] = useState(null);
   const [actionType, setActionType] = useState(""); // Nuevo estado para la acción
-  const [pacientesCargados, setPacientesCargados] = useState([]);
-
 
   async function traerPacientes() {
     const datos = await todosLosPacientes();
@@ -40,7 +38,7 @@ export default function Listado() {
     return datosFiltrados; 
   }
   
-  async function traerUsuarios() {
+  async function traerUsuarios(pacientesCargados) {
     const response = await traerUsuariosApi();
     if (response && pacientesCargados.length > 0) {
       const usuariosActualizados = response.map((user) => {
@@ -63,26 +61,16 @@ export default function Listado() {
   
   useEffect(() => {
     async function cargarDatos() {
-      setPacientesCargados(await traerPacientes());
-      await traerUsuarios();
+      const pacientesCargados = await traerPacientes();
+      await traerUsuarios(pacientesCargados);
     }
     cargarDatos();
-  }, [,usuarios]);
+  }, []);
   
   async function desactivar(dni) {
     try {
       await desactivarUsuarioApi(parseInt(dni));
       setUsuarios(usuarios.filter((usuario) => usuario.dni !== dni));
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-
-  async function activar(dni) {
-    try {
-      await activarUsuarioApi(parseInt(dni));
-      traerUsuarios()
     } catch (error) {
       console.error(error);
     }
@@ -98,8 +86,8 @@ export default function Listado() {
     if (actionType === "desactivar" && usuarioDni) {
       desactivar(usuarioDni);
     } else if (actionType === "reactivar" && usuarioDni) {
-      activar(usuarioDni);
-      
+      // Aquí puedes implementar la lógica para reactivar el usuario si es necesario.
+      // Ejemplo: reactivar(usuarioDni);
     }
   };
 

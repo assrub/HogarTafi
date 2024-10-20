@@ -1,7 +1,7 @@
 import React from "react";
 import CampoTexto from "./FormPacientes/CampoTexto";
 import Foto from "./FormPacientes/Foto";
-import Boton from "./Boton";
+import Boton from "./Botones/Boton";
 import { useState, useEffect, useRef } from "react";
 import TablaStock from "./FormPacientes/TablaStock";
 import TablaMedicamentos from "./FormPacientes/TablaMedicamentos";

@@ -8,7 +8,7 @@ export default function CampoTexto({
   error,
 }) {
   return (
-    <div className="mt-4 text-md lg:text-xl">
+    <div className="text-md lg:text-xl">
       <label
         htmlFor={`${propsLabel.labelFor}`}
         className="block font-medium leading-6 text-gray-900"

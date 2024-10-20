@@ -1,8 +1,12 @@
 import React, { useEffect, useState, forwardRef } from "react";
 import { traerMedicamentosApi, traerStockApi, guardarMedicamentosApi} from "../../api";
+import BotonActualizar from './../Botones/BotonActualizar';
+import BotonEditar from './../Botones/BotonEditar';
+import BotonEliminar from './../Botones/BotonEliminar';
+import BotonEditarMovil from './../Botones/BotonEditarMovil';
+import BotonEliminarMovil from './../Botones/BotonEliminarMovil';
+import BotonAgregar from './../Botones/BotonAgregar';
 import { useRef } from 'react';
-
-
 
 const TablaMedicamentos = forwardRef(({ paciente, menuMedicaionpaciente = false, medicacionDiaria = false, onClickRestaMedicacionDiaria, onclicksumarMedicacionDiaria }) => {
 
@@ -10,7 +14,6 @@ const TablaMedicamentos = forwardRef(({ paciente, menuMedicaionpaciente = false,
 function capitalizeFirstLetter(input) {
   if (!input) return input; // Retorna null o cadena vacía sin cambios
   input = input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
-  console.log("PROBANDO: " + input);
   return input;
 }
 
@@ -64,7 +67,110 @@ const datosTabla = convertirTablaAJson(refTabla);
 
 console.log(datosTabla);  // Muestra los datos convertidos de la tabla en consola
 
-async function guardarMedicamentos() {
+  const horasDelDia = [
+    "6:00",
+    "Desayuno",
+    "Almuerzo",
+    "Merienda",
+    "Cena",
+    "22:30",
+  ];
+
+  const [stock, setStock] = useState([
+    { medicacion: "", cantidad: "", cantidadMinima: "" }
+  ]);
+
+  const [medicamentos, setMedicamentos] = useState([
+    {
+      medicamento: "",
+      horario: horasDelDia.reduce((acc, hora) => ({ ...acc, [hora]: "" }), {}),
+      observaciones: "",
+      editable: false,
+    },
+  ]);
+
+  const [nuevoMedicamento, setNuevoMedicamento] = useState({
+    medicamento: "",
+    horario: horasDelDia.reduce((acc, hora) => ({ ...acc, [hora]: "" }), {}),
+    observaciones: "",
+  });
+
+  useEffect(() => {
+    traerStock(paciente.dni);
+    traerMedicamentos(paciente.dni);
+  }, [paciente]);
+
+  const manejarCambioSelect = (e, index) => {
+    const { value } = e.target;
+    setMedicamentos((prev) => {
+      const nuevosMedicamentos = [...prev];
+      nuevosMedicamentos[index] = {
+        ...nuevosMedicamentos[index],
+        medicamento: value,
+      };
+      return nuevosMedicamentos;
+    });
+  };
+
+  const manejarCambioNuevoMedicamento = (event) => {
+    const { name, value } = event.target;
+    setNuevoMedicamento((prev) => ({
+      ...prev,
+      horario: {
+        ...prev.horario,
+        [name]: value,
+      },
+    }));
+  };
+
+  const manejarCambio = (index, hora, event) => {
+    const { value } = event.target;
+    setMedicamentos((prev) => {
+      const nuevosMedicamentos = [...prev];
+      nuevosMedicamentos[index].horario[hora] = value;
+      return nuevosMedicamentos;
+    });
+  };
+
+  const handleEditRow = (index) => {
+    setMedicamentos((prev) => {
+      const nuevosMedicamentos = [...prev];
+      nuevosMedicamentos[index].editable = !nuevosMedicamentos[index].editable;
+      return nuevosMedicamentos;
+    });
+  };
+
+  const handleRemoveRow = (index) => {
+    setMedicamentos((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleAddRow = () => {
+    if (nuevoMedicamento.medicamento) {
+      setMedicamentos((prev) => [...prev, nuevoMedicamento]);
+      setNuevoMedicamento({
+        medicamento: "",
+        horario: horasDelDia.reduce((acc, hora) => ({ ...acc, [hora]: "" }), {}),
+        observaciones: "",
+      });
+    } else {
+      alert("Elegi un medicamento");
+    }
+  };
+
+  const manejarCambioObservaciones = (index, event) => {
+    const { value } = event.target;
+    setMedicamentos((prev) => {
+      const nuevosMedicamentos = [...prev];
+      nuevosMedicamentos[index] = {
+        ...nuevosMedicamentos[index],
+        observaciones: value,  // Actualiza las observaciones del medicamento en el índice correspondiente
+      };
+      return nuevosMedicamentos;
+    });
+  };
+  
+
+  async function guardarMedicamentos() {
     let tablaMedicamentos = convertirTablaAJson(refTabla);
     let arregloMedicacion = [];
     
@@ -86,7 +192,6 @@ async function guardarMedicamentos() {
     
     const response = await guardarMedicamentosApi(arregloMedicacion, parseInt(paciente.dni)); // Asegúrate de que esto sea await
 
-    console.log(await response);
     if (response === true) {
         setMensaje("Medicamentos guardados correctamente");
     } else {
@@ -94,81 +199,6 @@ async function guardarMedicamentos() {
     }
 }
 
-
-
-  const [stock, setStock] = useState([
-    {
-      medicacion: "",
-      cantidad: "",
-      cantidadMinima: ""
-    }
-  ]);
-
-  const horasDelDia = [
-    "6:00",
-    "Desayuno",
-    "Almuerzo",
-    "Merienda",
-    "Cena",
-    "22:30",
-  ];
-  const [medicamentos, setMedicamentos] = useState([
-    {
-      medicamento: "",
-      horario: horasDelDia.reduce((acc, hora) => ({ ...acc, [hora]: "" }), {}),
-      observaciones: "",
-      editable: false,
-    },
-  ]);
-
-  const [nuevoMedicamento, setNuevoMedicamento] = useState({
-    medicamento: "",
-    horario: horasDelDia.reduce((acc, hora) => ({ ...acc, [hora]: "" }), {}),
-    observaciones: "",
-  });
-
-  const handleAddRow = () => {
-    const datosFila = { ...nuevoMedicamento };
-    if (datosFila.medicamento) {
-      setMedicamentos((prev) => [...prev, datosFila]);
-
-      setNuevoMedicamento({
-        medicamento: "",
-        horario: horasDelDia.reduce(
-          (acc, hora) => ({ ...acc, [hora]: "" }),
-          {}
-        ),
-        observaciones: "",
-      });
-    } else {
-      alert("Elegi un medicamento");
-    }
-  };
-
-  const manejarCambioSelect = (e) => {
-    const { name, value } = e.target;
-    setNuevoMedicamento((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const manejarCambioNuevoMedicamento = (event) => {
-    const { name, value } = event.target;
-    setNuevoMedicamento((prev) => ({
-      ...prev,
-      horario: {
-        ...prev.horario,
-        [name]: value,
-      },
-    }));
-  };
-
-  const handleEditRow = (index) => {
-    const newMedicamentos = [...medicamentos];
-    newMedicamentos[index].editable = !newMedicamentos[index].editable;
-    setMedicamentos(newMedicamentos);
-  };
 
   const handleClearContent = () => {
     setMedicamentos([{
@@ -178,24 +208,6 @@ async function guardarMedicamentos() {
       editable: false,
     }]);
   };
-
-  const handleRemoveRow = (index) => {
-    if (medicamentos.length > 1) {
-      const newMedicamentos = [...medicamentos];
-      newMedicamentos.splice(index, 1);
-      setMedicamentos(newMedicamentos);
-    } else {
-      handleClearContent(index);
-    }
-  };
-
-  const manejarCambio = (index, hora, event) => {
-    const { value } = event.target;
-    const newMedicamentos = [...medicamentos];
-    newMedicamentos[index].horario[hora] = value; // Actualiza el valor del horario
-    setMedicamentos(newMedicamentos);
-  };
-
 
   async function traerMedicamentos(dni) {
   try {
@@ -279,36 +291,40 @@ async function guardarMedicamentos() {
     }));
   }
 
-  useEffect(() => {
-    
-    traerStock(paciente.dni);
-    traerMedicamentos(paciente.dni);
-  }, [paciente])
-
-  return (<div className="border rounded-lg p-2 shadow-md overflow-x-auto">
-    <table className="hidden lg:table min-w-full table-auto text-xs sm:text-xs bg-white" ref={refTabla}>
-      <thead>
-        <tr className="bg-gray-400 text-white">
-          <th className="p-2 border border-gray-300 text-white">MEDICAMENTO</th>
-          {horasDelDia.map((hora, index) => (
-            <th key={index} className="p-2 border border-gray-300 text-white">{hora.toUpperCase()}</th>
-          ))}
-          <th className="p-2 border border-gray-300 text-white">OBSERVACIONES</th>
-          <th className="p-2 border border-gray-300 text-white">ACCIONES</th>
-        </tr>
-      </thead>
-  
-      <tbody>
-        {medicamentos.map((medicamento, index) => (
-          medicamento.medicamento && (
+  return (
+    <div className="border rounded-lg p-3 shadow-md overflow-x-auto">
+      <table className="hidden lg:table min-w-full table-auto text-xs sm:text-xs bg-white">
+        <thead>
+          <tr className="bg-gray-400 text-white">
+            <th className="p-3 border border-gray-300 text-white">MEDICAMENTO</th>
+            {horasDelDia.map((hora, index) => (
+              <th key={index} className="p-3 border border-gray-300 text-white">{hora.toUpperCase()}</th>
+            ))}
+            <th className="p-3 border border-gray-300 text-white">OBSERVACIONES</th>
+            <th className="p-3 border border-gray-300 text-white">ACCIONES</th>
+          </tr>
+        </thead>
+        <tbody>
+          {medicamentos.map((medicamento, index) => (
             <tr key={index}>
-              <td className="border border-gray-300 p-0 h-full align-middle pl-3 text-gray-500 font-bold">
-                {medicamento.medicamento}
+              <td className="border border-gray-300 p-0 h-full align-middle">
+                <select
+                  className={`w-full h-full py-3 box-border text-center text-gray-500 font-bold ${!medicamento.editable ? 'bg-gray-200' : 'bg-white'}`}
+                  value={medicamento.medicamento}  // Aseguramos que el value sea el correcto
+                  onChange={(e) => manejarCambioSelect(e, index)}  // Pasamos el índice
+                  disabled={!medicamento.editable}
+                >
+                  {stock.map((item, idx) => (
+                    <option key={idx} value={item.medicacion}>
+                      {item.medicacion}
+                    </option>
+                  ))}
+                </select>
               </td>
               {horasDelDia.map((hora, idx) => (
                 <td key={idx} className="border border-gray-300 p-0 h-full align-middle">
                   <input
-                    className={`w-full h-full p-2 box-border text-center text-gray-500 font-bold ${!medicamento.editable ? 'bg-gray-200' : 'bg-white'}`}
+                    className={`w-full h-full p-3 box-border text-center text-gray-500 font-bold ${!medicamento.editable ? 'bg-gray-200' : 'bg-white'}`}
                     type="number"
                     value={medicamento.horario[hora] || ""}
                     onChange={(event) => manejarCambio(index, hora, event)}
@@ -318,146 +334,185 @@ async function guardarMedicamentos() {
               ))}
               <td className="border border-gray-300 p-0 h-full align-middle">
                 <input
-                  className={`w-full h-full p-2 box-border text-gray-500 font-bold ${!medicamento.editable ? 'bg-gray-200' : 'bg-white'}`}
+                  className={`w-full h-full p-3 box-border text-gray-500 font-bold ${!medicamento.editable ? 'bg-gray-200' : 'bg-white'}`}
                   type="text"
                   value={medicamento.observaciones}
+                  onChange={(event) => manejarCambioObservaciones(index, event)}
                   disabled={!medicamento.editable}
                 />
               </td>
-              <td className="border border-gray-300 p-0 h-full align-middle bg-gray-200">
-              <div className="flex justify-between">
-                <button
-                  className={`ml-2 px-3 py-1 text-black border border-gray-400 shadow-md  hover:bg-gray-400 hover:text-white transition duration-300 text-xs md:text-sm`}
-                  onClick={() => handleEditRow(index)}
-                >
-                    {medicamento.editable ? "Guardar" : "Modificar"}
-                </button>
-
-                  {!medicacionDiaria && (
-                <button
-                  className={`ml-1 mr-3 px-3 py-1 text-black border border-gray-400 shadow-md hover:bg-gray-400 hover:text-white transition duration-300 text-xs md:text-sm`}
-                  onClick={() => handleRemoveRow(index)}
-                >
-                  Eliminar            
-                </button>
-                 )}
-              </div>
+              <td className={`w-full flex border border-gray-300 p-0 h-full align-middle ${!medicamento.editable ? 'bg-gray-200' : 'bg-white'}`}>
+                  <BotonEditar editable={medicamento.editable} onGuardar={() => handleEditRow(index)} onModificar={() => handleEditRow(index)} />
+                  <BotonEliminar onClick={() => handleRemoveRow(index)} />
               </td>
             </tr>
-          )
-        ))}
-  
-        {!menuMedicaionpaciente && (
-          <tr>
-            <td className="border border-gray-300 p-0 h-full align-middle">
-              <select className="w-full h-full p-2 bg-white rounded-none" name="medicamento" value={nuevoMedicamento.medicamento} onChange={manejarCambioSelect}>
-                <option value="">Seleccione</option>
-                {stock.map((item, index) => (
-                  <option key={index} value={item.medicacion}>
-                    {item.medicacion}
-                  </option>
-                ))}
-              </select>
-            </td>
-            {horasDelDia.map((hora, idx) => (
-              <td key={idx} className="border border-gray-300 p-0 h-full align-middle">
+          ))}
+          {!menuMedicaionpaciente && (
+            <tr>
+              <td className="border border-gray-300 p-0 h-full align-middle">
+                <select
+                  className="w-full h-full p-3 bg-white rounded-none"
+                  name="medicamento"
+                  value={nuevoMedicamento.medicamento}
+                  onChange={(e) => setNuevoMedicamento((prev) => ({ ...prev, medicamento: e.target.value }))}
+                >
+                  <option value="">Seleccione</option>
+                  {stock.map((item, index) => (
+                    <option key={index} value={item.medicacion}>
+                      {item.medicacion}
+                    </option>
+                  ))}
+                </select>
+              </td>
+              {horasDelDia.map((hora, idx) => (
+                <td key={idx} className="border border-gray-300 p-0 h-full align-middle">
+                  <input
+                    type="number"
+                    name={hora}
+                    min={0}
+                    value={nuevoMedicamento.horario[hora]}
+                    onChange={manejarCambioNuevoMedicamento}
+                    className={`w-full h-full p-3 box-border bg-white text-center`}
+                    placeholder={hora}
+                  />
+                </td>
+              ))}
+              <td className="border border-gray-300 p-0 h-full align-middle">
                 <input
-                  type="number"
-                  name={hora}
-                  min={0}
-                  value={nuevoMedicamento.horario[hora]}
-                  onChange={manejarCambioNuevoMedicamento}
-                  className={`w-full h-full p-2 box-border bg-white text-center`}
-                  placeholder={hora}
+                  type="text"
+                  name="observaciones"
+                  value={nuevoMedicamento.observaciones}
+                  onChange={(e) => setNuevoMedicamento((prev) => ({ ...prev, observaciones: e.target.value }))}
+                  className="w-full h-full py-3 px-2 box-border bg-white"
+                  placeholder="Observaciones"
                 />
               </td>
-            ))}
-            <td className="border border-gray-300 p-0 h-full align-middle">
-              <input
-                type="text"
-                name="observaciones"
-                value={nuevoMedicamento.observaciones}
-                onChange={(e) => setNuevoMedicamento((prev) => ({ ...prev, observaciones: e.target.value }))}
-                className="w-full h-full p-2 box-border bg-white"
-                placeholder="Observaciones"
-              />
-            </td>
-            <td className="border border-gray-300 p-0 h-full align-middle">
-              <button className="text-white border bg-gray-400 w-full p-2 hover:bg-gray-300 hover:text-white text-xs md:text-sm" 
-                onClick={() => {handleAddRow(); guardarMedicamentos(); }}>
-                AGREGAR
-              </button>
+              <td className="py-3 border border-gray-300 flex justify-center">
+                   <BotonAgregar funcionUno={handleAddRow} funcionDos={""} /> 
+              </td>
+            </tr>
+          )}
+          <tr>
+            <td colSpan={horasDelDia.length + 3}>
+              <div className="flex justify-end items-end m-2">
+                <BotonActualizar type="submit" onClick={guardarMedicamentos} texto="Actualizar Datos" />
+              </div>
             </td>
           </tr>
-        )}
-        <tr>
-          <td colSpan={horasDelDia.length + 3}>
-            <div className="flex justify-end items-end m-2">
-              <button 
-                className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
-                onClick={guardarMedicamentos}
-              >
-                Guardar Medicamentos
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    {/* Vista móvil o tablet */}
-    <div className="lg:hidden grid grid-cols-1 gap-4">
-      {medicamentos.map((medicamento, index) => (
-        <div key={index} className="bg-white shadow-md p-4 rounded-lg">
-          <div className="mb-4">
-              <span className="font-bold">MEDICAMENTO:</span>
-              <span className="text-gray-500 uppercase"> {medicamento.medicamento}</span>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            {horasDelDia.map((hora, idx) => (
-              <div key={idx} className="flex flex-col">
-                <label className="text-xs font-bold">{hora.toUpperCase()}</label>
-                <input
-                  className={`p-2 box-border text-center text-gray-500 font-bold ${!medicamento.editable ? 'bg-gray-200' : 'bg-white'}`}
-                  type="number"
-                  value={medicamento.horario[hora] || ""}
-                  onChange={(event) => manejarCambio(index, hora, event)}
-                  disabled={!medicamento.editable}
-                />
-              </div>
+        </tbody>
+      </table>
+      
+      {/* Vista móvil o tablet */}
+      <div className="lg:hidden grid grid-cols-1 gap-4">
+  {medicamentos.map((medicamento, index) => (
+    <div key={index} className="bg-white shadow-md p-4 rounded-lg">
+      <div className="mb-4">
+        <span className="font-bold">MEDICAMENTO:</span>
+        {medicamento.editable ? (
+          <select
+            className="w-full p-3 bg-white border border-gray-300"
+            value={medicamento.medicamento}
+            onChange={(e) => manejarCambioSelect(e, index)}
+          >
+            <option value="">Seleccione</option>
+            {stock.map((item, idx) => (
+              <option key={idx} value={item.medicacion}>
+                {item.medicacion}
+              </option>
             ))}
-          </div>
-          <div className="mt-2">
-            <label className="text-xs font-bold">OBSERVACIONES</label>
+          </select>
+        ) : (
+          <span className="text-gray-500 uppercase"> {medicamento.medicamento}</span>
+        )}
+      </div>
+
+      <div className="grid grid-cols-2 gap-2">
+        {horasDelDia.map((hora, idx) => (
+          <div key={idx} className="flex flex-col">
+            <label className="text-xs font-bold">{hora.toUpperCase()}</label>
             <input
-              className={`w-full p-2 box-border text-gray-500 font-bold ${!medicamento.editable ? 'bg-gray-200' : 'bg-white'}`}
-              type="text"
-              value={medicamento.observaciones}
+              className={`p-3 box-border text-center text-gray-500 font-bold ${!medicamento.editable ? 'bg-gray-200' : 'bg-white'}`}
+              type="number"
+              value={medicamento.horario[hora] || ""}
+              onChange={(event) => manejarCambio(index, hora, event)}
               disabled={!medicamento.editable}
             />
           </div>
-          <div className="flex justify-between mt-4">
-          <button
-    className={`w-full m-1 px-4 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition duration-300 text-xs md:text-sm`}
-    onClick={() => handleEditRow(index)}
-  >
-    {medicamento.editable ? "Guardar" : "Modificar"}
-  </button>
-  
-  {!medicacionDiaria && (
-    <button
-      className={`w-full m-1 px-4 py-3 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition duration-300 text-xs md:text-sm`}
-      onClick={() => handleRemoveRow(index)}
-    >
-      Eliminar
-    </button>
-  )}
-          </div>
+        ))}
+      </div>
+      <div className="mt-2">
+        <label className="text-xs font-bold">OBSERVACIONES</label>
+        <input
+            className={`w-full p-3 box-border text-gray-500 font-bold ${!medicamento.editable ? 'bg-gray-200' : 'bg-white'}`}
+            type="text"
+            value={medicamento.observaciones}
+            onChange={(event) => manejarCambioObservaciones(index, event)}
+            disabled={!medicamento.editable}
+        />
+      </div>
+
+      <div className="flex justify-between mt-4">
+        <BotonEditarMovil editable={medicamento.editable} onGuardar={() => handleEditRow(index)} onModificar={() => handleEditRow(index)} />
+        <BotonEliminarMovil onClick={() => handleRemoveRow(index)} />
+      </div>
+    </div>
+  ))}
+
+  {/* Fila para agregar nuevo medicamento */}
+  <div className="bg-white shadow-md p-4 rounded-lg">
+    <div className="mb-4">
+      <span className="font-bold">MEDICAMENTO:</span>
+      <select
+        className="w-full p-3 bg-white border border-gray-300"
+        value={nuevoMedicamento.medicamento}
+        onChange={(e) => setNuevoMedicamento((prev) => ({ ...prev, medicamento: e.target.value }))}
+      >
+        <option value="">Seleccione</option>
+        {stock.map((item, index) => (
+          <option key={index} value={item.medicacion}>
+            {item.medicacion}
+          </option>
+        ))}
+      </select>
+    </div>
+
+    <div className="grid grid-cols-2 gap-2">
+      {horasDelDia.map((hora, idx) => (
+        <div key={idx} className="flex flex-col">
+          <label className="text-xs font-bold">{hora.toUpperCase()}</label>
+          <input
+            className="p-3 box-border text-center bg-white border border-gray-300"
+            type="number"
+            name={hora}
+            min={0}
+            value={nuevoMedicamento.horario[hora]}
+            onChange={manejarCambioNuevoMedicamento}
+          />
         </div>
       ))}
-      <button className="bg-blue-600 text-white px-4 py-2 rounded" onClick={guardarMedicamentos}> Guardar Medicamentos</button>
     </div>
-  </div> );
+
+    <div className="mt-2">
+      <label className="text-xs font-bold">OBSERVACIONES</label>
+      <input
+        className="w-full p-3 box-border bg-white border border-gray-300"
+        type="text"
+        name="observaciones"
+        value={nuevoMedicamento.observaciones}
+        onChange={(e) => setNuevoMedicamento((prev) => ({ ...prev, observaciones: e.target.value }))}
+        placeholder="Observaciones"
+      />
+    </div>
+
+    <div className="flex justify-center gap-2 mt-4">
+      <BotonAgregar funcionUno={handleAddRow} funcionDos={""} /> 
+    </div>
+  </div>
+
+  <BotonActualizar type="submit" onClick={guardarMedicamentos} texto="Actualizar Datos" />
+</div>
+
+    </div>);
 });
 
 export default TablaMedicamentos;

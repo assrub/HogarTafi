@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import Listado from "./ListadoUsuarios/Listado";
 import CampoTexto from "./FormPacientes/CampoTexto";
-import Boton from "./Boton"
+import Boton from "./Botones/Boton"
 import { todosLosPacientes, registrarUsuarioApi } from "../api";
 import CartelAviso from "./CartelAviso";
 

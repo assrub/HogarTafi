@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect } from "react";
-import Boton from "../Boton";
+import Boton from "../Botones/Boton";
 import { useRef, useState} from "react";
 
 

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import CampoTexto from "../../componentes/FormPacientes/CampoTexto";
-import Boton from "../../componentes/Boton";
+import Boton from "../../componentes/Botones/Boton";
 import { nuevosDatosApi } from "../../api";
 
 export default function Recupera(){

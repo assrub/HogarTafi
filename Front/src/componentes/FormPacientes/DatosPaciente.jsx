@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import CampoTexto from "./CampoTexto";
 import { modificarPaciente } from "../../api"; 
 import CartelAviso from "../CartelAviso";
+import BotonActualizar from './../Botones/BotonActualizar';
 
 function DatosPaciente({ paciente }) {
 
@@ -63,95 +64,129 @@ function DatosPaciente({ paciente }) {
 
     }
 
-    return (<div className="formulario grid grid-cols-1 mx-auto justify-items-center max-w-xl">
-        <div className="datos w-full mb-6">
-            <form onSubmit={(e) => { e.preventDefault(); modificar(); }} className="p-4 bg-white shadow-md rounded-lg">
-                <CampoTexto
-                    textoEtiqueta="Nombre"
-                    error={false} // Cambia según tu lógica de error
-                    obligatorio={true}
-                    propsLabel={{ labelFor: "inputNombre" }}
-                    propsInput={{
-                        type: "text",
-                        name: "nombre",
-                        id: "inputNombre",
-                        value: pacienteState.nombre,
-                        onChange: handleInputChange,
-                        className: "w-full rounded-lg border border-neutral-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-400" // Ajuste de estilo
-                    }}
-                />
-                <CampoTexto
-                    textoEtiqueta="Apellido"
-                    error={false}
-                    obligatorio={true}
-                    propsLabel={{ labelFor: "inputApellido" }}
-                    propsInput={{
-                        type: "text",
-                        name: "apellido",
-                        id: "inputApellido",
-                        value: pacienteState.apellido,
-                        onChange: handleInputChange,
-                        className: "w-full rounded-lg border border-neutral-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-400" // Ajuste de estilo
-                    }}
-                />
-                <CampoTexto
-                    textoEtiqueta="DNI"
-                    error={false}
-                    obligatorio={true}
-                    propsLabel={{ labelFor: "inputDni" }}
-                    propsInput={{
-                        type: "number",
-                        name: "dni",
-                        id: "inputDni",
-                        value: pacienteState.dni,
-                        readOnly: true,
-                        onChange: handleInputChange,
-                        className: "w-full rounded-lg bg-gray-200 border border-neutral-300 p-2 focus:outline-none" // Estilo de fondo gris
-                    }}
-                />
-                <CampoTexto
-                    textoEtiqueta="Obra social"
-                    propsLabel={{ labelFor: "inputObraSocial" }}
-                    propsInput={{
-                        type: "text",
-                        name: "obraSocial",
-                        id: "inputObraSocial",
-                        value: pacienteState.obraSocial,
-                        onChange: handleInputChange,
-                        className: "w-full rounded-lg border border-neutral-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-400" // Ajuste de estilo
-                    }}
-                />
-                <div className="observaciones mt-4">
-                    <label htmlFor="observaciones" className="text-xl font-medium">
-                        Observaciones
-                    </label>
+    return (
+        <div className="fborder rounded-lg shadow-md max-w-md m-auto">
+    <div className="datos w-full">
+        <form onSubmit={(e) => { e.preventDefault()}} className="p-4 bg-white shadow-md">
+
+            {/* Campo NOMBRE */}
+            <div className="flex flex-col sm:flex-row mb-2">
+                <div className="sm:flex-1 min-w-[140px] text-gray-700 pl-2 text-white bg-gray-400 flex items-center">
+                    NOMBRE
+                </div>
+                <div className="w-full">
+                    <CampoTexto
+                        error={false}
+                        obligatorio={true}
+                        propsLabel={{ labelFor: "inputNombre" }}
+                        propsInput={{
+                            type: "text",
+                            name: "nombre",
+                            id: "inputNombre",
+                            value: pacienteState.nombre,
+                            onChange: handleInputChange,
+                            className: "w-full p-2 border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        }}
+                    />
+                </div>
+            </div>
+
+            {/* Campo APELLIDO */}
+            <div className="flex flex-col sm:flex-row mb-2">
+                <div className="sm:flex-1 min-w-[140px] text-gray-700 pl-2 text-white bg-gray-400 flex items-center">
+                    APELLIDO
+                </div>
+                <div className="w-full">
+                    <CampoTexto
+                        error={false}
+                        obligatorio={true}
+                        propsLabel={{ labelFor: "inputApellido" }}
+                        propsInput={{
+                            type: "text",
+                            name: "apellido",
+                            id: "inputApellido",
+                            value: pacienteState.apellido,
+                            onChange: handleInputChange,
+                            className: "w-full border border-neutral-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        }}
+                    />
+                </div>
+            </div>
+
+            {/* Campo DNI */}
+            <div className="flex flex-col sm:flex-row mb-2">
+                <div className="sm:flex-1 min-w-[140px] text-gray-700 pl-2 text-white bg-gray-400 flex items-center">
+                    DNI
+                </div>
+                <div className="w-full">
+                    <CampoTexto
+                        error={false}
+                        obligatorio={true}
+                        propsLabel={{ labelFor: "inputDni" }}
+                        propsInput={{
+                            type: "number",
+                            name: "dni",
+                            id: "inputDni",
+                            value: pacienteState.dni,
+                            readOnly: true,
+                            onChange: handleInputChange,
+                            className: "w-full bg-gray-200 border border-neutral-300 p-2 focus:outline-none"
+                        }}
+                    />
+                </div>
+            </div>
+
+            {/* Campo OBRA SOCIAL */}
+            <div className="flex flex-col sm:flex-row mb-2">
+                <div className="sm:flex-1 min-w-[140px] text-gray-700 pl-2 text-white bg-gray-400 flex items-center">
+                    OBRA SOCIAL
+                </div>
+                <div className="w-full">
+                    <CampoTexto
+                        propsLabel={{ labelFor: "inputObraSocial" }}
+                        propsInput={{
+                            type: "text",
+                            name: "obraSocial",
+                            id: "inputObraSocial",
+                            value: pacienteState.obraSocial,
+                            onChange: handleInputChange,
+                            className: "w-full border border-neutral-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        }}
+                    />
+                </div>
+            </div>
+
+            {/* Campo OBSERVACIONES */}
+            <div className="flex flex-col sm:flex-row mb-2">
+                <div className="sm:flex-1 min-w-[140px] text-gray-700 pl-2 text-white bg-gray-400 flex items-center">
+                    OBSERVACIONES
+                </div>
+                <div className="w-full">
                     <textarea
                         id="observaciones"
                         name="observaciones"
-                        className="w-full rounded-lg h-32 bg-transparent border-neutral-300 border-2 p-2 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="w-full h-32 border border-neutral-300 p-2 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
                         value={pacienteState.observaciones}
                         onChange={handleInputChange}
                     ></textarea>
                 </div>
-                {/* Botón para modificar datos del paciente */}
-                <div className="grid justify-items-center mt-4">
-                    <button
-                        type="submit"
-                        className="bg-blue-500 text-white rounded-lg p-2 hover:bg-blue-700 transition duration-200 ease-in-out"
-                    >
-                        Modificar Datos
-                    </button>
-                </div>
-            </form>
-        </div>
-        <div className="modal">
-          <CartelAviso
+            </div>
+
+            {/* Botón Actualizar Datos */}
+            <div className="grid justify-items-center mt-4">
+                <BotonActualizar type="submit" onClick={modificar} texto="Actualizar Datos" />
+            </div>
+        </form>
+    </div>
+    <div className="modal">
+        <CartelAviso
             abrirModal={mostrarCartel}
             cerrarModal={toggleModal}
             mensaje={mensaje}
-          />
-        </div>
+        />
     </div>
+</div>
+
     );
 }
 
