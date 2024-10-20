@@ -3,7 +3,7 @@ import CampoTexto from "./FormPacientes/CampoTexto";
 import Foto from "./FormPacientes/Foto";
 import Boton from "./Botones/Boton";
 import { registrarPaciente } from "../api";
-import CartelAviso from "./CartelAviso";
+import CartelAviso from "./Modal/CartelAviso";
 
 function RegistrarPacientes() {
   const fotoFrenteDniRef = useRef(null);

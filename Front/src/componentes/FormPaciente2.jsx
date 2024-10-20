@@ -10,7 +10,7 @@ import DatosPaciente from "./FormPacientes/DatosPaciente";
 import TablaStock from "./FormPacientes/TablaStock2";
 import TablaMedicamentos from "./FormPacientes/TablaMedicamentos2";
 import Foto from "./FormPacientes/Foto2";
-import CartelAviso from "./CartelAviso";
+import CartelAviso from "./Modal/CartelAviso";
 
 function FormPaciente2() {
   const [pacientes, setPacientes] = useState([]);

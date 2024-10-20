@@ -7,13 +7,28 @@ import BotonEliminarMovil from '../Botones/BotonEliminarMovil';
 import BotonActualizar from './../Botones/BotonActualizar';
 import BotonAgregar from './../Botones/BotonAgregar';
 import EliminacionModal from './../Modal/EliminacionModal';
+import CartelAviso from "./../Modal/CartelAviso";
+
 
 const TablaStock = ({ paciente }) => {
   const [rows, setRows] = useState([{ medicacion: '', cantidad: '', cantidadMinima: '', added: false, isEditing: true }]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
+  
+  
+  const [mensajeModalDelete, setmensajeModalDelete] = useState("");
+  const [mostrarModalDelete, setModalDeleteOpen] = useState(false);
+  const toggleModalDelete = () => setModalDeleteOpen(!mostrarModalDelete);
+
+
+  const [mensajeModalAviso, setMensajeModalAviso] = useState("");
+  const [mostrarModalAviso, setMostrarModalAviso] = useState(false);
+  const [estadoModalAviso, setEstadoModalAviso] = useState("");
+  const toggleModalAviso = () => setMostrarModalAviso(!mostrarModalAviso);
+  
+
+ 
   const [currentAction, setCurrentAction] = useState(null); // 'add' o 'delete'
   const [rowToDelete, setRowToDelete] = useState(null); // Índice de la fila a eliminar
+  
 
   function convertirTablaAJson() {
     return rows.map(row => ({
@@ -28,11 +43,13 @@ const TablaStock = ({ paciente }) => {
     const response = await guardarStockApi(arregloStock, parseInt(paciente.dni));
 
     if (response === true) {
-      setModalMessage("Medicamentos guardados correctamente");
+      setMensajeModalAviso("Stocks del paciente modificado correctamente.");
+      setEstadoModalAviso(2);
     } else {
-      setModalMessage("Error al guardar los medicamentos");
+      setMensajeModalAviso("Error al guardar el Stock");
+      setEstadoModalAviso(3);
     }
-    toggleModal();
+    toggleModalAviso();
   }
 
   const handleInputChange = (index, event) => {
@@ -56,17 +73,18 @@ const TablaStock = ({ paciente }) => {
         { medicacion: '', cantidad: '', cantidadMinima: '', added: false, isEditing: true },
       ]);
     } else {
-      setModalMessage('Por favor, completa todos los campos antes de agregar una nueva fila.');
+      setMensajeModalAviso('Por favor, completa todos los campos antes de agregar una nueva fila.');
+      setEstadoModalAviso(4)
       setCurrentAction('add');
-      setIsModalOpen(true);
+      toggleModalAviso();
     }
   };
 
   const handleRemoveRow = (index) => {
     setRowToDelete(index);
-    setModalMessage('¿Estás seguro de que deseas eliminar esta fila?');
+    setmensajeModalDelete('¿Estás seguro de que deseas eliminar esta fila?');
     setCurrentAction('delete');
-    setIsModalOpen(true);
+    toggleModalDelete();
   };
 
   const confirmDeleteRow = () => {
@@ -77,12 +95,7 @@ const TablaStock = ({ paciente }) => {
       }
       return newRows;
     });
-    closeModal();
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setRowToDelete(null);
+    toggleModalDelete();
   };
 
   const handleEditRow = (index) => {
@@ -196,14 +209,6 @@ const TablaStock = ({ paciente }) => {
         </tbody>
       </table>
       
-      {/* Modal de confirmación */}
-      <EliminacionModal
-        isOpen={isModalOpen}
-        mensaje="¿Estás seguro de que deseas eliminar esta fila?"
-        onConfirm={confirmDeleteRow}
-        onClose={() => setIsModalOpen(false)}
-      />
-
       {/* Estructura alternativa para móviles */}
       <div className="lg:hidden">
         {rows.map((row, index) => (
@@ -259,6 +264,24 @@ const TablaStock = ({ paciente }) => {
   <div className="flex justify-end mt-4 p-0">
     <BotonActualizar onClick={guardarStock} texto="Actualizar Stock" />
   </div>
+  
+
+          {/* Modal de confirmación */}
+       <EliminacionModal
+        isOpen={mostrarModalDelete}
+        mensaje={mensajeModalDelete}
+        onClose={toggleModalDelete}
+        onConfirm={confirmDeleteRow}
+      />
+
+      
+      <CartelAviso
+        abrirModal={mostrarModalAviso}
+        cerrarModal={toggleModalAviso}
+        mensaje={mensajeModalAviso}
+        estado = {estadoModalAviso}
+      />
+
           
     </div>
     

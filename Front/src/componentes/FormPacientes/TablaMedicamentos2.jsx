@@ -6,9 +6,19 @@ import BotonEliminar from './../Botones/BotonEliminar';
 import BotonEditarMovil from './../Botones/BotonEditarMovil';
 import BotonEliminarMovil from './../Botones/BotonEliminarMovil';
 import BotonAgregar from './../Botones/BotonAgregar';
+import CartelAviso from "./../Modal/CartelAviso";
 import { useRef } from 'react';
 
 const TablaMedicamentos = forwardRef(({ paciente, menuMedicaionpaciente = false, medicacionDiaria = false, onClickRestaMedicacionDiaria, onclicksumarMedicacionDiaria }) => {
+
+   
+
+  const [mensajeModalAviso, setMensajeModalAviso] = useState("");       // Almacena el mensaje que debe mostrar el modal.
+  const [mostrarModalAviso, setMostrarModalAviso] = useState(false);    // Controla si el modal se muestra o no (true = mostrar, false = ocultar). 
+  const [estadoModalAviso, setEstadoModalAviso] = useState("");        // Almacena el estado del modal (número que representa el tipo de mensaje, 1 = éxito, 2 = error, etc.).
+  const [accionConfimModalAviso, setAccionConfimModalAviso] = useState(null);  // Almacena la función que se ejecutará si se confirma la acción en el modal (al presionar "Confirmar").
+  const toggleModalAviso = () => setMostrarModalAviso(!mostrarModalAviso);    // Alterna entre mostrar y ocultar el modal (si está oculto lo muestra, y viceversa).
+
 
 // Función para capitalizar la primera letra de una cadena
 function capitalizeFirstLetter(input) {
@@ -140,9 +150,19 @@ console.log(datosTabla);  // Muestra los datos convertidos de la tabla en consol
     });
   };
 
+  const confirmDelete = (index) => {
+    setMensajeModalAviso("¿Estás seguro de que deseas realizar esta acción?");
+    setEstadoModalAviso(11);  // Estado que indica confirmación
+    setAccionConfimModalAviso(() => () => handleRemoveRow(index));  // Asigna la acción de eliminación
+    toggleModalAviso();  // Muestra el modal
+  };
+  
+
   const handleRemoveRow = (index) => {
     setMedicamentos((prev) => prev.filter((_, i) => i !== index));
+    setMostrarModalAviso(false); //No me funciona el toggleModalAviso() aca.. no sé por qué... lo tuve que forzar.
   };
+  
 
   const handleAddRow = () => {
     if (nuevoMedicamento.medicamento) {
@@ -153,7 +173,10 @@ console.log(datosTabla);  // Muestra los datos convertidos de la tabla en consol
         observaciones: "",
       });
     } else {
-      alert("Elegi un medicamento");
+      setMensajeModalAviso("Por favor, selecciona un medicamento.");
+      setEstadoModalAviso(1); 
+      toggleModalAviso();
+      return;
     }
   };
 
@@ -190,12 +213,17 @@ console.log(datosTabla);  // Muestra los datos convertidos de la tabla en consol
         }
     });
     
-    const response = await guardarMedicamentosApi(arregloMedicacion, parseInt(paciente.dni)); // Asegúrate de que esto sea await
+    const response = await guardarMedicamentosApi(arregloMedicacion, parseInt(paciente.dni)); 
 
     if (response === true) {
-        setMensaje("Medicamentos guardados correctamente");
+      setMensajeModalAviso("Medicamentos guardados correctamente.");
+      setEstadoModalAviso(2); 
+      toggleModalAviso();
+      return;
     } else {
-        setMensaje("Error al guardar los medicamentos");
+      setMensajeModalAviso("Error al guardar los medicamentos.");
+      setEstadoModalAviso(3); 
+      toggleModalAviso();
     }
 }
 
@@ -344,7 +372,7 @@ console.log(datosTabla);  // Muestra los datos convertidos de la tabla en consol
               </td>
               <td className={`w-full flex border border-gray-300 p-0 h-full align-middle ${!medicamento.editable ? 'bg-gray-200' : 'bg-white'}`}>
                   <BotonEditar editable={medicamento.editable} onGuardar={() => handleEditRow(index)} onModificar={() => handleEditRow(index)} />
-                  <BotonEliminar onClick={() => handleRemoveRow(index)} />
+                  <BotonEliminar onClick={() => confirmDelete(index)} />
               </td>
             </tr>)
           ))}
@@ -406,6 +434,7 @@ console.log(datosTabla);  // Muestra los datos convertidos de la tabla en consol
       {/* Vista móvil o tablet */}
       <div className="lg:hidden grid grid-cols-1 gap-4">
   {medicamentos.map((medicamento, index) => (
+     medicamento.medicamento &&(
     <div key={index} className="bg-white shadow-md p-4 rounded-lg">
       <div className="mb-4">
         <span className="font-bold">MEDICAMENTO:</span>
@@ -454,9 +483,9 @@ console.log(datosTabla);  // Muestra los datos convertidos de la tabla en consol
 
       <div className="flex justify-between mt-4">
         <BotonEditarMovil editable={medicamento.editable} onGuardar={() => handleEditRow(index)} onModificar={() => handleEditRow(index)} />
-        <BotonEliminarMovil onClick={() => handleRemoveRow(index)} />
+        <BotonEliminarMovil onClick={() => confirmDelete(index)} />
       </div>
-    </div>
+    </div>)
   ))}
 
   {/* Fila para agregar nuevo medicamento */}
@@ -511,6 +540,14 @@ console.log(datosTabla);  // Muestra los datos convertidos de la tabla en consol
   </div>
 
   <BotonActualizar type="submit" onClick={guardarMedicamentos} texto="Actualizar Datos" />
+  
+  <CartelAviso
+            abrirModal={mostrarModalAviso}
+            cerrarModal={toggleModalAviso}
+            mensaje={mensajeModalAviso}
+            estado = {estadoModalAviso}
+            onConfirm={accionConfimModalAviso}
+        />
 </div>
 
     </div>);

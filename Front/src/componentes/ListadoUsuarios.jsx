@@ -3,7 +3,7 @@ import Listado from "./ListadoUsuarios/Listado";
 import CampoTexto from "./FormPacientes/CampoTexto";
 import Boton from "./Botones/Boton"
 import { todosLosPacientes, registrarUsuarioApi } from "../api";
-import CartelAviso from "./CartelAviso";
+import CartelAviso from "./Modal/CartelAviso";
 
 
 export default function ListadoUsuarios() {

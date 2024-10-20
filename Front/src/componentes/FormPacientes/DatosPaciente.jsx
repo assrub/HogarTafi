@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import CampoTexto from "./CampoTexto";
 import { modificarPaciente } from "../../api"; 
-import CartelAviso from "../CartelAviso";
+import CartelAviso from "./../Modal/CartelAviso";
 import BotonActualizar from './../Botones/BotonActualizar';
 
 function DatosPaciente({ paciente }) {
 
-    const [mensaje, setMensaje] = useState("");
-    const [mostrarCartel, setMostrarCartel] = useState(false);
-    const toggleModal = () => setMostrarCartel(!mostrarCartel);
+    const [mensajeModalAviso, setMensajeModalAviso] = useState("");
+    const [mostrarModalAviso, setMostrarModalAviso] = useState(false);
+    const [estadoModalAviso, setEstadoModalAviso] = useState("");
+    const toggleModalAviso = () => setMostrarModalAviso(!mostrarModalAviso);
 
     const [pacienteState, setPacienteState] = useState({
         nombre: "",
@@ -50,17 +51,29 @@ function DatosPaciente({ paciente }) {
         formData.append("fotoAtrasDni", null);
         formData.append("fotoFrenteCarnet", null);
         formData.append("fotoAtrasCarnet", null);
+        
+
+        if (pacienteState.dni == ""){
+            setMensajeModalAviso("No se ha seleccionado un paciente.");
+            setEstadoModalAviso(4); //informacion
+            toggleModalAviso();
+            return; 
+          }
+
         const response = await modificarPaciente(parseInt(pacienteState.dni), formData);
 
+
         if(response.status == 200){
-            setMensaje("Paciente modificado correctamente.");
+            setMensajeModalAviso("Datos del paciente modificado correctamente.");
+            setEstadoModalAviso(2);//ok
             
 
           }else if(response.status == 404 ) {
-            setMensaje("Error al modificar los datos del paciente.");
-           
+            setMensajeModalAviso("Error al modificar los datos del paciente.");
+            setEstadoModalAviso(3);//error
           }
-          toggleModal();
+
+          toggleModalAviso();
 
     }
 
@@ -180,9 +193,10 @@ function DatosPaciente({ paciente }) {
     </div>
     <div className="modal">
         <CartelAviso
-            abrirModal={mostrarCartel}
-            cerrarModal={toggleModal}
-            mensaje={mensaje}
+            abrirModal={mostrarModalAviso}
+            cerrarModal={toggleModalAviso}
+            mensaje={mensajeModalAviso}
+            estado = {estadoModalAviso}
         />
     </div>
 </div>

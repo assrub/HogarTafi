@@ -7,7 +7,7 @@ import TablaStock from "./FormPacientes/TablaStock";
 import TablaMedicamentos from "./FormPacientes/TablaMedicamentos";
 import { useLocation } from 'react-router-dom';
 import {todosLosPacientes, modificarPaciente, guardarStockApi, guardarMedicamentosApi} from "../api"
-import CartelAviso from "./CartelAviso";
+import CartelAviso from "./Modal/CartelAviso";
 
 function FormPacientes() {
 

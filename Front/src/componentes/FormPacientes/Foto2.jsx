@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { modificarPaciente } from "../../api";
+import BotonActualizar from './../Botones/BotonActualizar';
+import CartelAviso from "./../Modal/CartelAviso";
 
 function MostrarFotosPaciente({ paciente }) {
   const [pacienteActual, setPacienteActual] = useState(paciente);
@@ -8,6 +10,13 @@ function MostrarFotosPaciente({ paciente }) {
   const [nuevaFotoAtrasDni, setNuevaFotoAtrasDni] = useState(null);
   const [nuevaFotoFrenteCarnet, setNuevaFotoFrenteCarnet] = useState(null);
   const [nuevaFotoAtrasCarnet, setNuevaFotoAtrasCarnet] = useState(null);
+
+  const [mensajeModalAviso, setMensajeModalAviso] = useState("");       // Almacena el mensaje que debe mostrar el modal.
+  const [mostrarModalAviso, setMostrarModalAviso] = useState(false);    // Controla si el modal se muestra o no (true = mostrar, false = ocultar). 
+  const [estadoModalAviso, setEstadoModalAviso] = useState("");        // Almacena el estado del modal (número que representa el tipo de mensaje, 1 = éxito, 2 = error, etc.).
+  const [accionConfimModalAviso, setAccionConfimModalAviso] = useState(null);  // Almacena la función que se ejecutará si se confirma la acción en el modal (al presionar "Confirmar").
+  const toggleModalAviso = () => setMostrarModalAviso(!mostrarModalAviso);    // Alterna entre mostrar y ocultar el modal (si está oculto lo muestra, y viceversa).
+
 
   useEffect(() => {
     if (paciente) {
@@ -32,25 +41,27 @@ function MostrarFotosPaciente({ paciente }) {
     fileInput.click();
   };
 
-  const actualizarImagenes = () => {
+  const actualizarImagenes = async () => {
     const formData = new FormData();
     formData.append("dni", parseInt(paciente.dni));
-
-    if (nuevaFotoFrenteDni) {
-      formData.append("fotoFrenteDni", nuevaFotoFrenteDni);
+  
+    if (nuevaFotoFrenteDni) formData.append("fotoFrenteDni", nuevaFotoFrenteDni);
+    if (nuevaFotoAtrasDni) formData.append("fotoAtrasDni", nuevaFotoAtrasDni);
+    if (nuevaFotoFrenteCarnet) formData.append("fotoFrenteCarnet", nuevaFotoFrenteCarnet);
+    if (nuevaFotoAtrasCarnet) formData.append("fotoAtrasCarnet", nuevaFotoAtrasCarnet);
+  
+    const response = await modificarPaciente(parseInt(paciente.dni), formData);
+    if (response.ok) {
+      setMensajeModalAviso("Imágenes actualizadas correctamente");
+      setEstadoModalAviso(2); 
+      toggleModalAviso();
+    } else {
+      setMensajeModalAviso("Error al cargar las imagenes.");
+      setEstadoModalAviso(3); 
+      toggleModalAviso();
     }
-    if (nuevaFotoAtrasDni) {
-      formData.append("fotoAtrasDni", nuevaFotoAtrasDni);
-    }
-    if (nuevaFotoFrenteCarnet) {
-      formData.append("fotoFrenteCarnet", nuevaFotoFrenteCarnet);
-    }
-    if (nuevaFotoAtrasCarnet) {
-      formData.append("fotoAtrasCarnet", nuevaFotoAtrasCarnet);
-    }
-
-    modificarPaciente(parseInt(paciente.dni), formData);
   };
+  
 
   return (
     <div className="grid grid-cols-2 gap-4 p-4">
@@ -176,13 +187,16 @@ function MostrarFotosPaciente({ paciente }) {
 
       {/* Botón para actualizar imágenes */}
       <div className="col-span-2 flex justify-center mt-4">
-        <button
-          onClick={actualizarImagenes}
-          className="bg-green-500 text-white px-6 py-2 rounded"
-        >
-          Actualizar Imágenes
-        </button>
+        <BotonActualizar onClick={actualizarImagenes} texto="Actualizar Imágenes" />
       </div>
+
+      <CartelAviso
+            abrirModal={mostrarModalAviso}
+            cerrarModal={toggleModalAviso}
+            mensaje={mensajeModalAviso}
+            estado = {estadoModalAviso}
+        />
+        
     </div>
   );
 }
