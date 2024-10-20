@@ -306,6 +306,7 @@ console.log(datosTabla);  // Muestra los datos convertidos de la tabla en consol
         </thead>
         <tbody>
           {medicamentos.map((medicamento, index) => (
+            medicamento.medicamento &&(
             <tr key={index}>
               <td className="border border-gray-300 p-0 h-full align-middle">
                 <select
@@ -345,7 +346,7 @@ console.log(datosTabla);  // Muestra los datos convertidos de la tabla en consol
                   <BotonEditar editable={medicamento.editable} onGuardar={() => handleEditRow(index)} onModificar={() => handleEditRow(index)} />
                   <BotonEliminar onClick={() => handleRemoveRow(index)} />
               </td>
-            </tr>
+            </tr>)
           ))}
           {!menuMedicaionpaciente && (
             <tr>
@@ -387,7 +388,7 @@ console.log(datosTabla);  // Muestra los datos convertidos de la tabla en consol
                   placeholder="Observaciones"
                 />
               </td>
-              <td className="py-3 border border-gray-300 flex justify-center">
+              <td className="border border-gray-300 flex justify-center">
                    <BotonAgregar funcionUno={handleAddRow} funcionDos={""} /> 
               </td>
             </tr>
