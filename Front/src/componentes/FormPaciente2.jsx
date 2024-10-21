@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from 'react-router-dom';
 import {
   todosLosPacientes,
   modificarPaciente,
@@ -31,6 +32,7 @@ function FormPaciente2() {
   const [seccionActiva, setSeccionActiva] = useState("Datos");
   const [mostrarCartel, setMostrarCartel] = useState(false);
   const [modificado, setModificado] = useState(false);
+  const location = useLocation();
 
   const toggleModal = () => setMostrarCartel(!mostrarCartel);
 
@@ -39,6 +41,14 @@ function FormPaciente2() {
     const datosFiltrados = datos.filter((paciente) => paciente !== null);
     setPacientes(datosFiltrados);
   }
+
+
+  useEffect(() => {
+    if (location.state) {
+      setPaciente(location.state.paciente); 
+      setcamposDeshabilitados(false)
+    }
+  }, [location.state]); 
 
   useEffect(() => {
     traerPacientes();

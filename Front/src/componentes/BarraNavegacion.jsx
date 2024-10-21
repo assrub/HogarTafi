@@ -117,7 +117,7 @@ export function BarraNavegacion() {
               </Link>
             </div>)}
 
-              {(usuario.tipo==="admin" || usuario.tipo ==="empleado") && (
+              
                 <div className="pedidos p-3">
                 <Link
                   to="pedidos"
@@ -127,7 +127,7 @@ export function BarraNavegacion() {
                   Pedidos
                 </Link>
               </div>
-              )}
+   
             
         
             {usuario.tipo == "admin" && (
@@ -277,7 +277,6 @@ export function BarraNavegacion() {
             </div>)}
 
 
-            {(usuario.tipo==="admin" || usuario.tipo ==="empleado") && (
             <div className="pedidos p-3">
               <Link
                 to="pedidos"
@@ -287,7 +286,7 @@ export function BarraNavegacion() {
                 <ShoppingCartIcon className="text-[#017a98]" />
                 Pedidos
               </Link>
-            </div>)}
+            </div>
 
             {usuario.tipo == "admin" && (
                 <div className="lista-de-usuarios p-3">
