@@ -4,21 +4,21 @@ import React from "react";
 export default function TablaStockDelHogar({stocks}){
     return (
         <div>
-            <table className="table-auto w-full bg-white text-xl">
+            <table className="border rounded-lg p-3 shadow-md overflow-x-auto">
           <thead>
             <tr>
-              <th className="px-4 py-2 border border-[#181818]">Medicacion</th>
-              <th className="px-4 py-2 border border-[#181818]">Cantidad</th>
-              <th className="px-4 py-2 border border-[#181818]">Cantidad minima</th>
+              <th className="bg-gray-400 text-white">Medicacion</th>
+              <th className="bg-gray-400 text-white">Cantidad</th>
+              <th className="bg-gray-400 text-white">Cantidad minima</th>
             
             </tr>
           </thead>
           <tbody>
             {stocks.map((medicamento,index)=> (
                 <tr key={index}>
-                    <td className="border border-[#181818]">
+                    <td className="border border-gray-300 p-0 h-full align-middle">
                     <input
-                    className={`w-full h-full text-center border-none rounded-none`}
+                    className={`p-3 box-border text-center text-gray-500 font-bold bg-white`}
                     type="text"
                     name="medicacion"
                     value={medicamento.medicacion}
@@ -27,9 +27,9 @@ export default function TablaStockDelHogar({stocks}){
                     style={{ boxSizing: 'border-box', margin: '0', padding: '0' }} 
                   />
                     </td>
-                    <td className="border border-[#181818]">
+                    <td className="border border-gray-300 p-0 h-full align-middle">
                     <input
-                     className={`w-full h-full text-center border-none rounded-none`}
+                     className={`p-3 box-border text-center text-gray-500 font-bold bg-white`}
                     type="text"
                     name="cantidad"
                     value={medicamento.cantidad}
@@ -39,9 +39,9 @@ export default function TablaStockDelHogar({stocks}){
                   />
                     </td>
 
-                    <td className="border border-[#181818]">
+                    <td className="border border-gray-300 p-0 h-full align-middle">
                     <input
-                    className={`w-full h-full text-center border-none rounded-none`}
+                    className={`p-3 box-border text-center text-gray-500 font-bold bg-white`}
                     type="text"
                     name="medicacion"
                     value={medicamento.cant_minima}

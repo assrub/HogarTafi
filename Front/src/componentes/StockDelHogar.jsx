@@ -46,7 +46,7 @@ export default function StockDelHogar(){
           <h2 className="font-bold">Stock del hogar</h2>
         </div>
 
-            <div className="tabla">
+            <div className="border rounded-lg p-3 shadow-md overflow-x-auto">
                 <TablaStockDelHogar stocks={stocksInactivos}/>
             </div>
 
