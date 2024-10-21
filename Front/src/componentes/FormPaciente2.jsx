@@ -27,6 +27,7 @@ function FormPaciente2() {
     fotoAtrasCarnet: "",
   });
 
+  
   const [camposDeshabilitados, setcamposDeshabilitados] = useState(true);
   const [campoIncompleto, setCampoIncompleto] = useState(false);
   const [seccionActiva, setSeccionActiva] = useState("Datos");
