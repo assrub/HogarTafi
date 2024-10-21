@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import traerUsuariosApi, { desactivarUsuarioApi, todosLosPacientes } from "../../api";
+import traerUsuariosApi, { desactivarUsuarioApi, activarUsuarioApi, todosLosPacientes } from "../../api";
 
 const Modal = ({ isOpen, onClose, onConfirm, dni, action }) => {
   if (!isOpen) return null;
@@ -29,7 +29,8 @@ export default function Listado() {
   const [usuarios, setUsuarios] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [usuarioDni, setUsuarioDni] = useState(null);
-  const [actionType, setActionType] = useState(""); // Nuevo estado para la acción
+  const [actionType, setActionType] = useState("");
+
 
   async function traerPacientes() {
     const datos = await todosLosPacientes();
@@ -37,12 +38,14 @@ export default function Listado() {
     setPacientes(datosFiltrados);
     return datosFiltrados; 
   }
-  
+
+
   async function traerUsuarios(pacientesCargados) {
     const response = await traerUsuariosApi();
     if (response && pacientesCargados.length > 0) {
       const usuariosActualizados = response.map((user) => {
         if (user.tipo === "familiar") {
+          
           const pacienteAsociado = pacientesCargados.find(
             (paciente) => parseInt(paciente.dni) === parseInt(user.asociado)
           );
@@ -53,24 +56,36 @@ export default function Listado() {
             };
           }
         }
+        console.log(user.nombreAsociado)
         return user;
+
       });
       setUsuarios(usuariosActualizados);
     }
   }
+
   
   useEffect(() => {
     async function cargarDatos() {
-      const pacientesCargados = await traerPacientes();
-      await traerUsuarios(pacientesCargados);
+      const pacientesBackend = await traerPacientes(); 
+      await traerUsuarios(pacientesBackend);
     }
     cargarDatos();
   }, []);
-  
+
   async function desactivar(dni) {
     try {
       await desactivarUsuarioApi(parseInt(dni));
-      setUsuarios(usuarios.filter((usuario) => usuario.dni !== dni));
+      traerUsuarios(pacientes);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function activar(dni) {
+    try {
+      await activarUsuarioApi(parseInt(dni));
+      traerUsuarios(pacientes); 
     } catch (error) {
       console.error(error);
     }
@@ -86,8 +101,7 @@ export default function Listado() {
     if (actionType === "desactivar" && usuarioDni) {
       desactivar(usuarioDni);
     } else if (actionType === "reactivar" && usuarioDni) {
-      // Aquí puedes implementar la lógica para reactivar el usuario si es necesario.
-      // Ejemplo: reactivar(usuarioDni);
+      activar(usuarioDni);
     }
   };
 

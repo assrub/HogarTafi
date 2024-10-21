@@ -1,4 +1,4 @@
-const direccionIp = "192.168.100.103"
+const direccionIp = "192.168.0.208"
 
 export async function todosLosPacientes() {
   const response = await fetch(`http://${direccionIp}:8080/pacientes`);
@@ -278,4 +278,3 @@ export async function eliminarFotoApi(dni,id){
         return error;
     }
 }
-
