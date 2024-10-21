@@ -1,5 +1,7 @@
 import React, { useEffect, useState, forwardRef } from "react";
 import { traerMedicamentosApi, traerStockApi } from "../../api";
+import BotonEditar from './../Botones/BotonEditar';
+import BotonEliminar from './../Botones/BotonEliminar';
 
 
 const TablaMedicamentos = forwardRef(({ dni, menuMedicaionpaciente = false, medicacionDiaria = false, onClickRestaMedicacionDiaria, onclicksumarMedicacionDiaria }, ref) => {
@@ -194,25 +196,25 @@ const TablaMedicamentos = forwardRef(({ dni, menuMedicaionpaciente = false, medi
   }, [dni])
 
   return (
-    <div className="overflow-x-auto rounded-xl">
-      <table className=" table-auto mb-10" ref={ref}>
+    <div className="">
+      <table className=" hidden lg:table min-w-full table-auto text-xs sm:text-xs bg-white" ref={ref}>
         <thead>
-          <tr>
-            <th className="lg:px-2 lg:py-1 border border-[#181818] text-sm md:text-base">
+          <tr className="bg-gray-400 text-white">
+            <th className="p-3 border border-gray-300 text-white">
               Medicamento
             </th>
             {horasDelDia.map((hora, index) => (
               <th
                 key={index}
-                className="lg:px-2 lg:py-1 border border-[#181818] text-sm md:text-base"
+                className="p-3 border border-gray-300 text-white"
               >
                 {hora}
               </th>
             ))}
-            <th className="lg:px-2 lg:py-1 border border-[#181818] text-sm md:text-base">
+            <th className="p-3 border border-gray-300 text-white">
               Observaciones
             </th>
-            <th className="lg:px-2 lg:py-1 border border-[#181818] text-sm md:text-base">
+            <th className="p-3 border border-gray-300 text-white">
               Acciones
             </th>
           </tr>
@@ -221,104 +223,46 @@ const TablaMedicamentos = forwardRef(({ dni, menuMedicaionpaciente = false, medi
           {medicamentos.map(
             (medicamento, index) =>
               medicamento.medicamento && (
-                <tr key={index} className="text-sm md:text-base">
-                  <td className="lg:px-2 lg:py-1 border border-[#181818] break-words truncate ">
+                <tr key={index}>
+                  <td className="border border-gray-300 p-0 h-full text-center align-middle">
                     {medicamento.medicamento}
                   </td>
                   {horasDelDia.map((hora, idx) => (
-                    <td
-                      key={idx}
-                      className="lg:px-2 lg:py-1 border border-[#181818] break-words"
-                    >
-                      <input
-                        className={`rounded-lg  sm:w-12 xl:w-20 ${medicamento.editable ? "bg-white" : "bg-neutral-300"
-                          } border`}
-                        type="number"
-                        value={medicamento.horario[hora] || ""}
-                        onChange={(event) => manejarCambio(index, hora, event)}
-                        disabled={!medicamento.editable}
-                      />
-                    </td>
+                <td key={idx} className="border border-gray-300 p-0 h-full text-center align-middle">
+                  <input
+                    className={`w-full h-full p-3 box-border text-center text-gray-500 font-bold ${!medicamento.editable ? 'bg-gray-200' : 'bg-white'}`}
+                    type="number"
+                    value={medicamento.horario[hora] || ""}
+                    onChange={(event) => manejarCambio(index, hora, event)}
+                    disabled={!medicamento.editable}
+                  />
+                </td>
                   ))}
-                  <td className="lg:px-2 lg:py-1 border border-[#181818] break-all">
-                    <input
-                      className={`rounded-lg md:w-full ${medicamento.editable ? "bg-white" : "bg-neutral-300"
-                        } border`}
-                      type="text"
-                      value={medicamento.observaciones}
-                      disabled={!medicamento.editable}
-                    />
-                  </td>
-                  <td className="lg:px-2 lg:py-1 border border-[#181818] text-center">
-                    <button
-                      className="m-2 flex text-gray-600 rounded-md border border-gray-600 p-2 mx-4 hover:bg-gray-600 hover:text-white text-xs md:text-sm"
-                      onClick={() => handleEditRow(index)}
-                    >
-                      <svg
-                        data-slot="icon"
-                        fill="none"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                        className="w-4 h-4"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-                        ></path>
-                      </svg>
-                      {medicamento.editable ? "Guardar" : "Modificar"}
-                    </button>
-                    {!medicacionDiaria && (
+                  <td className="border border-gray-300 p-0 h-full text-center align-middle">
+                <input
+                  className={`w-full h-full p-3 box-border text-gray-500 font-bold ${!medicamento.editable ? 'bg-gray-200' : 'bg-white'}`}
+                  type="text"
+                  value={medicamento.observaciones}
+                  onChange={(event) => manejarCambioObservaciones(index, event)}
+                  disabled={!medicamento.editable}
+                />
+              </td>
+                  <td className="w-full flex border border-gray-300 p-0 h-full text-center align-middle">
+                   {medicacionDiaria && (
+                    <>
                       <button
-                        className="m-2 flex text-red-600 rounded-md border border-red-600 p-2 mx-4 hover:bg-red-600 hover:text-white text-xs md:text-sm"
-                        onClick={() => handleRemoveRow(index)}
-                      >
-                        <svg
-                          data-slot="icon"
-                          fill="none"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
-                          className="w-4 h-4"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-                          ></path>
-                        </svg>
-                        Eliminar
+                        className="min-w-[50px] bg-gray-200 border-r border-gray-300 w-full h-full py-3 text-center text-gray-500 font-bold hover:bg-red-500 hover:text-white"
+                        onClick={() => { onClickRestaMedicacionDiaria(medicamento.medicamento) }}>
+                          -
                       </button>
-                    )}
-
-                    {medicacionDiaria && (
-                      <div className="suma-resta">
                       <button
-                        className="m-2 flex text-red-600 rounded-md border border-red-600 p-2 mx-4 hover:bg-red-600 hover:text-white text-xs md:text-sm"
-                        onClick={() => { onClickRestaMedicacionDiaria(medicamento.medicamento) }}
-                      >
-                        <svg data-slot="icon" fill="none" className="w-6 h-6" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"></path>
-                        </svg>
-                        Restar medicacion
+                        className="min-w-[50px] bg-gray-200 w-full h-full py-3 text-center text-gray-500 font-bold hover:bg-green-500 hover:text-white"
+                        onClick={() => { onclicksumarMedicacionDiaria(medicamento.medicamento) }}>
+                        +
                       </button>
-                       <button
-                       className="m-2 flex text-green-600 rounded-md border border-green-600 p-2 mx-4 hover:bg-green-600 hover:text-white text-xs md:text-sm"
-                       onClick={() => { onclicksumarMedicacionDiaria(medicamento.medicamento) }}
-                     >
-                       <svg data-slot="icon" fill="none"  className="w-8 h-8" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
-</svg>
-                       Sumar medicacion
-                     </button>
-                     </div>
+                    </>
                     )}
+                    
                   </td>
                 </tr>
               )

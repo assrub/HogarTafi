@@ -208,7 +208,7 @@ export default function MedicacionesDiarias(){
 
 
     return (<>
-      <div className="registrar-pacientes w-full">
+      <div className="border rounded-lg p-3 shadow-md overflow-x-auto">
         <div className="titulo flex justify-center text-xl lg:text-3xl lg:mt-5 mb-10">
           <h2 className="font-bold">Medicaiones diarias</h2>
         </div>

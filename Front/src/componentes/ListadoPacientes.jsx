@@ -3,6 +3,8 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import { todosLosPacientes, desactivarPAcientes } from "../api";
+import BotonEditar from './Botones/BotonEditar';
+import BotonEliminar from './Botones/BotonEliminar';
 
 function ListadoPacientes() {
   const [pacientes, setPacientes] = useState([]);
@@ -52,43 +54,37 @@ function ListadoPacientes() {
         </h2>
       </div>
 
-      <div className="tabla overflow-x-auto">
-        <table className="min-w-full mb-10 border border-gray-300">
-          <thead className="bg-gray-200">
+      <div className="tabla border rounded-lg p-3 shadow-md overflow-x-auto">
+        <table className="hidden lg:table min-w-full table-auto text-xs sm:text-xs bg-white">
+          <thead className="bg-gray-400">
             <tr>
-              <th className="px-4 py-2 border-b text-left text-gray-600">Nombre</th>
-              <th className="px-4 py-2 border-b text-left text-gray-600">Apellido</th>
-              <th className="px-4 py-2 border-b text-left text-gray-600">DNI</th>
-              <th className="px-4 py-2 border-b text-left text-gray-600">Obra social</th>
-              <th className="px-4 py-2 border-b text-left text-gray-600">Acciones</th>
+              <th className="p-3 border border-gray-300 text-white">NOMBRE</th>
+              <th className="p-3 border border-gray-300 text-white">APELLIDO</th>
+              <th className="p-3 border border-gray-300 text-white">DNI</th>
+              <th className="p-3 border border-gray-300 text-white">OBRA SOCIAL</th>
+              <th className="p-3 border border-gray-300 text-white">ACCIONES</th>
             </tr>
           </thead>
           <tbody>
             {pacientes.map((paciente, index) => (
               <tr
                 key={index}
-                className={`hover:bg-gray-200 transition duration-300 ease-in-out text-lg ${index % 2 === 0 ? "bg-gray-50" : "bg-white"}`}
+                className={`hover:bg-gray-200 transition duration-100 ease-in-out ${index % 2 === 0 ? "bg-gray-50" : "bg-white"}`}
               >
-                <td className="px-4 py-3 ">{paciente.nombre}</td>
-                <td className="px-4 py-3 ">{paciente.apellido}</td>
-                <td className="px-4 py-3 ">{paciente.dni}</td>
-                <td className="px-4 py-3 ">{paciente.obraSocial}</td>
-                <td className="px-4 py-3 flex space-x-2">
-                  <button
-                    className="flex items-center px-2 py-0.5 bg-red-500 text-white rounded hover:bg-red-600 transition"
-                    onClick={() => handleEliminar(paciente)}
-                  >
-                    <DeleteForeverIcon fontSize="small" />
-                    <span className="ml-1 text-sm">Eliminar</span>
-                  </button>
+                <td className="border border-gray-300 p-0 h-full text-center align-middle">{paciente.nombre}</td>
+                <td className="border border-gray-300 p-0 h-full text-center align-middle">{paciente.apellido}</td>
+                <td className="border border-gray-300 p-0 h-full text-center align-middle">{paciente.dni}</td>
+                <td className="border border-gray-300 p-0 h-full text-center align-middle">{paciente.obraSocial}</td>
+                <td className={`w-full flex bg-gray-200 border border-gray-300 p-0 h-full align-middle}`}>
                   <Link
-                    className="flex items-center px-2 py-0.5 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                    className="min-w-[100px] w-full h-full py-3 text-center text-gray-500 font-bold hover:bg-blue-500 hover:text-white"
                     to={"/UserPanel/paciente/modificar"}
                     state={{ paciente: paciente }}
                   >
-                    <EditIcon fontSize="small" />
-                    <span className="ml-1 text-sm">Modificar</span>
+                    <span>Modificar</span>
                   </Link>
+
+                    <BotonEliminar onClick={() => handleEliminar(paciente)} />
                 </td>
               </tr>
             ))}
