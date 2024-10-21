@@ -83,12 +83,11 @@ export default function FotosFamiliares() {
 
 
     async function eliminarFoto(foto){
-      const arregloDni = foto.dni;
-      let response = null;
-      arregloDni.forEach(dni => {
-        response =  eliminarFotoApi(dni,foto.id);
-      });
 
+      let response = null;
+      response =  await eliminarFotoApi(foto.id);
+
+      console.log(response)
       if (response) {
         setFotosBackend(prevFotos => prevFotos.filter(f => f.id !== foto.id));
         setFotoEliminada(prev => !prev);

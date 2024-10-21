@@ -94,4 +94,25 @@ public class CFotos {
            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
        }
    }
+
+
+   @DeleteMapping("/eliminarFoto")
+   public ResponseEntity<Map<String, String>> eliminarDniDeFoto( @RequestParam("fotoId") String fotoId) {
+       Map<String, String> response = new HashMap<>();
+       try {
+           // Llama al servicio para eliminar la foto
+           boolean eliminado = servicioFotos.eliminarFoto(fotoId);
+   
+           if (eliminado) {
+               response.put("message", "Foto eliminada.");
+               return ResponseEntity.ok(response);
+           } else {
+               response.put("message", "No se pudo eliminar la foto.");
+               return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+           }
+       } catch (Exception e) {
+           response.put("message", "Error al procesar la solicitud.");
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+       }
+   }
 }

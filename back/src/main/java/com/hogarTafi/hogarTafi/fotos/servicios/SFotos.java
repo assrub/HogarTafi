@@ -18,4 +18,6 @@ public interface SFotos {
     boolean eliminarDniDeFoto(Integer dni, String fotoId);
 
     EFotos buscarPorContenido(byte[] fotoBytes);
+
+    boolean eliminarFoto(String fotoId);
 }

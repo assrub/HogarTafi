@@ -263,12 +263,11 @@ export async function actualizarStockApi(dni,formData){
 
 }
 
-export async function eliminarFotoApi(dni,id){
+export async function eliminarFotoApi(id){
     try {
                const formData = new FormData()
-               formData.append("dni",dni);
                formData.append("fotoId",id)
-        const response = await fetch(`http://${direccionIp}:8080/api/fotos`, {
+        const response = await fetch(`http://${direccionIp}:8080/api/fotos/eliminarFoto`, {
             method: "DELETE",
             body: formData,
         });

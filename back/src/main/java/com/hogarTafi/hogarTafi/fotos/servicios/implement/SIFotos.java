@@ -87,6 +87,20 @@ public class SIFotos implements SFotos {
     }
 
     @Override
+    public boolean eliminarFoto(String fotoId) {
+        Optional<EFotos> fotoOptional = repositorioFotos.findById(fotoId);
+        if (fotoOptional.isPresent()) {
+            EFotos foto = fotoOptional.get();
+            repositorioFotos.delete(foto);
+            return true;
+        }else{
+            return false;
+        }
+       
+    }
+
+
+    @Override
     public EFotos buscarPorContenido(byte[] fotoBytes) {
         List<EFotos> todasLasFotos = repositorioFotos.findAll();
 
