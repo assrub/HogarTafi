@@ -3,11 +3,16 @@ import Boton from "./Botones/Boton";
 import { todosLosPacientes, actualizarStockApi } from "../api";
 import TablaMedicamentos from "./FormPacientes/TablaMedicamentos";
 import CartelAviso from "./Modal/CartelAviso";
+import stock from "./FormPacientes/TablaStock2"
 
 export default function MedicacionesDiarias() {
-  const [mensaje, setMensaje] = useState("");
-  const [mostrarCartel, setMostrarCartel] = useState(false);
-  const toggleModal = () => setMostrarCartel(!mostrarCartel);
+  
+  const [mensajeModalAviso, setMensajeModalAviso] = useState("");
+  const [mostrarModalAviso, setMostrarModalAviso] = useState(false);
+  const [estadoModalAviso, setEstadoModalAviso] = useState("");
+  const [accionConfimModalAviso, setAccionConfimModalAviso] = useState(null);
+  const toggleModalAviso = () => setMostrarModalAviso(!mostrarModalAviso);
+
 
   const [pacientes, setPacientes] = useState([]);
   const [paciente, setPaciente] = useState({
@@ -128,13 +133,13 @@ export default function MedicacionesDiarias() {
       const response = await actualizarStockApi(paciente.dni, formData);
       console.log(await response);
       if (response.status === 404) {
-        setMensaje(
-          "No hay suficiente stock de " + medicacionParam + " para restar."
-        );
-        toggleModal();
+        setMensajeModalAviso("No hay suficiente stock de " + medicacionParam + " para restar.");
+        setEstadoModalAviso(3);
+        toggleModalAviso();
       } else if (response.status === 200) {
-        setMensaje("Medicacion restada correctamente.");
-        toggleModal();
+        setMensajeModalAviso("Medicacion restada correctamente.");
+        setEstadoModalAviso(2);
+        toggleModalAviso();
       }
     } catch (error) {
       console.error(error);
@@ -184,11 +189,13 @@ export default function MedicacionesDiarias() {
       console.log(await response.status);
 
       if (response.status == 200) {
-        setMensaje("Medicacion sumada correctamente.");
+        setMensajeModalAviso("Medicacion sumada correctamente.");
+        setEstadoModalAviso(2);
       } else if (response.status == 404) {
-        setMensaje("Error al sumar la medicacion al stock");
+        setMensajeModalAviso("Error al sumar la medicacion al stock");
+        setEstadoModalAviso(3);
       }
-      toggleModal();
+      toggleModalAviso();
     } catch (error) {
       console.error(error);
     }
@@ -234,7 +241,7 @@ export default function MedicacionesDiarias() {
                   onclicksumarMedicacionDiaria={sumarMedicacion}
                 />
               </div>
-
+              
               <div className="restar-medicacion lg:mx-4 lg:my-6 hidden">
                 <Boton
                   textoBoton="Restar medicaion"
@@ -247,9 +254,10 @@ export default function MedicacionesDiarias() {
 
         <div className="modal">
           <CartelAviso
-            abrirModal={mostrarCartel}
-            cerrarModal={toggleModal}
-            mensaje={mensaje}
+            abrirModal={mostrarModalAviso}
+            cerrarModal={toggleModalAviso}
+            mensaje={mensajeModalAviso}
+            estado={estadoModalAviso}
           />
         </div>
       </div>

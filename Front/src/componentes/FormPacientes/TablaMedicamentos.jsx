@@ -1,7 +1,6 @@
 import React, { useEffect, useState, forwardRef } from "react";
 import { traerMedicamentosApi, traerStockApi } from "../../api";
-import BotonEditar from "./../Botones/BotonEditar";
-import BotonEliminar from "./../Botones/BotonEliminar";
+import CartelAviso from "./../Modal/CartelAviso";
 
 const TablaMedicamentos = forwardRef(
   (
@@ -14,6 +13,13 @@ const TablaMedicamentos = forwardRef(
     },
     ref
   ) => {
+
+    const [mensajeModalAviso, setMensajeModalAviso] = useState("");
+    const [mostrarModalAviso, setMostrarModalAviso] = useState(false);
+    const [estadoModalAviso, setEstadoModalAviso] = useState(1);
+    const [accionConfimModalAviso, setAccionConfimModalAviso] = useState(null);
+    const toggleModalAviso = () => setMostrarModalAviso(!mostrarModalAviso);
+
     const [stock, setStock] = useState([
       {
         medicacion: "",
@@ -153,7 +159,6 @@ const TablaMedicamentos = forwardRef(
       }
     }
 
-    //esta funcion es porque el estado de medicamentos en este componente y los medicamentos que estan en la base de datos tienen diferente forma
     function transformarMedicamentos(medicamentosBackend) {
       return medicamentosBackend.map((medicamento) => ({
         medicamento: medicamento.medicamento,
@@ -173,7 +178,6 @@ const TablaMedicamentos = forwardRef(
     async function traerStock(dni) {
       try {
         const response = await traerStockApi(dni);
-        // Verificamos si el estado es 404 antes de intentar parsear el JSON
         if (response.status == 404) {
           setStock([
             {
@@ -185,7 +189,6 @@ const TablaMedicamentos = forwardRef(
           return; // Salimos de la función porque ya manejamos el 404
         }
 
-        // Si el estado es 200, procesamos la respuesta
         if (response.status == 200) {
           const data = await response.json();
           setStock(transformarStock(data.medicamentos));
@@ -212,6 +215,28 @@ const TablaMedicamentos = forwardRef(
       traerStock(dni);
       traerMedicamentos(dni);
     }, [dni]);
+
+    // Función para mostrar el modal de restar medicamento
+    const handleRestaMedicacion = (medicamento) => {
+      setMensajeModalAviso(`¿Estás seguro que deseas restar ${medicamento}?`);
+      setEstadoModalAviso(11);
+      setAccionConfimModalAviso(() => () => {
+        onClickRestaMedicacionDiaria(medicamento);
+        setMostrarModalAviso(false);
+      });
+      toggleModalAviso();
+    };
+
+    // Función para mostrar el modal de sumar medicamento
+    const handleSumaMedicacion = (medicamento) => {
+      setMensajeModalAviso(`¿Estás seguro que deseas sumar ${medicamento}?`);
+      setEstadoModalAviso(11);
+      setAccionConfimModalAviso(() => () => {
+        onclicksumarMedicacionDiaria(medicamento);
+        setMostrarModalAviso(false);
+      });
+      toggleModalAviso();
+    };
 
     return (
       <div className="">
@@ -284,21 +309,13 @@ const TablaMedicamentos = forwardRef(
                         <>
                           <button
                             className="min-w-[50px] bg-gray-200 border-r border-gray-300 w-full h-full py-3 text-center text-gray-500 font-bold hover:bg-red-500 hover:text-white"
-                            onClick={() => {
-                              onClickRestaMedicacionDiaria(
-                                medicamento.medicamento
-                              );
-                            }}
+                            onClick={() => handleRestaMedicacion(medicamento.medicamento)}
                           >
                             -
                           </button>
                           <button
                             className="min-w-[50px] bg-gray-200 w-full h-full py-3 text-center text-gray-500 font-bold hover:bg-green-500 hover:text-white"
-                            onClick={() => {
-                              onclicksumarMedicacionDiaria(
-                                medicamento.medicamento
-                              );
-                            }}
+                            onClick={() => handleSumaMedicacion(medicamento.medicamento)}
                           >
                             +
                           </button>
@@ -451,17 +468,13 @@ const TablaMedicamentos = forwardRef(
                   <div className="flex justify-between mt-4">
                     <button
                       className="min-w-[50px] bg-gray-200 border-r border-gray-300 w-full h-full py-3 text-center text-gray-500 font-bold hover:bg-red-500 hover:text-white"
-                      onClick={() => {
-                        onClickRestaMedicacionDiaria(medicamento.medicamento);
-                      }}
+                      onClick={() => handleRestaMedicacion(medicamento.medicamento)}
                     >
                       -
                     </button>
                     <button
                       className="min-w-[50px] bg-gray-200 w-full h-full py-3 text-center text-gray-500 font-bold hover:bg-green-500 hover:text-white"
-                      onClick={() => {
-                        onclicksumarMedicacionDiaria(medicamento.medicamento);
-                      }}
+                      onClick={() => handleSumaMedicacion(medicamento.medicamento)}
                     >
                       +
                     </button>
@@ -470,6 +483,14 @@ const TablaMedicamentos = forwardRef(
               )
           )}
         </div>
+        <CartelAviso
+          abrirModal={mostrarModalAviso}
+          cerrarModal={toggleModalAviso}
+          mensaje={mensajeModalAviso}
+          estado={estadoModalAviso}
+          onConfirm={accionConfimModalAviso}
+        />
+        
       </div>
     );
   }
