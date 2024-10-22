@@ -53,7 +53,7 @@ export function BarraNavegacion() {
             </Link>
           </div>
           <hr />
-          <div className="navegacion mt-6 ml-6 flex flex-col items-start h-full">
+          <div className="navegacion mt-6 ml-2 flex flex-col items-start h-full">
           {(usuario.tipo=="admin" || usuario.tipo ==="empleado") && (
             <div className="pacientes p-3 flex flex-col items-baseline w-full">
               <Link

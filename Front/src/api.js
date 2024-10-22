@@ -1,4 +1,4 @@
-const direccionIp = "192.168.0.208"
+const direccionIp = "localhost"
 
 export async function todosLosPacientes() {
   const response = await fetch(`http://${direccionIp}:8080/pacientes`);
@@ -102,7 +102,7 @@ export async function traerMedicamentosApi(dni){
 export async function registrarUsuarioApi(formData) {
     try {
                
-        const response = await fetch(`http://${direccionIp}:8080/usuario`, {
+        const response = await fetch(`http://${direccionIp}:8080/usuarios`, {
             method: "POST",
             body: formData,
         });

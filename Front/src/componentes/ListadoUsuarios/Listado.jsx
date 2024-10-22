@@ -105,60 +105,94 @@ export default function Listado() {
     }
   };
 
-  return (
-    <>
-      <Modal 
-        isOpen={modalOpen} 
-        onClose={() => setModalOpen(false)} 
-        onConfirm={handleConfirm} 
-        dni={usuarioDni} 
-        action={actionType} // Pasar la acción al modal
-      />
-      <div className="listadoUsuarios border rounded-lg p-2 shadow-md overflow-x-auto">
-        <table className="min-w-full table-auto text-xs sm:text-sm">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="px-1 py-0.5 border border-[#181818]">Nombre</th>
-              <th className="px-1 py-0.5 border border-[#181818]">Apellido</th>
-              <th className="px-1 py-0.5 border border-[#181818]">Email</th>
-              <th className="px-1 py-0.5 border border-[#181818]">DNI</th>
-              <th className="px-1 py-0.5 border border-[#181818]">Teléfono</th>
-              <th className="px-1 py-0.5 border border-[#181818]">Dirección</th>
-              <th className="px-1 py-0.5 border border-[#181818]">Paciente asociado</th>
-              <th className="px-1 py-0.5 border border-[#181818]">Tipo</th>
-              <th className="px-1 py-0.5 border border-[#181818]">Acciones</th>
+  return (<>
+    <Modal 
+      isOpen={modalOpen} 
+      onClose={() => setModalOpen(false)} 
+      onConfirm={handleConfirm} 
+      dni={usuarioDni} 
+      action={actionType} 
+    />
+    <div className="listadoUsuarios border rounded-lg p-2 shadow-md overflow-x-auto">
+      {/* Vista en pantallas grandes */}
+      <table className="hidden lg:table min-w-full table-auto text-xs sm:text-xs bg-white">
+        <thead>
+          <tr className="bg-gray-400">
+            <th className="p-3 border border-gray-300 text-white">Nombre</th>
+            <th className="p-3 border border-gray-300 text-white">Apellido</th>
+            <th className="p-3 border border-gray-300 text-white">Email</th>
+            <th className="p-3 border border-gray-300 text-white">DNI</th>
+            <th className="p-3 border border-gray-300 text-white">Teléfono</th>
+            <th className="p-3 border border-gray-300 text-white">Dirección</th>
+            <th className="p-3 border border-gray-300 text-white">Paciente asociado</th>
+            <th className="p-3 border border-gray-300 text-white">Tipo</th>
+            <th className="p-3 border border-gray-300 text-white">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {usuarios.map((usuario, index) => (
+            <tr key={index} className={`sm:text-xs hover:bg-gray-200 transition duration-100 ease-in-out ${index % 2 === 0 ? "bg-gray-100" : "bg-gray-300"}`}>
+              <td className="border border-gray-300 p-1 break-words text-center align-middle">{usuario.nombre}</td>
+              <td className="border border-gray-300 p-1 break-words text-center align-middle">{usuario.apellido}</td>
+              <td className="border border-gray-300 p-1 break-words text-center align-middle">{usuario.email}</td>
+              <td className="border border-gray-300 p-1 break-words text-center align-middle">{usuario.dni}</td>
+              <td className="border border-gray-300 p-1 break-words text-center align-middle">{usuario.telefono}</td>
+              <td className="border border-gray-300 p-1 break-words text-center align-middle">{usuario.direccion}</td>
+              <td className="border border-gray-300 p-1 break-words text-center align-middle">{usuario.tipo === "familiar" ? usuario.nombreAsociado : ""}</td>
+              <td className="border border-gray-300 p-1 break-words text-center align-middle">{usuario.tipo}</td>
+              <td className="border border-gray-300 p-1 break-words text-center align-middle">
+                {usuario.activo ? (
+                  <button className="w-full text-red-600 font-bold hover:bg-red-200 text-xs" onClick={() => handleActionClick(usuario.dni, "desactivar")}>
+                    <DeleteForeverIcon /> Desactivar
+                  </button>
+                ) : (
+                  <button className="w-full text-green-600 font-bold hover:bg-green-200 sm:text-xs" onClick={() => handleActionClick(usuario.dni, "reactivar")}>
+                    <CheckCircleOutlineIcon /> Reactivar
+                  </button>
+                )}
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {usuarios.map((usuario, index) => (
-              <tr
-                key={index}
-                className={`hover:bg-[#017a98]/50 ${index % 2 === 0 ? "bg-gray-100" : "bg-gray-300"}`}
-              >
-                <td className="px-1 py-0.5 border border-[#181818]">{usuario.nombre}</td>
-                <td className="px-1 py-0.5 border border-[#181818]">{usuario.apellido}</td>
-                <td className="px-1 py-0.5 border border-[#181818]">{usuario.email}</td>
-                <td className="px-1 py-0.5 border border-[#181818]">{usuario.dni}</td>
-                <td className="px-1 py-0.5 border border-[#181818]">{usuario.telefono}</td>
-                <td className="px-1 py-0.5 border border-[#181818]">{usuario.direccion}</td>
-                <td className="px-1 py-0.5 border border-[#181818]">{usuario.tipo === "familiar" ? usuario.nombreAsociado : ""}</td>
-                <td className="px-1 py-0.5 border border-[#181818]">{usuario.tipo}</td>
-                <td className="py-0.5 border border-[#181818]">
-                  {usuario.activo ? (
-                    <button className="text-red-600 font-bold hover:bg-red-200 text-xs" onClick={() => handleActionClick(usuario.dni, "desactivar")}>
-                      <DeleteForeverIcon /> Desactivar
-                    </button>
-                  ) : (
-                    <button className="text-green-600 font-bold hover:bg-green-200 text-xs" onClick={() => handleActionClick(usuario.dni, "reactivar")}>
-                      <CheckCircleOutlineIcon /> Reactivar
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+          ))}
+        </tbody>
+      </table>
+  
+      {/* Vista en dispositivos móviles y tabletas */}
+      <div className="lg:hidden grid grid-cols-1 gap-6">
+        {usuarios.map((usuario, index) => (
+          <div key={index} className="border border-gray-300 p-3 rounded-lg bg-white shadow-sm">
+            <div className="grid grid-cols-2 gap-x-2 text-xs sm:text-sm">
+              <div className="font-bold text-gray-700">Nombre</div>
+              <div>{usuario.nombre}</div>
+              <div className="font-bold text-gray-700">Apellido</div>
+              <div>{usuario.apellido}</div>
+              <div className="font-bold text-gray-700">Email</div>
+              <div>{usuario.email}</div>
+              <div className="font-bold text-gray-700">DNI</div>
+              <div>{usuario.dni}</div>
+              <div className="font-bold text-gray-700">Teléfono</div>
+              <div>{usuario.telefono}</div>
+              <div className="font-bold text-gray-700">Dirección</div>
+              <div>{usuario.direccion}</div>
+              <div className="font-bold text-gray-700">Paciente asociado</div>
+              <div>{usuario.tipo === "familiar" ? usuario.nombreAsociado : ""}</div>
+              <div className="font-bold text-gray-700">Tipo</div>
+              <div>{usuario.tipo}</div>
+            </div>
+            <div className="mt-4 text-center">
+              {usuario.activo ? (
+                <button className="w-full text-red-600 font-bold hover:bg-red-200 text-xs" onClick={() => handleActionClick(usuario.dni, "desactivar")}>
+                  <DeleteForeverIcon /> Desactivar
+                </button>
+              ) : (
+                <button className="w-full text-green-600 font-bold hover:bg-green-200 text-xs" onClick={() => handleActionClick(usuario.dni, "reactivar")}>
+                  <CheckCircleOutlineIcon /> Reactivar
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
-    </>
+    </div>
+  </>
   );
 }

@@ -13,7 +13,6 @@ const TablaMedicamentos = forwardRef(
     },
     ref
   ) => {
-
     const [mensajeModalAviso, setMensajeModalAviso] = useState("");
     const [mostrarModalAviso, setMostrarModalAviso] = useState(false);
     const [estadoModalAviso, setEstadoModalAviso] = useState(1);
@@ -216,27 +215,28 @@ const TablaMedicamentos = forwardRef(
       traerMedicamentos(dni);
     }, [dni]);
 
-    // Función para mostrar el modal de restar medicamento
     const handleRestaMedicacion = (medicamento) => {
       setMensajeModalAviso(`¿Estás seguro que deseas restar ${medicamento}?`);
       setEstadoModalAviso(11);
-      setAccionConfimModalAviso(() => () => {
-        onClickRestaMedicacionDiaria(medicamento);
+      setAccionConfimModalAviso(() => async () => {
+        await onClickRestaMedicacionDiaria(medicamento);
         setMostrarModalAviso(false);
+        await traerStock(dni);  // Mover aquí la llamada a traerStock
       });
       toggleModalAviso();
     };
-
-    // Función para mostrar el modal de sumar medicamento
+    
     const handleSumaMedicacion = (medicamento) => {
       setMensajeModalAviso(`¿Estás seguro que deseas sumar ${medicamento}?`);
       setEstadoModalAviso(11);
-      setAccionConfimModalAviso(() => () => {
-        onclicksumarMedicacionDiaria(medicamento);
+      setAccionConfimModalAviso(() => async () => {
+        await onclicksumarMedicacionDiaria(medicamento);
         setMostrarModalAviso(false);
+        await traerStock(dni);  // Mover aquí la llamada a traerStock
       });
       toggleModalAviso();
     };
+    
 
     return (
       <div className="">
@@ -259,6 +259,9 @@ const TablaMedicamentos = forwardRef(
               ))}
               <th className="p-3 border border-gray-300 text-white">
                 Observaciones
+              </th>
+              <th className="p-3 border border-gray-300 text-white">
+                Cantidad Disponbles
               </th>
               <th className="p-3 border border-gray-300 text-white">
                 Acciones
@@ -304,18 +307,27 @@ const TablaMedicamentos = forwardRef(
                         disabled={!medicamento.editable}
                       />
                     </td>
+                    {/* Ajuste aquí: solo un td con cantidad correspondiente */}
+                    <td className="bg-yellow-200 border border-gray-300 p-0 h-full text-center align-middle">
+                      {stock[index]?.cantidad || "N/A"}{" "}
+                      {/* Asegurarse de que stock esté alineado con medicamentos */}
+                    </td>
                     <td className="w-full flex border border-gray-300 p-0 h-full text-center align-middle">
                       {medicacionDiaria && (
                         <>
                           <button
-                            className="min-w-[50px] bg-gray-200 border-r border-gray-300 w-full h-full py-3 text-center text-gray-500 font-bold hover:bg-red-500 hover:text-white"
-                            onClick={() => handleRestaMedicacion(medicamento.medicamento)}
+                            className="min-w-[50px] bg-red-200 border-r border-gray-300 w-full h-full py-3 text-center text-gray-500 font-bold hover:bg-red-500 hover:text-white"
+                            onClick={() =>
+                              handleRestaMedicacion(medicamento.medicamento)
+                            }
                           >
                             -
                           </button>
                           <button
-                            className="min-w-[50px] bg-gray-200 w-full h-full py-3 text-center text-gray-500 font-bold hover:bg-green-500 hover:text-white"
-                            onClick={() => handleSumaMedicacion(medicamento.medicamento)}
+                            className="min-w-[50px] bg-green-200 w-full h-full py-3 text-center text-gray-500 font-bold hover:bg-green-500 hover:text-white"
+                            onClick={() =>
+                              handleSumaMedicacion(medicamento.medicamento)
+                            }
                           >
                             +
                           </button>
@@ -464,19 +476,28 @@ const TablaMedicamentos = forwardRef(
                       disabled={!medicamento.editable}
                     />
                   </div>
-
+                  <div className="flex items-center justify-center mt-3 bg-yellow-200">
+                    <div className="w-full ml-2 font-bold ">CANTIDAD DISPONIBLE:</div>
+                    <input className="w-full p-3 box-border text-gray-500 font-bold bg-yellow-200 text-center"
+                          type="text"
+                          value={stock[index]?.cantidad || "N/A"}></input>
+                  </div>
                   <div className="flex justify-between mt-4">
                     <button
-                      className="min-w-[50px] bg-gray-200 border-r border-gray-300 w-full h-full py-3 text-center text-gray-500 font-bold hover:bg-red-500 hover:text-white"
-                      onClick={() => handleRestaMedicacion(medicamento.medicamento)}
+                      className="min-w-[50px] bg-red-400 border-r border-gray-300 w-full h-full py-3 text-center text-gray-500 font-bold hover:bg-red-500 hover:text-white"
+                      onClick={() =>
+                        handleRestaMedicacion(medicamento.medicamento)
+                      }
                     >
-                      -
+                      RESTAR (-)
                     </button>
                     <button
-                      className="min-w-[50px] bg-gray-200 w-full h-full py-3 text-center text-gray-500 font-bold hover:bg-green-500 hover:text-white"
-                      onClick={() => handleSumaMedicacion(medicamento.medicamento)}
+                      className="min-w-[50px] bg-green-400 w-full h-full py-3 text-center text-gray-500 font-bold hover:bg-green-500 hover:text-white"
+                      onClick={() =>
+                        handleSumaMedicacion(medicamento.medicamento)
+                      }
                     >
-                      +
+                      SUMAR (+)
                     </button>
                   </div>
                 </div>
@@ -490,7 +511,6 @@ const TablaMedicamentos = forwardRef(
           estado={estadoModalAviso}
           onConfirm={accionConfimModalAviso}
         />
-        
       </div>
     );
   }

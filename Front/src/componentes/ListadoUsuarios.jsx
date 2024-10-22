@@ -150,17 +150,15 @@ export default function ListadoUsuarios() {
           empleado: false
         });
       }
-      
 
-  
   return (<>
     <div className="registrar-pacientes w-full">
-      <div className="titulo flex justify-center text-xl lg:text-3xl lg:mt-5 mb-10">
-        <h2 className="font-bold">Listado de usuarios</h2>
+      <div className="titulo flex justify-center text-lg lg:text-2xl lg:mt-5 mb-5">
+        <h2 className="font-bold">LISTADO DE USUARIOS</h2>
       </div>
       
       {formregistrar && (
-        <div className="border rounded-lg p-3 m-auto shadow-md max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+        <div className="tabla border rounded-lg p-3 shadow-md overflow-x-auto">
           <div className="registrarUsuario">
             <form action="">
               {[
@@ -244,7 +242,7 @@ export default function ListadoUsuarios() {
       )}
   
       {!formregistrar && (
-        <div className="mx-4">
+        <div>
           <div className="registrarUsuario mb-4">
             <button
               onClick={mostrarFormRegistroUsuario}
