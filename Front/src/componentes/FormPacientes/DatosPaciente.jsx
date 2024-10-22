@@ -3,6 +3,7 @@ import CampoTexto from "./CampoTexto";
 import { modificarPaciente } from "../../api"; 
 import CartelAviso from "./../Modal/CartelAviso";
 import BotonActualizar from './../Botones/BotonActualizar';
+import DatosFamiliar from "./DatosFamiliar";
 
 function DatosPaciente({ paciente }) {
 
@@ -199,6 +200,10 @@ function DatosPaciente({ paciente }) {
             estado = {estadoModalAviso}
         />
     </div>
+
+<div className="datosFamiliar">
+    <DatosFamiliar dniPaciente={paciente.dni}/>
+</div>
 </div>
 
     );

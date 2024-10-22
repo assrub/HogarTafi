@@ -40,11 +40,7 @@ export function BarraNavegacion() {
       <div className={`flex flex-col justify-between h-screen text-xl`}>
         <div className="hidden lg:block">
           <div className="perfil flex flex-col items-start mt-6 p-3 ml-6">
-            <img
-              src="/foto-avatar.webp"
-              className="w-1/5 rounded-full"
-              alt="foto de perfil"
-            />
+          
             <span className="mt-4">{usuario.nombre + " " + usuario.apellido}</span>
             <span className="opacity-70">{usuario.tipo}</span>
 
@@ -183,11 +179,7 @@ export function BarraNavegacion() {
             X
           </button>
           <div className="perfil flex flex-col items-start mt-6">
-            <img
-              src="/foto-avatar.webp"
-              className="w-20 rounded-full"
-              alt="foto de perfil"
-            />
+          
             <span className="mt-4">{usuario.nombre + " " + usuario.apellido}</span>
             <span className="opacity-70">{usuario.tipo}</span>
             <Link
