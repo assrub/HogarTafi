@@ -19,6 +19,8 @@ const TablaMedicamentos = forwardRef(
     const [estadoModalAviso, setEstadoModalAviso] = useState(1);
     const [accionConfimModalAviso, setAccionConfimModalAviso] = useState(null);
     const toggleModalAviso = () => setMostrarModalAviso(!mostrarModalAviso);
+    const [restaOSuma, setRestaOSuma] = useState(0);
+    const [forceRender, setForceRender] = useState(false);
 
     const [stock, setStock] = useState([
       {
@@ -212,30 +214,36 @@ const TablaMedicamentos = forwardRef(
     }
 
     useEffect(() => {
-      traerStock(dni);
+       traerStock(dni);
       traerMedicamentos(dni);
     }, [dni]);
 
-    // Función para mostrar el modal de restar medicamento
+    useEffect(() => {
+      console.log("restaOSuma actualizado:", restaOSuma);
+      traerStock(dni); 
+    }, [restaOSuma]);
+    
     const handleRestaMedicacion = (medicamento) => {
       setMensajeModalAviso(`¿Estás seguro que deseas restar ${medicamento}?`);
       setEstadoModalAviso(11);
-
-      setAccionConfimModalAviso(() => () => {
-        onClickRestaMedicacionDiaria(medicamento);
-        traerStock(dni);
+    
+      setAccionConfimModalAviso( () => async () => {
+        await onClickRestaMedicacionDiaria(medicamento);
+        setRestaOSuma(prev => prev + 1);
+    setForceRender(prev => !prev);
         setMostrarModalAviso(false);
       });
       toggleModalAviso();
     };
-
-    // Función para mostrar el modal de sumar medicamento
+    
     const handleSumaMedicacion = (medicamento) => {
       setMensajeModalAviso(`¿Estás seguro que deseas sumar ${medicamento}?`);
       setEstadoModalAviso(11);
-      setAccionConfimModalAviso(() => () => {
-        onclicksumarMedicacionDiaria(medicamento);
-        traerStock(dni);
+    
+      setAccionConfimModalAviso(() => async  () => {
+        await onclicksumarMedicacionDiaria(medicamento);
+        setRestaOSuma(prev => prev + 1);
+    setForceRender(prev => !prev);
         setMostrarModalAviso(false);
       });
       toggleModalAviso();
