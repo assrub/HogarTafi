@@ -220,8 +220,10 @@ const TablaMedicamentos = forwardRef(
     const handleRestaMedicacion = (medicamento) => {
       setMensajeModalAviso(`¿Estás seguro que deseas restar ${medicamento}?`);
       setEstadoModalAviso(11);
+
       setAccionConfimModalAviso(() => () => {
         onClickRestaMedicacionDiaria(medicamento);
+        traerStock(dni);
         setMostrarModalAviso(false);
       });
       toggleModalAviso();
@@ -233,6 +235,7 @@ const TablaMedicamentos = forwardRef(
       setEstadoModalAviso(11);
       setAccionConfimModalAviso(() => () => {
         onclicksumarMedicacionDiaria(medicamento);
+        traerStock(dni);
         setMostrarModalAviso(false);
       });
       toggleModalAviso();
@@ -259,6 +262,9 @@ const TablaMedicamentos = forwardRef(
               ))}
               <th className="p-3 border border-gray-300 text-white">
                 Observaciones
+              </th>
+              <th className="p-3 border border-gray-300 text-white"> 
+                Cantidad Disponible
               </th>
               <th className="p-3 border border-gray-300 text-white">
                 Acciones
@@ -304,6 +310,11 @@ const TablaMedicamentos = forwardRef(
                         disabled={!medicamento.editable}
                       />
                     </td>
+                    <td className="border border-gray-300 bg-gray-200 text-gray-500 font-bold p-0 h-full text-center align-middle">
+            {stock.find((item) => item.medicacion === medicamento.medicamento)?.cantidad || "No disponible"}
+          </td>
+                
+                
                     <td className="w-full flex border border-gray-300 p-0 h-full text-center align-middle">
                       {medicacionDiaria && (
                         <>
@@ -374,6 +385,8 @@ const TablaMedicamentos = forwardRef(
                     placeholder="Observaciones"
                   />
                 </td>
+               
+
                 <td className="lg:px-2 lg:py-1 border border-[#181818]">
                   <button
                     className="text-green-600 border border-green-600 m-2 p-2 rounded-md flex hover:bg-green-600 hover:text-white text-xs md:text-sm"
@@ -464,6 +477,20 @@ const TablaMedicamentos = forwardRef(
                       disabled={!medicamento.editable}
                     />
                   </div>
+
+                  <div className="mt-2">
+                    <label className="text-xs font-bold">CANTIDAD DISPONIBLE</label>
+                    <input
+                      className={`w-full p-3 box-border text-gray-500 font-bold text-center ${
+                        !medicamento.editable ? "bg-gray-200" : "bg-white"
+                      }`}
+                      type="text"
+                      value={ stock.find((item) => item.medicacion === medicamento.medicamento)?.cantidad || "No disponible"}
+                      disabled={!medicamento.editable}
+                    />
+                  </div>
+
+
 
                   <div className="flex justify-between mt-4">
                     <button

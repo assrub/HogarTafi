@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Boton from "./Botones/Boton";
-import { todosLosPacientes, actualizarStockApi } from "../api";
+import { todosLosPacientes, actualizarStockApi,traerStockApi} from "../api";
 import TablaMedicamentos from "./FormPacientes/TablaMedicamentos";
 import CartelAviso from "./Modal/CartelAviso";
 import stock from "./FormPacientes/TablaStock2"
@@ -13,6 +13,8 @@ export default function MedicacionesDiarias() {
   const [accionConfimModalAviso, setAccionConfimModalAviso] = useState(null);
   const toggleModalAviso = () => setMostrarModalAviso(!mostrarModalAviso);
 
+
+ 
 
   const [pacientes, setPacientes] = useState([]);
   const [paciente, setPaciente] = useState({
