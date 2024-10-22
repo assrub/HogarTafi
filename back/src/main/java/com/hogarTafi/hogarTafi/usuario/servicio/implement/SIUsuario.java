@@ -35,6 +35,11 @@ public class SIUsuario implements SUsuario{
             return false; // El usuario ya está registrado
         }
 
+        // Verificar si el usuario ya existe por Email
+        if (repositorioUsuario.findByEmail(usuarioDtos.getEmail()).isPresent()) {
+            return false; // El email ya está registrado
+        }
+        
         // Hashear la contraseña antes de guardar
         String hashedPassword = BCrypt.hashpw(usuarioDtos.getPassword(), BCrypt.gensalt());
         usuarioDtos.setPassword(hashedPassword); // Establecer la contraseña hasheada
