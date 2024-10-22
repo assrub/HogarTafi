@@ -18,6 +18,8 @@ const TablaMedicamentos = forwardRef(
     const [estadoModalAviso, setEstadoModalAviso] = useState(1);
     const [accionConfimModalAviso, setAccionConfimModalAviso] = useState(null);
     const toggleModalAviso = () => setMostrarModalAviso(!mostrarModalAviso);
+    const [restaOSuma, setRestaOSuma] = useState(0);
+    const [forceRender, setForceRender] = useState(false);
 
     const [stock, setStock] = useState([
       {
@@ -211,7 +213,7 @@ const TablaMedicamentos = forwardRef(
     }
 
     useEffect(() => {
-      traerStock(dni);
+       traerStock(dni);
       traerMedicamentos(dni);
     }, [dni]);
 
@@ -260,8 +262,8 @@ const TablaMedicamentos = forwardRef(
               <th className="p-3 border border-gray-300 text-white">
                 Observaciones
               </th>
-              <th className="p-3 border border-gray-300 text-white">
-                Cantidad Disponbles
+              <th className="p-3 border border-gray-300 text-white"> 
+                Cantidad Disponible
               </th>
               <th className="p-3 border border-gray-300 text-white">
                 Acciones
@@ -386,6 +388,8 @@ const TablaMedicamentos = forwardRef(
                     placeholder="Observaciones"
                   />
                 </td>
+               
+
                 <td className="lg:px-2 lg:py-1 border border-[#181818]">
                   <button
                     className="text-green-600 border border-green-600 m-2 p-2 rounded-md flex hover:bg-green-600 hover:text-white text-xs md:text-sm"
