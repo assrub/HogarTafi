@@ -160,8 +160,8 @@ export default function ListadoUsuarios() {
       {formregistrar && (
         <div className="tabla border rounded-lg p-3 shadow-md overflow-x-auto">
           <div className="registrarUsuario">
-            <form action="">
-              {[
+            <form action="" className="max-w-4xl m-auto grid grid-cols-1 sm:grid-cols-1 gap-1 p-3">
+            {[
                 { name: "nombre", type: "text" },
                 { name: "apellido", type: "text" },
                 { name: "email", type: "email" },
@@ -170,25 +170,26 @@ export default function ListadoUsuarios() {
                 { name: "telefono", type: "number" },
                 { name: "direccion", type: "text" },
               ].map((campo) => (
-                <CampoTexto
-                  key={campo.name}
-                  textoEtiqueta={campo.label}
-                  error={campoIncompleto}
-                  obligatorio={true}
-                  propsLabel={{ labelFor: campo.name }}
-                  propsInput={{
-                    placeholder: campo.name,
-                    type: campo.type,
-                    name: campo.name,
-                    id: `input${campo.name.charAt(0).toUpperCase() + campo.name.slice(1)}`,
-                    value: usuario[campo.name],
-                    onChange: handleInputChange,
-                    min: campo.min,
-                    max: campo.max,
-                  }}
-                />
+                <div key={campo.name} className="flex flex-col">
+                  <label 
+                    htmlFor={`input${campo.name.charAt(0).toUpperCase() + campo.name.slice(1)}`} 
+                    className="text-gray-700 font-semibold mb-1"
+                  >
+                    {campo.name.charAt(0).toUpperCase() + campo.name.slice(1)}
+                  </label>
+                  <input
+                    className="border rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder={campo.name}
+                    type={campo.type}
+                    name={campo.name}
+                    id={`input${campo.name.charAt(0).toUpperCase() + campo.name.slice(1)}`}
+                    value={usuario[campo.name]}
+                    onChange={handleInputChange}
+                    min={campo.min}
+                    max={campo.max}
+                  />
+                </div>
               ))}
-  
               <div className="tipo-usuario mt-5">
                 <select
                   name="paciente"

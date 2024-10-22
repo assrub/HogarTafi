@@ -32,41 +32,36 @@ async function recuperarContra(){
 }
 
 
-    return (
-        <div className="grid h-screen place-items-center">
-
-
-        <div className="login grid place-content-center border border-black h-1/2 p-56 bg-white rounded-xl" >
-            <div className="titulo text-3xl mb-4 font-bold">
-                <h2>Recuperar contraseña</h2>
+    return (<div className="grid h-screen place-items-center">
+        <div className="login grid place-content-center border border-black p-10 sm:p-8 lg:p-56 bg-white rounded-xl max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl w-full">
+          <div className="titulo text-3xl mb-4 font-bold text-center">
+            <h2>Recuperar contraseña</h2>
+          </div>
+          <div className="formulario">
+            <div className="email mb-4">
+              <CampoTexto 
+                //textoEtiqueta="Correo electronico"
+                error={campoIncompleto}
+                obligatorio={true}
+                propsLabel={{ labelFor: "email" }}
+                propsInput={{
+                  type: "text",
+                  name: "email",
+                  id: "inputEmail",
+                  placeholder: "Correo electronico",
+                  value: email,
+                  onChange: handleInputChange,
+                  className: "p-3 w-full border rounded-md"
+                }}
+              />
             </div>
-            <div className="formulario">
-                <div className="email">
-                    <CampoTexto 
-                        textoEtiqueta="Correo electronico"
-                        error={campoIncompleto}
-                        obligatorio={true}
-                        propsLabel={{ labelFor: "email" }}
-                        propsInput={{
-                            type: "text",
-                            name: "email",
-                            id: "inputEmail",
-                            placeholder: "Correo electronico",
-                            value: email,
-                            onChange: handleInputChange
-                        }}
-                    />
-                </div>
-               
-
-           
-                <div className="iniciar-sesion mt-6">
-                <Boton textoBoton="Cancelar" onClick={cancelar}/>
-                    <Boton textoBoton="Enviar" onClick={recuperarContra}/>
-                </div>
+      
+            <div className="iniciar-sesion mt-6 flex justify-between">
+              <Boton textoBoton="Cancelar" onClick={cancelar} className="w-1/2 mr-2" />
+              <Boton textoBoton="Enviar" onClick={recuperarContra} className="w-1/2 ml-2" />
             </div>
-           
+          </div>
         </div>
-    </div>
-    );
+      </div>
+      );
 }

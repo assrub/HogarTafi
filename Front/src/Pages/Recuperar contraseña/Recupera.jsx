@@ -61,60 +61,56 @@ async function enviarNuevosDatos(){
          setToken(datosrecuperacion[3]);
     }
 
-    return (
-        <>
-         <div className="grid h-screen place-items-center">
-
-
-<div className="login grid place-content-center border border-black h-1/2 p-56 bg-white rounded-xl" >
-    <div className="titulo text-3xl mb-4 font-bold">
-        <h2>Recuperacion de contraseña</h2>
-    </div>
-    <div className="formulario">
-        <div className="nuevaContra">
-            <CampoTexto 
-                textoEtiqueta="Nueva contraseña"
-                error={campoIncompleto}
-                obligatorio={true}
-                propsLabel={{ labelFor: "password" }}
-                propsInput={{
+    return (<>
+        <div className="grid h-screen place-items-center">
+          <div className="login grid place-content-center border border-black p-10 sm:p-8 lg:p-56 bg-white rounded-xl max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl w-full">
+            <div className="titulo text-3xl mb-4 font-bold text-center">
+              <h2>Recuperación de contraseña</h2>
+            </div>
+            <div className="formulario">
+              <div className="nuevaContra mb-4">
+                <CampoTexto 
+                  //textoEtiqueta="Nueva contraseña"
+                  error={campoIncompleto}
+                  obligatorio={true}
+                  propsLabel={{ labelFor: "password" }}
+                  propsInput={{
                     type: "password",
                     name: "nuevaContra",
                     id: "inputContra1",
                     placeholder: "Nueva contraseña",
                     value: datosRecuperacion.nuevaContra,
-                    onChange: handleInputChange
-                }}
-            />
-        </div>
-
-        <div className="confirmacion">
-            <CampoTexto 
-                textoEtiqueta="Confirmacion"
-                error={campoIncompleto}
-                obligatorio={true}
-                propsLabel={{ labelFor: "password" }}
-                propsInput={{
+                    onChange: handleInputChange,
+                    className: "p-3 w-full border rounded-md"
+                  }}
+                />
+              </div>
+      
+              <div className="confirmacion mb-4">
+                <CampoTexto 
+                  //textoEtiqueta="Confirmación"
+                  error={campoIncompleto}
+                  obligatorio={true}
+                  propsLabel={{ labelFor: "password" }}
+                  propsInput={{
                     type: "password",
                     name: "confirmacion",
-                    id: "inputconfirmacion",
-                    placeholder: "Confirmacion",
+                    id: "inputConfirmacion",
+                    placeholder: "Confirmación",
                     value: datosRecuperacion.confirmacion,
-                    onChange: handleInputChange
-                }}
-            />
+                    onChange: handleInputChange,
+                    className: "p-3 w-full border rounded-md"
+                  }}
+                />
+              </div>
+      
+              <div className="iniciar-sesion mt-6 flex justify-between">
+                <Boton textoBoton="Cancelar" onClick={cancelar} className="w-1/2 mr-2" />
+                <Boton textoBoton="Enviar" onClick={enviarNuevosDatos} className="w-1/2 ml-2" />
+              </div>
+            </div>
+          </div>
         </div>
-       
-
-   
-        <div className="iniciar-sesion mt-6">
-        <Boton textoBoton="Cancelar" onClick={cancelar}/>
-            <Boton textoBoton="Enviar" onClick={enviarNuevosDatos}/>
-        </div>
-    </div>
-   
-</div>
-</div>
-        </>
-    )
+      </>
+      )
 }
