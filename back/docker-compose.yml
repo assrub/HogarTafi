@@ -1,20 +1,19 @@
-version: '3.8'
-
 services:
   mongodb:
     image: mongo:4.4
-    container_name: Cmongo
+    container_name: Mongo-container
     ports:
       - "27017:27017"
     volumes:
-      - ./volumenes/mongodb_data:/data/db  
+      - ./volumenes/mongodb_data:/data/db
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./imagenes:/imagenes  # Montar la carpeta de fotos dentro del contenedor
 
-  webserver:
+  maven:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: entorno-maven-java-HogarTafi
+    container_name: Maven-container
     ports:
       - "8080:8080"
     depends_on:
@@ -23,5 +22,6 @@ services:
       - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/hogarTafi
       - SPRING_PROFILES_ACTIVE=dev
     volumes:
-      - .:/app  # Código fuente
+      - .:/app # Montar el código fuente
+      - ~/.m2:/root/.m2 # Caché de dependencias de Maven
     command: mvn spring-boot:run

@@ -28,3 +28,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+### NODE ####
+
+/Front/node_modules
+
+# BACK
+/back/volumenes
+/back/target
